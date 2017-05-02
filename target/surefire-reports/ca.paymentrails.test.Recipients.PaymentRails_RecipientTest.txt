@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: ca.paymentrails.test.Recipients.PaymentRails_RecipientTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.415 sec
