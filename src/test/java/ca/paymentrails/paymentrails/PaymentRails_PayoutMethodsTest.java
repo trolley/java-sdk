@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ca.paymentrails.paymentrails;
 
+import ca.paymentrails.Exceptions.InvalidConnectionException;
+import ca.paymentrails.Exceptions.InvalidFieldException;
 import ca.paymentrails.Exceptions.InvalidStatusCodeException;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -17,9 +14,9 @@ import org.junit.Ignore;
 public class PaymentRails_PayoutMethodsTest {
 
     @Test
-    public void testRetrievePayoutMethods() throws InvalidStatusCodeException {
+    public void testRetrievePayoutMethods() throws InvalidStatusCodeException, InvalidFieldException, InvalidConnectionException {
         PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
-        String recipient_id = "R-912Q4JHD6RH7E";
+        String recipient_id = "R-91XQ4QBJ65W1U";
         String response = PaymentRails_PayoutMethods.get(recipient_id);
         String result = response.substring(6, 10);
         assertEquals("true", result);
@@ -27,21 +24,21 @@ public class PaymentRails_PayoutMethodsTest {
     }
 
     @Test(expected = InvalidStatusCodeException.class)
-    public void testRetrievePayoutMethodsInvalidAPIKey() throws InvalidStatusCodeException {
+    public void testRetrievePayoutMethodsInvalidAPIKey() throws InvalidStatusCodeException, InvalidFieldException, InvalidConnectionException {
         PaymentRails_Configuration.setApiKey("ddd");
-        String recipient_id = "R-912Q4JHD6RH7E";
+        String recipient_id = "R-91XQ4QBJ65W1U";
         String response = PaymentRails_PayoutMethods.get(recipient_id);
     }
 
     @Test(expected = InvalidStatusCodeException.class)
-    public void testRetrievePayoutMethodsInvalidPayoutStatus() throws InvalidStatusCodeException {
+    public void testRetrievePayoutMethodsInvalidPayoutStatus() throws InvalidStatusCodeException, InvalidFieldException, InvalidConnectionException {
         PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
-        String recipient_id = "R-91XPY2G3F5R34";
+        String recipient_id = "R-91XQ4VKD39C3P";
         String response = PaymentRails_PayoutMethods.get(recipient_id);
     }
 
     @Test(expected = InvalidStatusCodeException.class)
-    public void testRetrievePayoutMethodsInvalidRecipientId() throws InvalidStatusCodeException {
+    public void testRetrievePayoutMethodsInvalidRecipientId() throws InvalidStatusCodeException, InvalidFieldException, InvalidConnectionException {
         PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String recipient_id = "R-ff";
         String response = PaymentRails_PayoutMethods.get(recipient_id);
@@ -49,7 +46,7 @@ public class PaymentRails_PayoutMethodsTest {
 
     @Ignore("Ignored as not to continousuly create payout methods")
     @Test
-    public void testCreatePayoutMethods() throws InvalidStatusCodeException {
+    public void testCreatePayoutMethods() throws InvalidStatusCodeException, InvalidFieldException, InvalidConnectionException {
         PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String recipient_id = "R-912Q4JHD6RH7E";
         String body = "{\"primary\": {\"method\":\"bank\", \"currency\":"
@@ -62,9 +59,9 @@ public class PaymentRails_PayoutMethodsTest {
     }
 
     @Test(expected = InvalidStatusCodeException.class)
-    public void testCreatePayoutMethodsInvalidAPIKey() throws InvalidStatusCodeException {
+    public void testCreatePayoutMethodsInvalidAPIKey() throws InvalidStatusCodeException, InvalidFieldException, InvalidConnectionException {
         PaymentRails_Configuration.setApiKey("ddd");
-        String recipient_id = "R-912Q4JHD6RH7E";
+        String recipient_id = "R-91XQ4QBJ65W1U";
         String body = "{\"primary\": {\"method\":\"bank\", \"currency\":"
                 + " \"CAD\"}, \"accounts\":{\"bank\":{\"country\":\"CA\","
                 + " \"accountNum\": \"6022847\", \"institution\": \"123\", "
@@ -73,7 +70,7 @@ public class PaymentRails_PayoutMethodsTest {
     }
 
     @Test(expected = InvalidStatusCodeException.class)
-    public void testCreatePayoutMethodsInvalidRecipientId() throws InvalidStatusCodeException {
+    public void testCreatePayoutMethodsInvalidRecipientId() throws InvalidStatusCodeException, InvalidFieldException, InvalidConnectionException {
         PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String recipient_id = "R-dddd";
         String body = "{\"primary\": {\"method\":\"bank\", \"currency\":"
@@ -84,9 +81,9 @@ public class PaymentRails_PayoutMethodsTest {
     }
 
     @Test
-    public void testUpdatePayoutMethods() throws InvalidStatusCodeException {
+    public void testUpdatePayoutMethods() throws InvalidStatusCodeException, InvalidFieldException, InvalidConnectionException {
         PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
-        String recipient_id = "R-912Q4JHD6RH7E";
+        String recipient_id = "R-91XQ4QBJ65W1U";
         String body = "{\"primary\": {\"method\":\"paypal\", \"currency\": \"CAD\"}, "
                 + "\"accounts\":{\"paypal\": {\"address\": \"testpaypal@example.com\"}}}";
         String response = PaymentRails_PayoutMethods.patch(recipient_id, body);
@@ -95,16 +92,16 @@ public class PaymentRails_PayoutMethodsTest {
     }
 
     @Test(expected = InvalidStatusCodeException.class)
-    public void testUpdatePayoutMethodsInvalidAPIKey() throws InvalidStatusCodeException {
+    public void testUpdatePayoutMethodsInvalidAPIKey() throws InvalidStatusCodeException, InvalidFieldException, InvalidConnectionException {
         PaymentRails_Configuration.setApiKey("ddd");
-        String recipient_id = "R-912Q4JHD6RH7E";
+        String recipient_id = "R-91XQ4QBJ65W1U";
         String body = "{\"primary\": {\"method\":\"paypal\", \"currency\": \"CAD\"}, "
                 + "\"accounts\":{\"paypal\": {\"address\": \"testpaypal@example.com\"}}}";
         String response = PaymentRails_PayoutMethods.patch(recipient_id, body);
     }
 
     @Test(expected = InvalidStatusCodeException.class)
-    public void testUpdatePayoutMethodsInvalidRecipientId() throws InvalidStatusCodeException {
+    public void testUpdatePayoutMethodsInvalidRecipientId() throws InvalidStatusCodeException, InvalidFieldException, InvalidConnectionException {
         PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String recipient_id = "R-ddd";
         String body = "{\"primary\": {\"method\":\"paypal\", \"currency\": \"CAD\"}, "

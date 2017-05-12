@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="21" failures="0" name="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" time="2.495" errors="0" skipped="2">
+<testsuite tests="21" failures="0" name="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" time="5.65" errors="0" skipped="2">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_51\jre\bin"/>
@@ -16,7 +16,7 @@
     <property name="sun.os.patch.level" value=""/>
     <property name="test" value="ca.paymentrails.paymentrails.PaymentRails_PaymentTest"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="C:\Users\jesse\Desktop\paymentrails"/>
+    <property name="user.dir" value="C:\Users\jesse\Desktop\Java SDK\paymentrails"/>
     <property name="java.runtime.version" value="1.8.0_51-b16"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
     <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_51\jre\lib\endorsed"/>
@@ -30,7 +30,7 @@
     <property name="maven.ext.class.path" value="C:\Program Files\NetBeans 8.2\java\maven-nblib\netbeans-eventspy.jar"/>
     <property name="classworlds.conf" value="C:\Program Files\NetBeans 8.2\java\maven\bin\m2.conf"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_51\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\system32\config\systemprofile\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files\Git\cmd;C:\ProgramData\ComposerSetup\bin;C:\wamp64\bin\php\php7.0.10;C:\bin;C:\Program Files\nodejs\;C:\Go\bin;C:\Users\jesse\AppData\Local\Programs\Python\Python36-32\Scripts\;C:\Users\jesse\AppData\Local\Programs\Python\Python36-32\;C:\Users\jesse\AppData\Local\Microsoft\WindowsApps;C:\Users\jesse\AppData\Roaming\Composer\vendor\bin;C:\bin;C:\Users\jesse\AppData\Roaming\npm;C:\Hugo\bin\;;C:\Program Files (x86)\Microsoft VS Code\bin;."/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_51\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\system32\config\systemprofile\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files\Git\cmd;C:\ProgramData\ComposerSetup\bin;C:\wamp64\bin\php\php7.0.10;C:\bin;C:\Program Files\nodejs\;C:\Go\bin;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\dev\flyway-4.2.0;C:\Users\jesse\AppData\Local\Programs\Python\Python36-32\Scripts\;C:\Users\jesse\AppData\Local\Programs\Python\Python36-32\;C:\Users\jesse\AppData\Local\Microsoft\WindowsApps;C:\Users\jesse\AppData\Roaming\Composer\vendor\bin;C:\bin;C:\Users\jesse\AppData\Roaming\npm;C:\Hugo\bin\;C:\Program Files (x86)\Microsoft VS Code\bin;C:\Program Files\Docker Toolbox;C:\dev\flyway-4.2.0;;."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="52.0"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
@@ -62,29 +62,29 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testListAllPaymentsInvalidBatchId" time="0.226"/>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testCreatePaymentInvalidRecipientId" time="0.152"/>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testRetrievePayment" time="0.101"/>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testUpdatePaymentInvalidBatchId" time="0.58"/>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testCreatePayment" time="0.581">
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testListAllPaymentsInvalidBatchId" time="0.505"/>
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testCreatePaymentInvalidRecipientId" time="0.207"/>
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testRetrievePayment" time="0.196"/>
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testUpdatePaymentInvalidBatchId" time="1.227"/>
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testCreatePayment" time="1.228">
     <skipped/>
   </testcase>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testListAllPayments" time="0.064"/>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testUpdatePayment" time="0.165"/>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testDeletePaymentInvalidBatchId" time="0.045"/>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testRetrievePaymentInvalidPaymentId" time="0.102"/>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testRetrieveRPaymentInvalidAPI" time="0.075"/>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testUpdatePaymentInvalidAPIKey" time="0.089"/>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testListAllPaymentsInvalidAPIKey" time="0.064"/>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testRetrievePaymentInvalidBatchId" time="0.096"/>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testDeletePaymentInvalidPaymentId" time="0.099"/>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testDeletePayment" time="0.099">
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testListAllPayments" time="0.309"/>
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testUpdatePayment" time="0.844"/>
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testDeletePaymentInvalidBatchId" time="0.289"/>
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testRetrievePaymentInvalidPaymentId" time="0.071"/>
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testRetrieveRPaymentInvalidAPI" time="0.015"/>
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testUpdatePaymentInvalidAPIKey" time="0.015"/>
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testListAllPaymentsInvalidAPIKey" time="0.008"/>
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testRetrievePaymentInvalidBatchId" time="0.033"/>
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testDeletePaymentInvalidPaymentId" time="0.152"/>
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testDeletePayment" time="0.152">
     <skipped/>
   </testcase>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testDeletePaymentInvalidAPIKey" time="0.069"/>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testListAllPaymentsWithQueries" time="0.125"/>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testCreatePaymentInvalidBatchId" time="0.049"/>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testUpdatePaymentInvalidSourceAmount" time="0.117"/>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testCreatePaymentInvalidAPI" time="0.076"/>
-  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testUpdatePaymentInvalidPaymentId" time="0.099"/>
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testDeletePaymentInvalidAPIKey" time="0.013"/>
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testListAllPaymentsWithQueries" time="0.119"/>
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testCreatePaymentInvalidBatchId" time="0.556"/>
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testUpdatePaymentInvalidSourceAmount" time="0.54"/>
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testCreatePaymentInvalidAPI" time="0.032"/>
+  <testcase classname="ca.paymentrails.paymentrails.PaymentRails_PaymentTest" name="testUpdatePaymentInvalidPaymentId" time="0.193"/>
 </testsuite>

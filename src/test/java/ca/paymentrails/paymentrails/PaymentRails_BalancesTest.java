@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ca.paymentrails.paymentrails;
 
+import ca.paymentrails.Exceptions.InvalidConnectionException;
+import ca.paymentrails.Exceptions.InvalidFieldException;
 import ca.paymentrails.Exceptions.InvalidStatusCodeException;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
@@ -16,7 +13,7 @@ import org.junit.Test;
 public class PaymentRails_BalancesTest {
 
     @Test
-    public void testGetAllBalances() throws InvalidStatusCodeException {
+    public void testGetAllBalances() throws InvalidStatusCodeException, InvalidFieldException, InvalidConnectionException {
         PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String response = PaymentRails_Balances.get();
         String result = response.substring(6, 10);
@@ -24,7 +21,7 @@ public class PaymentRails_BalancesTest {
     }
 
     @Test(expected = InvalidStatusCodeException.class)
-    public void testGetAllBalancesInvalidAPIKey() throws InvalidStatusCodeException {
+    public void testGetAllBalancesInvalidAPIKey() throws InvalidStatusCodeException, InvalidFieldException, InvalidConnectionException {
         PaymentRails_Configuration.setApiKey("dd");
         String response = PaymentRails_Balances.get();
     }

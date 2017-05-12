@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import org.apache.http.HttpResponse;
@@ -61,7 +62,6 @@ public class PaymentRails_Client {
             con.setRequestProperty("Content-Type", "application/json");
 
             int responseCode = con.getResponseCode();
-
             StringBuffer response;
             try (BufferedReader in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()))) {
@@ -77,10 +77,10 @@ public class PaymentRails_Client {
                 throw new InvalidStatusCodeException(StringResponse);
             }
 
-        } catch (InvalidStatusCodeException e) {
-            throw new InvalidStatusCodeException(StringResponse);
-        }catch (IOException e){
+        } catch (ConnectException ce) {
             throw new InvalidConnectionException("Failed to connect to " + apiBase);
+        } catch (InvalidStatusCodeException | IOException e) {
+            throw new InvalidStatusCodeException(StringResponse);
         }
         return StringResponse;
     }
@@ -130,12 +130,12 @@ public class PaymentRails_Client {
                 throw new InvalidStatusCodeException(StringResponse);
             }
 
-        } catch (InvalidStatusCodeException e) {
-            throw new InvalidStatusCodeException(StringResponse);
-        }catch (IOException e){
+        } catch (ConnectException ce) {
             throw new InvalidConnectionException("Failed to connect to " + apiBase);
+        } catch (InvalidStatusCodeException | IOException e) {
+            throw new InvalidStatusCodeException(StringResponse);
         }
-        
+
         return StringResponse;
     }
 
@@ -176,10 +176,10 @@ public class PaymentRails_Client {
                 throw new InvalidStatusCodeException(StringResponse);
             }
 
-        } catch (InvalidStatusCodeException e) {
-            throw new InvalidStatusCodeException(StringResponse);
-        }catch (IOException e){
+        } catch (ConnectException ce) {
             throw new InvalidConnectionException("Failed to connect to " + apiBase);
+        } catch (InvalidStatusCodeException | IOException e) {
+            throw new InvalidStatusCodeException(StringResponse);
         }
         return StringResponse;
     }
@@ -220,10 +220,10 @@ public class PaymentRails_Client {
                 throw new InvalidStatusCodeException(StringResponse);
             }
 
-        } catch (InvalidStatusCodeException e) {
-            throw new InvalidStatusCodeException(StringResponse);
-        }catch (IOException e){
+        } catch (ConnectException ce) {
             throw new InvalidConnectionException("Failed to connect to " + apiBase);
+        } catch (InvalidStatusCodeException | IOException e) {
+            throw new InvalidStatusCodeException(StringResponse);
         }
         return StringResponse;
     }
@@ -269,10 +269,10 @@ public class PaymentRails_Client {
                 throw new InvalidStatusCodeException(StringResponse);
             }
 
-        } catch (InvalidStatusCodeException e) {
-            throw new InvalidStatusCodeException(StringResponse);
-        }catch (IOException e){
+        } catch (ConnectException ce) {
             throw new InvalidConnectionException("Failed to connect to " + apiBase);
+        } catch (InvalidStatusCodeException | IOException e) {
+            throw new InvalidStatusCodeException(StringResponse);
         }
         return StringResponse;
     }

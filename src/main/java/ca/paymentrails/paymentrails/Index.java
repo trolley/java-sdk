@@ -12,9 +12,9 @@ public class Index {
 
     public static void main(String[] args) throws Exception {
 
-        recipient();
+        // recipient();
         // payoutMethods();
-        // balances();
+         balances();
         // batch();
         // payment();
     }
@@ -59,10 +59,10 @@ public class Index {
     public static void balances() throws InvalidStatusCodeException, InvalidFieldException, InvalidConnectionException {
         PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
 
-        //String response = PaymentRails_Balances.get();
-        //System.out.println(response);
-        String response = PaymentRails_Balances.get("paypal");
+        String response = PaymentRails_Balances.get();
         System.out.println(response);
+        //String response = PaymentRails_Balances.get("paypal");
+        //System.out.println(response);
 //        
 //        String response = PaymentRails_Balances.get("paymentrails");
 //        System.out.println(response);
