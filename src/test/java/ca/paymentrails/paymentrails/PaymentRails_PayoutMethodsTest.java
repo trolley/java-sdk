@@ -18,7 +18,7 @@ public class PaymentRails_PayoutMethodsTest {
 
     @Test
     public void testRetrievePayoutMethods() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String recipient_id = "R-912Q4JHD6RH7E";
         String response = PaymentRails_PayoutMethods.get(recipient_id);
         String result = response.substring(6, 10);
@@ -35,14 +35,14 @@ public class PaymentRails_PayoutMethodsTest {
 
     @Test(expected = InvalidStatusCodeException.class)
     public void testRetrievePayoutMethodsInvalidPayoutStatus() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String recipient_id = "R-91XPY2G3F5R34";
         String response = PaymentRails_PayoutMethods.get(recipient_id);
     }
 
     @Test(expected = InvalidStatusCodeException.class)
     public void testRetrievePayoutMethodsInvalidRecipientId() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String recipient_id = "R-ff";
         String response = PaymentRails_PayoutMethods.get(recipient_id);
     }
@@ -50,7 +50,7 @@ public class PaymentRails_PayoutMethodsTest {
     @Ignore("Ignored as not to continousuly create payout methods")
     @Test
     public void testCreatePayoutMethods() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String recipient_id = "R-912Q4JHD6RH7E";
         String body = "{\"primary\": {\"method\":\"bank\", \"currency\":"
                 + " \"CAD\"}, \"accounts\":{\"bank\":{\"country\":\"CA\","
@@ -74,7 +74,7 @@ public class PaymentRails_PayoutMethodsTest {
 
     @Test(expected = InvalidStatusCodeException.class)
     public void testCreatePayoutMethodsInvalidRecipientId() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String recipient_id = "R-dddd";
         String body = "{\"primary\": {\"method\":\"bank\", \"currency\":"
                 + " \"CAD\"}, \"accounts\":{\"bank\":{\"country\":\"CA\","
@@ -85,7 +85,7 @@ public class PaymentRails_PayoutMethodsTest {
 
     @Test
     public void testUpdatePayoutMethods() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String recipient_id = "R-912Q4JHD6RH7E";
         String body = "{\"primary\": {\"method\":\"paypal\", \"currency\": \"CAD\"}, "
                 + "\"accounts\":{\"paypal\": {\"address\": \"testpaypal@example.com\"}}}";
@@ -105,7 +105,7 @@ public class PaymentRails_PayoutMethodsTest {
 
     @Test(expected = InvalidStatusCodeException.class)
     public void testUpdatePayoutMethodsInvalidRecipientId() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String recipient_id = "R-ddd";
         String body = "{\"primary\": {\"method\":\"paypal\", \"currency\": \"CAD\"}, "
                 + "\"accounts\":{\"paypal\": {\"address\": \"testpaypal@example.com\"}}}";

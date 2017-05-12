@@ -6,7 +6,8 @@ package ca.paymentrails.paymentrails;
  */
 public class PaymentRails_Configuration {
 
-    static String apiBase = "http://api.railz.io/";
+    static String apiBase = "http://api.local.dev:3000/";
+    
     static String apiKey = "";
 
     /**

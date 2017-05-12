@@ -1,5 +1,7 @@
 package ca.paymentrails.paymentrails;
 
+import ca.paymentrails.Exceptions.InvalidConnectionException;
+import ca.paymentrails.Exceptions.InvalidFieldException;
 import ca.paymentrails.Exceptions.InvalidStatusCodeException;
 
 /**
@@ -15,9 +17,17 @@ public class PaymentRails_Payment {
      *
      * @param payment_id
      * @return The response
-     * @throws InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
+     * @throws ca.paymentrails.Exceptions.InvalidFieldException
      */
-    public static String get(String payment_id) throws InvalidStatusCodeException {
+    public static String get(String payment_id) throws InvalidStatusCodeException, InvalidConnectionException, InvalidFieldException {
+        if (batch_id == null || batch_id.isEmpty()) {
+            throw new InvalidFieldException("Batch id cannot be null or empty.");
+        }
+        if (payment_id == null || payment_id.isEmpty()) {
+            throw new InvalidFieldException("Payment id cannot be null or empty.");
+        }
         PaymentRails_Client client = PaymentRails_Client.create();
 
         String endPoint = "v1/batches/" + PaymentRails_Payment.batch_id + "/payments/" + payment_id;
@@ -30,9 +40,17 @@ public class PaymentRails_Payment {
      *
      * @param body
      * @return The response
-     * @throws InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
+     * @throws ca.paymentrails.Exceptions.InvalidFieldException
      */
-    public static String post(String body) throws InvalidStatusCodeException {
+    public static String post(String body) throws InvalidStatusCodeException, InvalidConnectionException, InvalidFieldException {
+        if (batch_id == null || batch_id.isEmpty()) {
+            throw new InvalidFieldException("Batch id cannot be null or empty.");
+        }
+        if (body == null || body.isEmpty()) {
+            throw new InvalidFieldException("Body cannot be null or empty.");
+        }
         PaymentRails_Client client = PaymentRails_Client.create();
 
         String endPoint = "v1/batches/" + PaymentRails_Payment.batch_id + "/payments";
@@ -46,9 +64,21 @@ public class PaymentRails_Payment {
      * @param payment_id
      * @param body
      * @return The response
-     * @throws InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
+     * @throws ca.paymentrails.Exceptions.InvalidFieldException
      */
-    public static String patch(String payment_id, String body) throws InvalidStatusCodeException {
+    public static String patch(String payment_id, String body) throws InvalidStatusCodeException, InvalidConnectionException, InvalidFieldException {
+        if (batch_id == null || batch_id.isEmpty()) {
+            throw new InvalidFieldException("Batch id cannot be null or empty.");
+        }
+        if (payment_id == null || payment_id.isEmpty()) {
+            throw new InvalidFieldException("Payment id cannot be null or empty.");
+        }
+        if (body == null || body.isEmpty()) {
+            throw new InvalidFieldException("Body cannot be null or empty.");
+        }
+
         PaymentRails_Client client = PaymentRails_Client.create();
 
         String endPoint = "v1/batches/" + PaymentRails_Payment.batch_id + "/payments/" + payment_id;
@@ -61,9 +91,17 @@ public class PaymentRails_Payment {
      *
      * @param payment_id
      * @return The response
-     * @throws InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
+     * @throws ca.paymentrails.Exceptions.InvalidFieldException
      */
-    public static String delete(String payment_id) throws InvalidStatusCodeException {
+    public static String delete(String payment_id) throws InvalidStatusCodeException, InvalidConnectionException, InvalidFieldException {
+        if (batch_id == null || batch_id.isEmpty()) {
+            throw new InvalidFieldException("Batch id cannot be null or empty.");
+        }
+        if (payment_id == null || payment_id.isEmpty()) {
+            throw new InvalidFieldException("Payment id cannot be null or empty.");
+        }
         PaymentRails_Client client = PaymentRails_Client.create();
 
         String endPoint = "v1/batches/" + PaymentRails_Payment.batch_id + "/payments/" + payment_id;
@@ -79,9 +117,20 @@ public class PaymentRails_Payment {
      * @param pageSize
      * @param message
      * @return The response
-     * @throws InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
+     * @throws ca.paymentrails.Exceptions.InvalidFieldException
      */
-    public static String query(int page, int pageSize, String message) throws InvalidStatusCodeException {
+    public static String query(int page, int pageSize, String message) throws InvalidStatusCodeException, InvalidConnectionException, InvalidFieldException {
+        if (page < 0) {
+            throw new InvalidFieldException("Page cannot be less then 0");
+        }
+        if (pageSize < 0) {
+            throw new InvalidFieldException("Page size cannot be less then 0");
+        }
+        if (message == null) {
+            throw new InvalidFieldException("Message cannot be null");
+        }
         PaymentRails_Client client = PaymentRails_Client.create();
         String endPoint = "v1/batches/" + PaymentRails_Payment.batch_id + "/payments/?" + "&search=" + message + "&page=" + page + "&pageSize=" + pageSize;
         String response = client.get(endPoint);
@@ -93,9 +142,11 @@ public class PaymentRails_Payment {
      *
      * @param message
      * @return The response
-     * @throws InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
+     * @throws ca.paymentrails.Exceptions.InvalidFieldException
      */
-    public static String query(String message) throws InvalidStatusCodeException {
+    public static String query(String message) throws InvalidStatusCodeException, InvalidConnectionException, InvalidFieldException {
         return query(1, 10, message);
     }
 
@@ -103,9 +154,11 @@ public class PaymentRails_Payment {
      * List all payments
      *
      * @return The response
-     * @throws InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
+     * @throws ca.paymentrails.Exceptions.InvalidFieldException
      */
-    public static String query() throws InvalidStatusCodeException {
+    public static String query() throws InvalidStatusCodeException, InvalidConnectionException, InvalidFieldException {
         return query(1, 10, "");
     }
 
@@ -114,11 +167,14 @@ public class PaymentRails_Payment {
      * and page size
      *
      * @param page
-     * @param pageNumber
+     * @param pageSize
      * @return The response
-     * @throws InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
+     * @throws ca.paymentrails.Exceptions.InvalidFieldException
      */
-    public static String query(int page, int pageNumber) throws InvalidStatusCodeException {
-        return query(page, pageNumber, "");
+    public static String query(int page, int pageSize) throws InvalidStatusCodeException, InvalidConnectionException, InvalidFieldException {
+
+        return query(page, pageSize, "");
     }
 }

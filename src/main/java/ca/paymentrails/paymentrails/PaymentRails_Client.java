@@ -1,8 +1,10 @@
 package ca.paymentrails.paymentrails;
 
+import ca.paymentrails.Exceptions.InvalidConnectionException;
 import ca.paymentrails.Exceptions.InvalidStatusCodeException;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -40,9 +42,10 @@ public class PaymentRails_Client {
      *
      * @param endPoint
      * @return The response
-     * @throws InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
      */
-    public String get(String endPoint) throws InvalidStatusCodeException {
+    public String get(String endPoint) throws InvalidStatusCodeException, InvalidConnectionException {
         String StringResponse = "";
         try {
             String url = apiBase + endPoint;
@@ -74,8 +77,10 @@ public class PaymentRails_Client {
                 throw new InvalidStatusCodeException(StringResponse);
             }
 
-        } catch (Exception e) {
+        } catch (InvalidStatusCodeException e) {
             throw new InvalidStatusCodeException(StringResponse);
+        }catch (IOException e){
+            throw new InvalidConnectionException("Failed to connect to " + apiBase);
         }
         return StringResponse;
     }
@@ -86,9 +91,10 @@ public class PaymentRails_Client {
      * @param endPoint
      * @param body
      * @return The response
-     * @throws InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
      */
-    public String post(String endPoint, String body) throws InvalidStatusCodeException {
+    public String post(String endPoint, String body) throws InvalidStatusCodeException, InvalidConnectionException {
         String StringResponse = "";
         try {
             String url = apiBase + endPoint;
@@ -124,9 +130,12 @@ public class PaymentRails_Client {
                 throw new InvalidStatusCodeException(StringResponse);
             }
 
-        } catch (Exception e) {
+        } catch (InvalidStatusCodeException e) {
             throw new InvalidStatusCodeException(StringResponse);
+        }catch (IOException e){
+            throw new InvalidConnectionException("Failed to connect to " + apiBase);
         }
+        
         return StringResponse;
     }
 
@@ -135,9 +144,10 @@ public class PaymentRails_Client {
      *
      * @param endPoint
      * @return The response
-     * @throws InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
      */
-    public String post(String endPoint) throws InvalidStatusCodeException {
+    public String post(String endPoint) throws InvalidStatusCodeException, InvalidConnectionException {
         String StringResponse = "";
         try {
             String url = apiBase + endPoint;
@@ -166,8 +176,10 @@ public class PaymentRails_Client {
                 throw new InvalidStatusCodeException(StringResponse);
             }
 
-        } catch (Exception e) {
+        } catch (InvalidStatusCodeException e) {
             throw new InvalidStatusCodeException(StringResponse);
+        }catch (IOException e){
+            throw new InvalidConnectionException("Failed to connect to " + apiBase);
         }
         return StringResponse;
     }
@@ -178,9 +190,10 @@ public class PaymentRails_Client {
      * @param endPoint
      * @param body
      * @return The response
-     * @throws InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
      */
-    public String patch(String endPoint, String body) throws InvalidStatusCodeException {
+    public String patch(String endPoint, String body) throws InvalidStatusCodeException, InvalidConnectionException, InvalidConnectionException {
         String StringResponse = "";
         try {
 
@@ -207,8 +220,10 @@ public class PaymentRails_Client {
                 throw new InvalidStatusCodeException(StringResponse);
             }
 
-        } catch (Exception e) {
+        } catch (InvalidStatusCodeException e) {
             throw new InvalidStatusCodeException(StringResponse);
+        }catch (IOException e){
+            throw new InvalidConnectionException("Failed to connect to " + apiBase);
         }
         return StringResponse;
     }
@@ -219,8 +234,9 @@ public class PaymentRails_Client {
      * @param endPoint
      * @return The response
      * @throws InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
      */
-    public String delete(String endPoint) throws InvalidStatusCodeException {
+    public String delete(String endPoint) throws InvalidStatusCodeException, InvalidConnectionException {
         String StringResponse = "";
         try {
             String url = apiBase + endPoint;
@@ -253,8 +269,10 @@ public class PaymentRails_Client {
                 throw new InvalidStatusCodeException(StringResponse);
             }
 
-        } catch (Exception e) {
+        } catch (InvalidStatusCodeException e) {
             throw new InvalidStatusCodeException(StringResponse);
+        }catch (IOException e){
+            throw new InvalidConnectionException("Failed to connect to " + apiBase);
         }
         return StringResponse;
     }

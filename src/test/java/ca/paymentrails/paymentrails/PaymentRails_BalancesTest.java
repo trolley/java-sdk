@@ -17,7 +17,7 @@ public class PaymentRails_BalancesTest {
 
     @Test
     public void testGetAllBalances() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String response = PaymentRails_Balances.get();
         String result = response.substring(6, 10);
         assertEquals("true", result);

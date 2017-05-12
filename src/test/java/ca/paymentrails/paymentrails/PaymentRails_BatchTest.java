@@ -18,7 +18,7 @@ public class PaymentRails_BatchTest {
 
     @Test
     public void testRetrieveRecipient() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String batch_id = "B-91XPU88Q093HW";
         String response = PaymentRails_Batch.get(batch_id);
         String result = response.substring(6, 10);
@@ -34,14 +34,14 @@ public class PaymentRails_BatchTest {
 
     @Test(expected = InvalidStatusCodeException.class)
     public void testRetrieveRecipientInvalidBatchId() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String batch_id = "B-fff";
         String response = PaymentRails_Batch.get(batch_id);
     }
 
     @Test
     public void testUpdateRecipient() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String body = "{\"update_payments\":[{\"id\":\"P-91XPU88Q5GN2E\","
                 + "\"sourceAmount\":999}]}";
         String batch_id = "B-91XPU88Q093HW";
@@ -61,7 +61,7 @@ public class PaymentRails_BatchTest {
 
     @Test(expected = InvalidStatusCodeException.class)
     public void testUpdateRecipientInvalidBatchId() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String body = "{\"update_payments\":[{\"id\":\"P-91XPU88Q5GN2E\","
                 + "\"sourceAmount\":999}]}";
         String batch_id = "B-fweffe";
@@ -70,7 +70,7 @@ public class PaymentRails_BatchTest {
 
     @Test(expected = InvalidStatusCodeException.class)
     public void testUpdateRecipientInvalidAmount() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String body = "{\"update_payments\":[{\"id\":\"P-91XPU88Q5GN2E\","
                 + "\"sourceAmount\":9.9}]}";
         String batch_id = "B-91XPU88Q093HW";
@@ -79,7 +79,7 @@ public class PaymentRails_BatchTest {
 
     @Test(expected = InvalidStatusCodeException.class)
     public void testUpdateRecipientInvalidFieldName() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String body = "{\"update_payments\":[{\"isss\":\"P-91XPU88Q5GN2E\","
                 + "\"sourceAmount\":999}]}";
         String batch_id = "B-91XPU88Q093HW";
@@ -89,7 +89,7 @@ public class PaymentRails_BatchTest {
     @Ignore("Ignored due to not wanting to keep deleting the same batch")
     @Test
     public void testDeleteRecipient() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String batch_id = "B-91XPU88Q093HW";
         String response = PaymentRails_Batch.delete(batch_id);
         String result = response.substring(6, 10);
@@ -105,21 +105,21 @@ public class PaymentRails_BatchTest {
 
     @Test(expected = InvalidStatusCodeException.class)
     public void testDeleteRecipientInvalidBatchId() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String batch_id = "B-fff";
         String response = PaymentRails_Batch.delete(batch_id);
     }
 
     @Test(expected = InvalidStatusCodeException.class)
     public void testDeleteRecipientInvalidBatchStatus() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String batch_id = "B-91XPR9AZD8BMP";
         String response = PaymentRails_Batch.delete(batch_id);
     }
 
     @Test
     public void testListBatches() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String response = PaymentRails_Batch.query();
         String result = response.substring(6, 10);
         assertEquals("true", result);
@@ -127,7 +127,7 @@ public class PaymentRails_BatchTest {
 
     @Test
     public void testListBatchesWithQueries() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String response = PaymentRails_Batch.query(1, 10, "");
         String result = response.substring(6, 10);
         assertEquals("true", result);
@@ -143,7 +143,7 @@ public class PaymentRails_BatchTest {
 
     @Test
     public void testBatchSummary() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String response = PaymentRails_Batch.summary("B-91XPU88Q093HW");
         String result = response.substring(6, 10);
         assertEquals("true", result);
@@ -157,14 +157,14 @@ public class PaymentRails_BatchTest {
 
     @Test(expected = InvalidStatusCodeException.class)
     public void testBatchSummaryInvalidBatchId() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String response = PaymentRails_Batch.summary("B-fff");
     }
 
     @Ignore("Ignored as not to keep creating batches")
     @Test
     public void testCreateBatch() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String body = "{\"payments\":[{\"recipient\":{\"id\":\"R-912Q4JHD6RH7E\"},\"sourceAmount\":\"65\",\"memo\":\"\",\"sourceCurrency\":\"CAD\"}]}";
         String response = PaymentRails_Batch.post(body);
         String batch_id = response.substring(26, 41);
@@ -185,7 +185,7 @@ public class PaymentRails_BatchTest {
 
     @Test(expected = InvalidStatusCodeException.class)
     public void testCreateBatchInvalidRecipientId() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
         String body = "{\"payments\":[{\"recipient\":{\"id\":\"R-fefef\"},\"sourceAmount\":\"65\",\"memo\":\"\",\"sourceCurrency\":\"CAD\"}]}";
         String response = PaymentRails_Batch.post(body);
     }

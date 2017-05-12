@@ -1,5 +1,7 @@
 package ca.paymentrails.paymentrails;
 
+import ca.paymentrails.Exceptions.InvalidConnectionException;
+import ca.paymentrails.Exceptions.InvalidFieldException;
 import ca.paymentrails.Exceptions.InvalidStatusCodeException;
 
 /**
@@ -10,19 +12,19 @@ public class Index {
 
     public static void main(String[] args) throws Exception {
 
-        // recipient();
+        recipient();
         // payoutMethods();
         // balances();
         // batch();
         // payment();
     }
 
-    public static void recipient() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+    public static void recipient() throws InvalidStatusCodeException, InvalidFieldException, InvalidConnectionException {
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
 
-        // String recipient_id = "R-91XPJZTR612MG";
-        // String response = PaymentRails_Recipient.get(recipient_id);
-        // System.out.println(response);
+         String recipient_id = "R-91XQ4GK3FNHG0";
+         String response = PaymentRails_Recipient.get(recipient_id);
+         System.out.println(response);
         // String body = "{\"type\": \"individual\", \"firstName\": \"Michael\", \"lastName\": \"Jackson\", \"email\": \"mj@example.com\"}";
         // String response = PaymentRails_Recipient.post(body);
         // System.out.println(response);
@@ -33,7 +35,7 @@ public class Index {
     }
 
     public static void payoutMethods() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
 
         //String recipient_id = "R-912Q4JHD6RH7E";
         //String response = PaymentRails_PayoutMethods.get(recipient_id);
@@ -54,8 +56,8 @@ public class Index {
 
     }
 
-    public static void balances() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+    public static void balances() throws InvalidStatusCodeException, InvalidFieldException, InvalidConnectionException {
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
 
         //String response = PaymentRails_Balances.get();
         //System.out.println(response);
@@ -67,7 +69,7 @@ public class Index {
     }
 
     public static void batch() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
 
         //String batch_id = "B-91XPU88Q093HW";
         //String response = PaymentRails_Batch.get(batch_id);
@@ -96,7 +98,7 @@ public class Index {
     }
 
     public static void payment() throws InvalidStatusCodeException {
-        PaymentRails_Configuration.setApiKey("pk_live_91XNJFBD19ZQ6");
+        PaymentRails_Configuration.setApiKey("pk_test_91XPYV1Y8MXQC");
 
         // String payment_id = "P-91XPU88Q5GN2E";
         //PaymentRails_Payment.batch_id = "B-91XPU88Q093HW";
