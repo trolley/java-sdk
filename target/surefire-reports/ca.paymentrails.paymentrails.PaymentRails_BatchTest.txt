@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: ca.paymentrails.paymentrails.PaymentRails_BatchTest
--------------------------------------------------------------------------------
-Tests run: 20, Failures: 0, Errors: 0, Skipped: 2, Time elapsed: 7.241 sec
