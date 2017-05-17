@@ -32,13 +32,14 @@ public class PaymentRails_Balances {
      * @throws ca.paymentrails.Exceptions.InvalidConnectionException
      */
     public static String get(String term) throws InvalidStatusCodeException, InvalidFieldException, InvalidConnectionException {
-       if(term == null){
-           throw new InvalidFieldException("Term cannot be null");
-       }
+        if (term == null) {
+            throw new InvalidFieldException("Term cannot be null");
+        }
         PaymentRails_Client client = PaymentRails_Client.create();
 
         String endPoint = "v1/profile/balances/" + term;
         String response = client.get(endPoint);
         return response;
     }
+
 }

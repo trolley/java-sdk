@@ -63,6 +63,11 @@ public class PaymentRails_Client {
 
             int responseCode = con.getResponseCode();
             StringBuffer response;
+            
+            if(responseCode == 404){
+                StringResponse = "{\"ok\":false,\"errors\":[{\"code\":\"not_found\",\"message\":\"Object not found\"}]}";
+                throw new InvalidStatusCodeException();
+            }
             try (BufferedReader in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()))) {
                 String inputLine;
@@ -79,7 +84,7 @@ public class PaymentRails_Client {
 
         } catch (ConnectException ce) {
             throw new InvalidConnectionException("Failed to connect to " + apiBase);
-        } catch (InvalidStatusCodeException | IOException e) {
+        } catch (InvalidStatusCodeException  | IOException e) {
             throw new InvalidStatusCodeException(StringResponse);
         }
         return StringResponse;
@@ -114,7 +119,10 @@ public class PaymentRails_Client {
             }
 
             int responseCode = con.getResponseCode();
-
+            if(responseCode == 404){
+                StringResponse = "{\"ok\":false,\"errors\":[{\"code\":\"not_found\",\"message\":\"Object not found\"}]}";
+                throw new InvalidStatusCodeException();
+            }
             StringBuffer response;
             try (BufferedReader in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()))) {
@@ -160,7 +168,10 @@ public class PaymentRails_Client {
             con.setRequestProperty("Content-Type", "application/json");
 
             int responseCode = con.getResponseCode();
-
+            if(responseCode == 404){
+                StringResponse = "{\"ok\":false,\"errors\":[{\"code\":\"not_found\",\"message\":\"Object not found\"}]}";
+                throw new InvalidStatusCodeException();
+            }
             StringBuffer response;
             try (BufferedReader in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()))) {
@@ -253,7 +264,10 @@ public class PaymentRails_Client {
 
             int responseCode = con.getResponseCode();
             //check response code
-
+            if(responseCode == 404){
+                StringResponse = "{\"ok\":false,\"errors\":[{\"code\":\"not_found\",\"message\":\"Object not found\"}]}";
+                throw new InvalidStatusCodeException();
+            }
             StringBuffer response;
             try (BufferedReader in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()))) {

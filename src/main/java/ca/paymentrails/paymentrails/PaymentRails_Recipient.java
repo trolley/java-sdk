@@ -101,24 +101,24 @@ public class PaymentRails_Recipient {
      *
      * @param page
      * @param pageSize
-     * @param message
+     * @param term
      * @return The response
      * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
      * @throws ca.paymentrails.Exceptions.InvalidConnectionException
      * @throws ca.paymentrails.Exceptions.InvalidFieldException
      */
-    public static String query(int page, int pageSize, String message) throws InvalidStatusCodeException, InvalidConnectionException, InvalidFieldException {
+    public static String query(int page, int pageSize, String term) throws InvalidStatusCodeException, InvalidConnectionException, InvalidFieldException {
         if (page < 0) {
             throw new InvalidFieldException("Page cannot be less then 0");
         }
         if (pageSize < 0) {
             throw new InvalidFieldException("Page size cannot be less then 0");
         }
-        if (message == null) {
+        if (term == null) {
             throw new InvalidFieldException("Message cannot be null");
         }
         PaymentRails_Client client = PaymentRails_Client.create();
-        String endPoint = "v1/recipients/?" + "&search=" + message + "&page=" + page + "&pageSize=" + pageSize;
+        String endPoint = "v1/recipients/?" + "&search=" + term + "&page=" + page + "&pageSize=" + pageSize;
         String response = client.get(endPoint);
         return response;
     }

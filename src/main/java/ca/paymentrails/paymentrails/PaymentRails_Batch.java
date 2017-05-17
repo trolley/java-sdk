@@ -42,10 +42,10 @@ public class PaymentRails_Batch {
      * @throws ca.paymentrails.Exceptions.InvalidConnectionException
      */
     public static String patch(String batch_id, String body) throws InvalidStatusCodeException, InvalidFieldException, InvalidConnectionException {
-         if(batch_id == null || batch_id.isEmpty()){
+        if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
         }
-        if(body == null || body.isEmpty()){
+        if (body == null || body.isEmpty()) {
             throw new InvalidFieldException("Body cannot be null or empty.");
         }
         PaymentRails_Client client = PaymentRails_Client.create();
