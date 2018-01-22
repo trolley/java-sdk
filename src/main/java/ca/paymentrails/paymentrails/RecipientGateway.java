@@ -10,26 +10,33 @@ public class RecipientGateway {
         this.client = new Client(config);
     }
 
-    public String find(String recipient_id, String term) throws Exception {
+    public String find(String recipient_id) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
 
-        // Client client = Client.create();
-        String endPoint = "/v1/recipients/" + recipient_id + "/" + term;
+        String endPoint = "/v1/recipients/" + recipient_id;
         String response = this.client.get(endPoint);
         return response;
     }
 
-    public String find(String recipient_id) throws Exception {
-        return find(recipient_id, "");
+    public String findLogs(String recipient_id) throws Exception {
+        String endPoint = "/v1/recipients/" + recipient_id + "/logs";
+        String response = this.client.get(endPoint);
+        return response;
+    }
+
+    public String findPayments(String recipient_id) throws Exception {
+        String endPoint = "/v1/recipients/" + recipient_id + "/payments";
+        String response = this.client.get(endPoint);
+        return response;
     }
 
     public String create(String body) throws Exception {
         if (body == null || body.isEmpty()) {
             throw new InvalidFieldException("Body cannot be null or empty");
         }
-        // Client client = Client.create();
+
         String endPoint = "/v1/recipients/";
         String response = this.client.post(endPoint, body);
         return response;
@@ -42,7 +49,7 @@ public class RecipientGateway {
         if (body == null || body.isEmpty()) {
             throw new InvalidFieldException("Body cannot be null or empty");
         }
-        // Client client = Client.create();
+
         String endPoint = "/v1/recipients/" + recipient_id;
         String response = this.client.patch(endPoint, body);
         return response;
@@ -52,7 +59,7 @@ public class RecipientGateway {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
-        // Client client = Client.create();
+
         String endPoint = "/v1/recipients/" + recipient_id;
         String response = this.client.delete(endPoint);
         return response;
@@ -68,7 +75,7 @@ public class RecipientGateway {
         if (term == null) {
             throw new InvalidFieldException("Message cannot be null");
         }
-        // Client client = Client.create();
+
         String endPoint = "/v1/recipients/?" + "&search=" + term + "&page=" + page + "&pageSize=" + pageSize;
         String response = this.client.get(endPoint);
         return response;

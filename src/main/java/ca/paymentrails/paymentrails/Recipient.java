@@ -3,6 +3,7 @@ package ca.paymentrails.paymentrails;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 
 import java.util.List;
 
@@ -246,22 +247,53 @@ public class Recipient {
      * Retrieves a recipient based on the recipient id given
      *
      * @param recipient_id
-     * @param term
      * @return The response
      * @throws Exception
     
      */
 
-    public static Recipient find(String recipient_id, String term) throws Exception {
-        String response = Configuration.gateway().recipient.find(recipient_id, term);
+    public static Recipient find(String recipient_id) throws Exception {
+        String response = Configuration.gateway().recipient.find(recipient_id);
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(response);
         Recipient recipient = mapper.readValue(node.get("recipient").traverse(), Recipient.class);
         return recipient;
     }
 
-    public static Recipient find(String recipient_id) throws Exception {
-        return find(recipient_id, "");
+    /**
+     * Retreives the recipient's logs based on the recipient id given
+     * 
+     * @param recipient_id
+     * @return the response
+     * @throws Exception
+     */
+    public static String findLogs(String recipient_id) throws Exception {
+        String response = Configuration.gateway().recipient.findLogs(recipient_id);
+        return response;
+    }
+
+    /**
+     * Retreives the recipient's payments based on the recipient id given
+     * 
+     * @param recipient_id
+     * @return the response
+     * @throws Exception
+     */
+    public static List<Payment> findPayments(String recipient_id) throws Exception {
+        String response = Configuration.gateway().recipient.findPayments(recipient_id);
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.readTree(response);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        Object payment = mapper.readValue(node.get("payments").traverse(), Object.class);
+        @SuppressWarnings("unchecked")
+        List<Payment> paymens = (List<Payment>) payment;
+        List<Payment> payments = new ArrayList<Payment>();
+        for (int i = 0; i < paymens.size(); i++) {
+            Payment pojo = mapper.convertValue(paymens.get(i), Payment.class);
+            payments.add(pojo);
+        }
+
+        return payments;
     }
 
     /**
@@ -275,7 +307,7 @@ public class Recipient {
      */
     public static Recipient create(String body) throws Exception {
         String response = Configuration.gateway().recipient.create(body);
-        
+
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(response);
         Recipient recipient = mapper.readValue(node.get("recipient").traverse(), Recipient.class);

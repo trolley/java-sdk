@@ -29,7 +29,7 @@ Parameters | Return Type
 (recipientId, recipientAccountId, body) | string
 
 ---
-### **remove**
+### **delete**
 Utility method to make DELETE requests to the payout method API
 
 Parameters | Return Type

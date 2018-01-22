@@ -34,8 +34,8 @@ import ca.paymentrails.Exceptions.*;
 public class PaymentRailsExample {
     public static void main(String[] args) {
         
-       Configuration.setPublicKey("<YOUR-PUBLIC-KEY>");
-       Configuration.setPrivateKey("<YOU-PRIVATE-KEY>");
+       Configuration.setPublicKey("YOUR-PUBLIC-KEY");
+       Configuration.setPrivateKey("YOU-PRIVATE-KEY");
 
         try {
             Recipient recipient = Recipient.find("R-1a2B3c4D5e6F7g8H9i0J1k");
@@ -57,6 +57,8 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *Recipient | [**get**](docs/Recipient.md#get) | **GET** /recipient/ |
 *Recipient | [**post**](docs/Recipient.md#post) | **POST** /recipient/ |
+*Recipient | [**findLogs**](docs/Recipient.md#findLogs) | **GET**/recipient/logs
+*Recipient | [**findPayments**](docs/Recipient.md#findPayments) | **GET**/recipient/payments
 *Recipient | [**patch**](docs/Recipient.md#patch) | **PATCH** /recipient/ |
 *Recipient | [**delete**](docs/Recipient.md#delete) | **DELETE** /recipient/ |
 *Recipient | [**query**](docs/Recipient.md#query) | **GET** /recipient/ |

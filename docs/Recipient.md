@@ -11,8 +11,22 @@ Utility method to make GET requests to the recipient API
 Parameters | Return Type
 ---| ---:
 (String recipient_id) | Recipient
-(String recipient_id, $term) | Recipient
 
+---
+### **findLogs**
+Utility method to make a GET request to the recipient API for the recipient logs
+
+Parameters | Return Type
+---| ---:
+(String recipient_id) | String
+
+---
+### **findPayments**
+Utility method to make a GET request to the recipient API for the recipient payments
+
+Parameters | Return Type
+---| ---:
+(String recipient_id) | List<Payment>
 
 ---
 ### **post**
