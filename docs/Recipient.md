@@ -10,8 +10,8 @@ Utility method to make GET requests to the recipient API
 
 Parameters | Return Type
 ---| ---:
-(String recipient_id) | String
-(String recipient_id, $term) | String
+(String recipient_id) | Recipient
+(String recipient_id, $term) | Recipient
 
 
 ---
@@ -20,7 +20,7 @@ Utility method to make POST requests to the recipient API
 
 Parameters | Return Type
 --- | ---:
-(String body) | String
+(String body) | Recipient
 
 ---
 ### **patch**
@@ -44,7 +44,7 @@ Utility method for querying recipients
 
 Parameters | Return Type
 --- | ---:
-(no-parameters) | String
-(String term) | String
-(int page, int pageSize) | String
-(int page, int pageSize, String term) | String
+(no-parameters) | List<Recipient>
+(String term) | List<Recipient>
+(int page, int pageSize) | List<Recipient>
+(int page, int pageSize, String term) | List<Recipient>

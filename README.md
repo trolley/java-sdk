@@ -34,13 +34,13 @@ import ca.paymentrails.Exceptions.*;
 public class PaymentRailsExample {
     public static void main(String[] args) {
         
-        PaymentRails_Configuration.setApiKey("<YOUR-API-KEY>");
+       Configuration.setPublicKey("<YOUR-PUBLIC-KEY>");
+       Configuration.setPrivateKey("<YOU-PRIVATE-KEY>");
 
-        String recipient_id = "R-91XQ4GK3FNHG0";
         try {
-            String response = PaymentRails_Recipient.get(recipient_id);
-            System.out.println(response);
-        } catch (InvalidConnectionException | InvalidFieldException | InvalidStatusCodeException e) {
+            Recipient recipient = Recipient.find("R-1a2B3c4D5e6F7g8H9i0J1k");
+            System.out.println(recipient.getId());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -60,10 +60,10 @@ Class | Method | HTTP request | Description
 *Recipient | [**patch**](docs/Recipient.md#patch) | **PATCH** /recipient/ |
 *Recipient | [**delete**](docs/Recipient.md#delete) | **DELETE** /recipient/ |
 *Recipient | [**query**](docs/Recipient.md#query) | **GET** /recipient/ |
-*PayoutMethods | [**get**](docs/PayoutMethods.md#get) | **GET** /recipient/<recipient_id>/payout-methods |
-*PayoutMethods | [**post**](docs/PayoutMethods.md#post) | **POST** /recipient/<recipient_id>/payout-methods |
-*PayoutMethods | [**patch**](docs/PayoutMethods.md#patch) | **PATCH** /recipient/<recipient_id>/payout-methods |
-*PayoutMethods | [**delete**](docs/PayoutMethods.md#delete) | **DELETE** /recipient/<recipient_id>/payout-methods |
+*RecipientAccount | [**get**](docs/RecipientAccount.md#get) | **GET** /recipient/<recipient_id>/accounts<recipient_account_id>|
+*RecipientAccount | [**post**](docs/RecipientAccount.md#post) | **POST** /recipient/<recipient_id>/accounts |
+*RecipientAccount | [**patch**](docs/RecipientAccount.md#patch) | **PATCH** /recipient/<recipient_id>/accounts |
+*RecipientAccount | [**delete**](docs/RecipientAccount.md#delete) | **DELETE** /recipient/<recipient_id>/accounts/<recipient_account_id> |
 *Batch | [**get**](docs/Batch.md#get) | **GET** /batch/ |
 *Batch | [**post**](docs/Batch.md#post) | **POST** /batch/ |
 *Batch | [**patch**](docs/Batch.md#patch) | **PATCH** /batch/ |
@@ -82,6 +82,6 @@ Class | Method | HTTP request | Description
 
 ### merchantKey
 
-- **Type**: API key
-- **API key parameter name**: x-api-key
+- **Type**: Authorization
+- **Authorization parts**: Access code, Secret code
 - **Location**: HTTP header

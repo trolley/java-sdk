@@ -1,3 +1,10 @@
 nb-configuration
 target
 nbproject
+.classpath
+.project
+.settings
+.settings/*
+.project
+.vscode
+.vscode/*

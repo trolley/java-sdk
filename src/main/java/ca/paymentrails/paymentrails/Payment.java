@@ -1,0 +1,353 @@
+package ca.paymentrails.paymentrails;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import java.util.List;
+
+public class Payment {
+
+    private String id;
+    private Recipient recipient;
+    private String status;
+    private Boolean isSupplyPayment;
+    private String returnedAmount;
+    private String sourceAmount;
+    private String sourceCurrency;
+    private String targetAmount;
+    private String targetCurrency;
+    private String exchangeRate;
+    private String fees;
+    private String recipientFees;
+    private String fxRate;
+    private String memo;
+    private String externalId;
+    private Object processedAt;
+    private String createdAt;
+    private String updatedAt;
+    private String merchantFees;
+    private Compliance compliance;
+    private String payoutMethod;
+    private String methodDisplay;
+    Object batch;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Recipient getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(Recipient recipient) {
+        this.recipient = recipient;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Boolean getIsSupplyPayment() {
+        return isSupplyPayment;
+    }
+
+    public void setIsSupplyPayment(Boolean isSupplyPayment) {
+        this.isSupplyPayment = isSupplyPayment;
+    }
+
+    public String getReturnedAmount() {
+        return returnedAmount;
+    }
+
+    public void setReturnedAmount(String returnedAmount) {
+        this.returnedAmount = returnedAmount;
+    }
+
+    public String getSourceAmount() {
+        return sourceAmount;
+    }
+
+    public void setSourceAmount(String sourceAmount) {
+        this.sourceAmount = sourceAmount;
+    }
+
+    public String getSourceCurrency() {
+        return sourceCurrency;
+    }
+
+    public void setSourceCurrency(String sourceCurrency) {
+        this.sourceCurrency = sourceCurrency;
+    }
+
+    public String getTargetAmount() {
+        return targetAmount;
+    }
+
+    public void setTargetAmount(String targetAmount) {
+        this.targetAmount = targetAmount;
+    }
+
+    public String getTargetCurrency() {
+        return targetCurrency;
+    }
+
+    public void setTargetCurrency(String targetCurrency) {
+        this.targetCurrency = targetCurrency;
+    }
+
+    public String getExchangeRate() {
+        return exchangeRate;
+    }
+
+    public void setExchangeRate(String exchangeRate) {
+        this.exchangeRate = exchangeRate;
+    }
+
+    public String getFees() {
+        return fees;
+    }
+
+    public void setFees(String fees) {
+        this.fees = fees;
+    }
+
+    public String getRecipientFees() {
+        return recipientFees;
+    }
+
+    public void setRecipientFees(String recipientFees) {
+        this.recipientFees = recipientFees;
+    }
+
+    public String getFxRate() {
+        return fxRate;
+    }
+
+    public void setFxRate(String fxRate) {
+        this.fxRate = fxRate;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
+
+    public Object getProcessedAt() {
+        return processedAt;
+    }
+
+    public void setProcessedAt(Object processedAt) {
+        this.processedAt = processedAt;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getMerchantFees() {
+        return merchantFees;
+    }
+
+    public void setMerchantFees(String merchantFees) {
+        this.merchantFees = merchantFees;
+    }
+
+    public Compliance getCompliance() {
+        return compliance;
+    }
+
+    public void setCompliance(Compliance compliance) {
+        this.compliance = compliance;
+    }
+
+    public String getPayoutMethod() {
+        return payoutMethod;
+    }
+
+    public void setPayoutMethod(String payoutMethod) {
+        this.payoutMethod = payoutMethod;
+    }
+
+    public String getMethodDisplay() {
+        return methodDisplay;
+    }
+
+    public void setMethodDisplay(String methodDisplay) {
+        this.methodDisplay = methodDisplay;
+    }
+
+    /**
+     * Retrieves a batch based on the batch id
+     *
+     * @param payment_id
+     * @param batch_id
+     * @return The response
+     * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
+     * @throws ca.paymentrails.Exceptions.InvalidFieldException
+     */
+    public static Payment find(String payment_id, String batch_id) throws Exception {
+        String response = Configuration.gateway().payment.find(payment_id, batch_id);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        JsonNode node = mapper.readTree(response);
+        Payment payment = mapper.readValue(node.get("payment").traverse(), Payment.class);
+        return payment;
+    }
+
+    /**
+     * Creates a payment based on the body and batch id
+     *
+     * @param body
+     * @param batch_id
+     * @return The response
+     * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
+     * @throws ca.paymentrails.Exceptions.InvalidFieldException
+     */
+    public static Payment create(String body, String batch_id) throws Exception {
+        String response = Configuration.gateway().payment.create(body, batch_id);
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        JsonNode node = mapper.readTree(response);
+        Payment payment = mapper.readValue(node.get("payment").traverse(), Payment.class);
+        return payment;
+    }
+
+    /**
+     * Updates a payment based on the payment id, body and batch id
+     *
+     * @param payment_id
+     * @param body
+     * @param batch_id
+     * @return The response
+     * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
+     * @throws ca.paymentrails.Exceptions.InvalidFieldException
+     */
+    public static String update(String payment_id, String body, String batch_id) throws Exception {
+        return Configuration.gateway().payment.update(payment_id, body, batch_id);
+    }
+
+    /**
+     * Deletes a payment based on the payment id and batch id
+     *
+     * @param payment_id
+     * @param batch_id
+     * @return The response
+     * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
+     * @throws ca.paymentrails.Exceptions.InvalidFieldException
+     */
+    public static String delete(String payment_id, String batch_id) throws Exception {
+        return Configuration.gateway().payment.delete(payment_id, batch_id);
+    }
+
+    /**
+     * List all payments based on the recipient id and (optional) a given
+     * wildcard, page amount and page size
+     *
+     * @param batch_id
+     * @param page
+     * @param pageSize
+     * @param message
+     * @return The response
+     * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
+     * @throws ca.paymentrails.Exceptions.InvalidFieldException
+     */
+    public static List<Payment> query(String batch_id, int page, int pageSize, String message) throws Exception {
+
+        String response = Configuration.gateway().payment.query(batch_id, page, pageSize, message);
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.readTree(response);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        Object payment = mapper.readValue(node.get("payments").traverse(), Object.class);
+        @SuppressWarnings("unchecked")
+        List<Payment> paymens = (List<Payment>) payment;
+        List<Payment> payments = new ArrayList<Payment>();
+        for (int i = 0; i < paymens.size(); i++) {
+            Payment pojo = mapper.convertValue(paymens.get(i), Payment.class);
+            payments.add(pojo);
+        }
+
+        return payments;
+    }
+
+    /**
+     * List all payments based on the recipient id and a given wildcard
+     *
+     * @param batch_id
+     * @param message
+     * @return The response
+     * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
+     * @throws ca.paymentrails.Exceptions.InvalidFieldException
+     */
+    public static List<Payment> query(String batch_id, String message) throws Exception {
+        return query(batch_id, 1, 10, message);
+    }
+
+    /**
+     * List all payments
+     *
+     * @param batch_id
+     * @return The response
+     * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
+     * @throws ca.paymentrails.Exceptions.InvalidFieldException
+     */
+    public static List<Payment> query(String batch_id) throws Exception {
+        return query(batch_id, 1, 10, "");
+    }
+
+    /**
+     * List all payments based on the recipient id and (optional) page amount
+     * and page size
+     *
+     * @param batch_id
+     * @param page
+     * @param pageSize
+     * @return The response
+     * @throws ca.paymentrails.Exceptions.InvalidStatusCodeException
+     * @throws ca.paymentrails.Exceptions.InvalidConnectionException
+     * @throws ca.paymentrails.Exceptions.InvalidFieldException
+     */
+    public static List<Payment> query(String batch_id, int page, int pageSize) throws Exception {
+
+        return query(batch_id, page, pageSize, "");
+    }
+}

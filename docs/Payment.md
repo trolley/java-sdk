@@ -10,7 +10,7 @@ Utility method to make GET requests to the payment API
 
 Parameters | Return Type
 --- | ---:
-(String payment_id,String batch_id) | String
+(String payment_id, String batch_id) | Payment
 
 
 ---
@@ -19,7 +19,7 @@ Utility method to make POST requests to the payment API
 
 Parameters | Return Type
 --- | ---:
-(String body) | String
+(String body) | Payment
 
 ---
 ### **patch**
@@ -43,7 +43,7 @@ Utility method for querying payments
 
 Parameters | Return Type
 --- | ---:
-(String batch_id) | String
-(String batch_id,String term) | String
-(String batch_id,int page, int pageSize) | String
-(String batch_id,int page, int pageSize, String term) | String
+(String batch_id) | List<Payment>
+(String batch_id,String term) | List<Payment>
+(String batch_id,int page, int pageSize) | List<Payment>
+(String batch_id,int page, int pageSize, String term) | List<Payment>

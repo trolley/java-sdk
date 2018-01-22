@@ -1,9 +1,5 @@
 package ca.paymentrails.Exceptions;
 
-/**
- *
- * @author Jesse
- */
 public class InvalidConnectionException extends Exception {
 
     public InvalidConnectionException() {

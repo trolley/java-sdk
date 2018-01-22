@@ -1,10 +1,6 @@
 
 package ca.paymentrails.Exceptions;
 
-/**
- *
- * @author Jesse
- */
 public class InvalidFieldException extends Exception {
 
     public InvalidFieldException() {

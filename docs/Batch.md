@@ -10,7 +10,7 @@ Utility method to make GET requests to the batch API
 
 Parameters | Return Type
 --- | ---:
-(String batch_id) | String
+(String batch_id) | Batch
 
 
 ---
@@ -19,7 +19,7 @@ Utility method to make POST requests to the batch API
 
 Parameters | Return Type
 --- | ---:
-(String body) | String
+(String body) | Batch
 
 ---
 ### **patch**
@@ -43,10 +43,10 @@ Utility method for querying batches
 
 Parameters | Return Type
 --- | ---:
-(no-parameters) | String
-(String term) | String
-(int page, int pageSize) | String
-(int page, int pageSize, String term) | String
+(no-parameters) | List<Batch>
+(String term) | List<Batch>
+(int page, int pageSize) | List<Batch>
+(int page, int pageSize, String term) | List<Batch>
 
 ---
 ### **generateQuote**
@@ -72,4 +72,4 @@ Utility method to get a batch summary
 
 Parameters | Return Type
 --- | ---:
-(String batch_id) | String
+(String batch_id) | BatchSummary
