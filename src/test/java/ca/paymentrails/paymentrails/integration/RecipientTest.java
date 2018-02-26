@@ -10,86 +10,91 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import ca.paymentrails.paymentrails.Configuration;
 import ca.paymentrails.paymentrails.Recipient;
 import ca.paymentrails.paymentrails.RecipientAccount;
+import ca.paymentrails.paymentrails.Gateway;
 
 import java.util.List;
+import java.util.UUID;
 
 @PrepareForTest(Recipient.class)
 public class RecipientTest {
 
     @Test
     public void testCreateRecipient() throws Exception {
-        Configuration.setPublicKey("YOUR-PUBLIC-KEY");
-        Configuration.setPrivateKey("YOUR-PRIVATE-KEY");
+        Gateway client = new Gateway(new Configuration("YOUR-API-KEY", "YOUR-API-KEY", "production"));
 
-        String body = "{\"type\": \"individual\",\"firstName\": \"John\",\"lastName\": \"Smith\",\"email\": \"jsmith21@example.com\"}";
-        Recipient recipient = Recipient.create(body);
-        assertEquals(recipient.getFirstName(), "John");
-        assertEquals(recipient.getLastName(), "Smith");
-        assertEquals(recipient.getEmail(), "jsmith21@example.com");
+        UUID uuid = UUID.randomUUID();
+
+        String body = "{\"type\": \"individual\",\"firstName\": \"Tom\",\"lastName\": \"Jones\",\"email\": \"test.create"
+                + uuid.toString()
+                + "@example.com\",\"address\":{\"street1\": \"123 Main St\",\"city\": \"San Francisco\",\"region\": \"CA\",\"postalCode\": \"94131\",\"country\": \"US\",\"phone\" : \"18005551212\"}}";
+        Recipient recipient = client.recipient.create(body);
+        assertEquals(recipient.getFirstName(), "Tom");
+        assertEquals(recipient.getLastName(), "Jones");
+        assertEquals(recipient.getEmail(), "test.create" + uuid.toString() + "@example.com");
         assertNotNull(recipient.getId());
     }
 
     @Test
     public void testLifecycle() throws Exception {
-        Configuration.setPublicKey("YOUR-PUBLIC-KEY");
-        Configuration.setPrivateKey("YOUR-PRIVATE-KEY");
+        Gateway client = new Gateway(new Configuration("YOUR-API-KEY", "YOUR-API-KEY", "production"));
 
-        String body = "{\"type\": \"individual\",\"firstName\": \"John\",\"lastName\": \"Smith\",\"email\": \"jsmith3@example.com\"}";
-        Recipient recipient = Recipient.create(body);
-        assertEquals(recipient.getFirstName(), "John");
-        assertEquals(recipient.getLastName(), "Smith");
-        assertEquals(recipient.getEmail(), "jsmith3@example.com");
+        UUID uuid = UUID.randomUUID();
+
+        String body = "{\"type\": \"individual\",\"firstName\": \"Tom\",\"lastName\": \"Jones\",\"email\": \"test.create"
+                + uuid.toString() + "@example.com\"}";
+        Recipient recipient = client.recipient.create(body);
+        assertEquals(recipient.getFirstName(), "Tom");
+        assertEquals(recipient.getLastName(), "Jones");
+        assertEquals(recipient.getEmail(), "test.create" + uuid.toString() + "@example.com");
         assertNotNull(recipient.getId());
 
         body = "{\"firstName\": \"Bob\"}";
-        String response = Recipient.update(recipient.getId(), body);
+        boolean response = client.recipient.update(recipient.getId(), body);
         assertNotNull(response);
 
-        Recipient anotheRecipient = Recipient.find(recipient.getId());
+        Recipient anotheRecipient = client.recipient.find(recipient.getId());
         assertEquals(anotheRecipient.getFirstName(), "Bob");
 
-        response = Recipient.delete(recipient.getId());
+        response = client.recipient.delete(recipient.getId());
         assertNotNull(response);
 
-        Recipient anotherNewRecipient = Recipient.find(recipient.getId());
+        Recipient anotherNewRecipient = client.recipient.find(recipient.getId());
         assertEquals("archived", anotherNewRecipient.getStatus());
     }
 
     @Test
     public void testAccount() throws Exception {
-        Configuration.setPublicKey("YOUR-PUBLIC-KEY");
-        Configuration.setPrivateKey("YOUR-PRIVATE-KEY");
+        Gateway client = new Gateway(new Configuration("YOUR-API-KEY", "YOUR-API-KEY", "production"));
 
-        String body = "{\"type\": \"individual\",\"firstName\": \"John\",\"lastName\": \"Smith\",\"email\": \"jsmith34@example.com\"}";
-        Recipient recipient = Recipient.create(body);
-        assertEquals(recipient.getFirstName(), "John");
-        assertEquals(recipient.getLastName(), "Smith");
-        assertEquals(recipient.getEmail(), "jsmith34@example.com");
+        UUID uuid = UUID.randomUUID();
+
+        String body = "{\"type\": \"individual\",\"firstName\": \"Tom\",\"lastName\": \"Jones\",\"email\": \"account.create"
+                + uuid.toString() + "@example.com\"}";
+        Recipient recipient = client.recipient.create(body);
+        assertEquals(recipient.getFirstName(), "Tom");
+        assertEquals(recipient.getLastName(), "Jones");
+        assertEquals(recipient.getEmail(), "account.create" + uuid.toString() + "@example.com");
         assertNotNull(recipient.getId());
 
-        body = "{\"type\": \"bank-transfer\", \"primary\": \"true\", \"country\": \"CA\", \"currency\": \"CAD\",\"accountNum\": \"604622847\", \"bankId\": \"123\", \"branchId\": \"47261\",  \"accountHolderName\": \"John Smith\"}";
-        RecipientAccount recipientAccount = RecipientAccount.create(recipient.getId(), body);
-        assertEquals("John Smith", recipientAccount.getAccountHolderName());
+        body = "{\"type\": \"bank-transfer\", \"primary\": \"true\", \"country\": \"CA\", \"currency\": \"CAD\",\"accountNum\": \"604622847\", \"bankId\": \"123\", \"branchId\": \"47261\",  \"accountHolderName\": \"Tom Jones\"}";
+        RecipientAccount recipientAccount = client.recipientAccount.create(recipient.getId(), body);
+        assertEquals("Tom Jones", recipientAccount.getAccountHolderName());
 
-        body = "{\"type\": \"bank-transfer\", \"primary\": \"true\", \"country\": \"CA\", \"currency\": \"CAD\",\"accountNum\": \"604622847\", \"bankId\": \"123\", \"branchId\": \"47261\",  \"accountHolderName\": \"Tom Smith\"}";
-        RecipientAccount recipientAccount1 = RecipientAccount.create(recipient.getId(), body);
-        assertEquals("Tom Smith", recipientAccount1.getAccountHolderName());
+        body = "{\"type\": \"bank-transfer\", \"primary\": \"true\", \"country\": \"CA\", \"currency\": \"CAD\",\"accountNum\": \"604622848\", \"bankId\": \"123\", \"branchId\": \"47261\",  \"accountHolderName\": \"Tom Jones\"}";
+        RecipientAccount recipientAccount1 = client.recipientAccount.create(recipient.getId(), body);
+        assertEquals("Tom Jones", recipientAccount1.getAccountHolderName());
 
-
-        RecipientAccount recipAccount = RecipientAccount.find(recipient.getId(), recipientAccount.getId());
+        RecipientAccount recipAccount = client.recipientAccount.find(recipient.getId(), recipientAccount.getId());
         assertEquals(recipAccount.getCountry(), recipientAccount.getCountry());
 
-        List<RecipientAccount> recipientAccounts = RecipientAccount.findAll(recipient.getId());
+        List<RecipientAccount> recipientAccounts = client.recipientAccount.findAll(recipient.getId());
         assertEquals(2, recipientAccounts.size());
 
-
-        String response = RecipientAccount.delete(recipient.getId(), recipientAccount1.getId());
+        boolean response = client.recipientAccount.delete(recipient.getId(), recipientAccount1.getId());
         assertNotNull(response);
 
-        List<RecipientAccount> recipientAccounts1 = RecipientAccount.findAll(recipient.getId());
+        List<RecipientAccount> recipientAccounts1 = client.recipientAccount.findAll(recipient.getId());
         assertEquals(1, recipientAccounts1.size());
-        
-
     }
 
 }

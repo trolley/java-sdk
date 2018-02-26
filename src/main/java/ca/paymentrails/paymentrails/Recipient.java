@@ -1,10 +1,5 @@
 package ca.paymentrails.paymentrails;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-
 import java.util.List;
 
 public class Recipient {
@@ -34,10 +29,47 @@ public class Recipient {
     String payoutMethod;
     public Object payout;
     String emailAddress;
+    public Object inactiveReasons;
 
     Compliance compliance;
     List<RecipientAccount> accounts;
     Address address;
+
+    String taxForm;
+    String taxFormStatus;
+    String taxWithholdingPercentage = "0.0";
+
+    public String getTaxFormStatus() {
+        return this.taxFormStatus;
+    }
+
+    public void setTaxFormStatus(String taxFormStatus) {
+        this.taxFormStatus = taxForm;
+    }
+
+    public String getTaxWithholdingPercentage() {
+        return this.taxWithholdingPercentage;
+    }
+
+    public void setTaxWithholdingPercentage(String taxWithholdingPercentage) {
+        this.taxWithholdingPercentage = taxWithholdingPercentage;
+    }
+
+    public String getTaxForm() {
+        return this.taxForm;
+    }
+
+    public void setTaxForm(String taxForm) {
+        this.taxForm = taxForm;
+    }
+
+    public Object getInactiveReasons() {
+        return inactiveReasons;
+    }
+
+    public void setInactiveReasons(Object inactiveReasons) {
+        this.inactiveReasons = inactiveReasons;
+    }
 
     public List<RecipientAccount> getAccounts() {
         return accounts;
@@ -253,11 +285,7 @@ public class Recipient {
      */
 
     public static Recipient find(String recipient_id) throws Exception {
-        String response = Configuration.gateway().recipient.find(recipient_id);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(response);
-        Recipient recipient = mapper.readValue(node.get("recipient").traverse(), Recipient.class);
-        return recipient;
+        return Configuration.gateway().recipient.find(recipient_id);
     }
 
     /**
@@ -280,20 +308,8 @@ public class Recipient {
      * @throws Exception
      */
     public static List<Payment> findPayments(String recipient_id) throws Exception {
-        String response = Configuration.gateway().recipient.findPayments(recipient_id);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(response);
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        Object payment = mapper.readValue(node.get("payments").traverse(), Object.class);
-        @SuppressWarnings("unchecked")
-        List<Payment> paymens = (List<Payment>) payment;
-        List<Payment> payments = new ArrayList<Payment>();
-        for (int i = 0; i < paymens.size(); i++) {
-            Payment pojo = mapper.convertValue(paymens.get(i), Payment.class);
-            payments.add(pojo);
-        }
+        return Configuration.gateway().recipient.findPayments(recipient_id);
 
-        return payments;
     }
 
     /**
@@ -306,12 +322,8 @@ public class Recipient {
      * @throws ca.paymentrails.Exceptions.InvalidConnectionException
      */
     public static Recipient create(String body) throws Exception {
-        String response = Configuration.gateway().recipient.create(body);
+        return Configuration.gateway().recipient.create(body);
 
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(response);
-        Recipient recipient = mapper.readValue(node.get("recipient").traverse(), Recipient.class);
-        return recipient;
     }
 
     /**
@@ -324,7 +336,7 @@ public class Recipient {
      * @throws ca.paymentrails.Exceptions.InvalidFieldException
      * @throws ca.paymentrails.Exceptions.InvalidConnectionException
      */
-    public static String update(String recipient_id, String body) throws Exception {
+    public static boolean update(String recipient_id, String body) throws Exception {
         return Configuration.gateway().recipient.update(recipient_id, body);
     }
 
@@ -337,7 +349,7 @@ public class Recipient {
      * @throws ca.paymentrails.Exceptions.InvalidFieldException
      * @throws ca.paymentrails.Exceptions.InvalidConnectionException
      */
-    public static String delete(String recipient_id) throws Exception {
+    public static boolean delete(String recipient_id) throws Exception {
         return Configuration.gateway().recipient.delete(recipient_id);
     }
 
@@ -354,19 +366,7 @@ public class Recipient {
      * @throws ca.paymentrails.Exceptions.InvalidFieldException
      */
     public static List<Recipient> search(int page, int pageSize, String term) throws Exception {
-        String response = Configuration.gateway().recipient.search(page, pageSize, term);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(response);
-
-        Object recipient = mapper.readValue(node.get("recipients").traverse(), Object.class);
-        @SuppressWarnings("unchecked")
-        List<Recipient> recips = (List<Recipient>) recipient;
-        List<Recipient> recipients = new ArrayList<Recipient>();
-        for (int i = 0; i < recips.size(); i++) {
-            Recipient pojo = mapper.convertValue(recips.get(i), Recipient.class);
-            recipients.add(pojo);
-        }
-        return recipients;
+        return Configuration.gateway().recipient.search(page, pageSize, term);
     }
 
     /**

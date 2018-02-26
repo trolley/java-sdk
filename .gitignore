@@ -8,3 +8,4 @@ nbproject
 .project
 .vscode
 .vscode/*
+src/main/java/ca/paymentrails/paymentrails/index.java

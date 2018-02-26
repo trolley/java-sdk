@@ -1,9 +1,5 @@
 package ca.paymentrails.paymentrails;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import java.util.List;
 
 public class RecipientAccount {
@@ -28,6 +24,30 @@ public class RecipientAccount {
     String bankRegionCode;
     String bankPostalCode;
     String emailAddress;
+    String status;
+    String disabledAt;
+
+    public String getEmailAddress(){
+        return emailAddress;
+    }
+    public void setEmailAddress(String emailAddress){
+        this.emailAddress = emailAddress;
+    }
+
+
+    public String getDisabledAt(){
+        return disabledAt;
+    }
+    public void setDisabledAt(String disabledAt){
+        this.disabledAt = disabledAt;
+    }
+
+    public String getStatus(){
+        return status;
+    }
+    public void setStatus(String status){
+        this.status = status;
+    }
 
     public String getType() {
         return type;
@@ -182,43 +202,22 @@ public class RecipientAccount {
     }
 
     public static List<RecipientAccount> findAll(String recipient_id) throws Exception {
-        String response = Configuration.gateway().recipientAccount.findAll(recipient_id);
-
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(response);
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        Object recipientAccount = mapper.readValue(node.get("accounts").traverse(), Object.class);
-        @SuppressWarnings("unchecked")
-        List<RecipientAccount> recipAccounts = (List<RecipientAccount>) recipientAccount;
-        List<RecipientAccount> recipientAccounts = new ArrayList<RecipientAccount>();
-        for (int i = 0; i < recipAccounts.size(); i++) {
-            RecipientAccount pojo = mapper.convertValue(recipAccounts.get(i), RecipientAccount.class);
-            recipientAccounts.add(pojo);
-        }
-        return recipientAccounts;
+        return Configuration.gateway().recipientAccount.findAll(recipient_id);
     }
 
     public static RecipientAccount find(String recipient_id, String recipient_account_id) throws Exception {
-        String response = Configuration.gateway().recipientAccount.find(recipient_id, recipient_account_id);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(response);
-        RecipientAccount recipientAccount = mapper.readValue(node.get("account").traverse(), RecipientAccount.class);
-        return recipientAccount;
+       return Configuration.gateway().recipientAccount.find(recipient_id, recipient_account_id);
     }
 
     public static RecipientAccount create(String recipient_id, String body) throws Exception {
-        String response = Configuration.gateway().recipientAccount.create(recipient_id, body);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(response);
-        RecipientAccount recipientAccount = mapper.readValue(node.get("account").traverse(), RecipientAccount.class);
-        return recipientAccount;
+       return Configuration.gateway().recipientAccount.create(recipient_id, body);
     }
 
-    public static String update(String recipient_id, String recipient_account_id, String body) throws Exception {
+    public static RecipientAccount update(String recipient_id, String recipient_account_id, String body) throws Exception {
         return Configuration.gateway().recipientAccount.update(recipient_id, recipient_account_id, body);
     }
 
-    public static String delete(String recipient_id, String recipient_account_id) throws Exception {
+    public static boolean delete(String recipient_id, String recipient_account_id) throws Exception {
         return Configuration.gateway().recipientAccount.delete(recipient_id, recipient_account_id);
     }
 

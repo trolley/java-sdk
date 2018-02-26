@@ -2,18 +2,29 @@ package ca.paymentrails.paymentrails;
 
 public class Configuration {
 
-    static String apiBase = "http://api.local.dev:3000";
+    String apiBase = "https://api.paymentrails.com";
+    String privateKey = "";
+    String publicKey = "";
 
-    static String privateKey = "";
-    static String publicKey = "";
+    public Configuration() {
+    }
+    public Configuration(String publicKey, String privateKey){
+        this.publicKey = publicKey;
+        this.privateKey = privateKey;
+    }
+    public Configuration(String publicKey, String privateKey, String apiBase) {
+        this.publicKey = publicKey;
+        this.privateKey = privateKey;
+        this.apiBase = setEnviroment(apiBase);
+    }
 
     /**
      * Getter for the api base
      *
      * @return the api base
      */
-    public static String getApiBase() {
-        return Configuration.apiBase;
+    public String getApiBase() {
+        return this.apiBase;
     }
 
     /**
@@ -21,8 +32,8 @@ public class Configuration {
      *
      * @param apiBase
      */
-    public static void setApiBase(String apiBase) {
-        Configuration.apiBase = apiBase;
+    public void setApiBase(String apiBase) {
+        this.apiBase = apiBase;
     }
 
     /**
@@ -30,8 +41,8 @@ public class Configuration {
      * 
      * @return publicKey
      */
-    public static String getPublicKey() {
-        return Configuration.publicKey;
+    public String getPublicKey() {
+        return this.publicKey;
     }
 
     /**
@@ -39,8 +50,8 @@ public class Configuration {
      * 
      * @param publicKey
      */
-    public static void setPublicKey(String publicKey) {
-        Configuration.publicKey = publicKey;
+    public void setPublicKey(String publicKey) {
+        this.publicKey = publicKey;
     }
 
     /**
@@ -48,8 +59,8 @@ public class Configuration {
      * 
      * @param privateKey
      */
-    public static String getPrivateKey() {
-        return Configuration.privateKey;
+    public String getPrivateKey() {
+        return this.privateKey;
     }
 
     /**
@@ -57,8 +68,8 @@ public class Configuration {
      * 
      * @param privateKey
      */
-    public static void setPrivateKey(String privatKey) {
-        Configuration.privateKey = privatKey;
+    public void setPrivateKey(String privatKey) {
+        this.privateKey = privatKey;
     }
 
     public static Gateway gateway() {
@@ -78,18 +89,21 @@ public class Configuration {
      * 
      * @param enviroment
      */
-    public static void setEnviroment(String enviroment) {
+    public String setEnviroment(String enviroment) {
         switch (enviroment) {
         case "production":
-            Configuration.apiBase = "https://api.paymentrails.com";
-            break;
+        case "PRODUCTION":
+            return "https://api.paymentrails.com";
         case "development":
-            Configuration.apiBase = "http://api.railz.io";
-            break;
+        case "DEVELOPMENT":
+            return "http://api.railz.io";
         case "integration":
-            Configuration.apiBase = "http://api.local.dev:3000";
-            break;
-
+        case "INTEGRATION":
+            return "http://api.local.dev:3000";
+        case "sandbox":
+        case "SANDBOX":
+        return "https://api.paymentrails.com";
         }
+        return "https://api.paymentrails.com";
     }
 }

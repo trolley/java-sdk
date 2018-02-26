@@ -1,9 +1,5 @@
 package ca.paymentrails.paymentrails;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import java.util.List;
 
 public class Payment {
@@ -31,6 +27,43 @@ public class Payment {
     private String payoutMethod;
     private String methodDisplay;
     Object batch;
+
+    String withholdingAmount;
+    String withholdingCurrency;
+    String equivalentWithholdingAmount;
+    String equivalentWithholdingCurrency;
+
+    public void setEquivalentWithholdingCurrency(String equivalentWithholdingCurrency) {
+        this.equivalentWithholdingCurrency = equivalentWithholdingCurrency;
+    }
+
+    public String getEquivalentWithholdingCurrency() {
+        return equivalentWithholdingCurrency;
+    }
+
+    public void setEquivalentWithholdingAmount(String equivalentWithholdingAmount) {
+        this.equivalentWithholdingAmount = equivalentWithholdingAmount;
+    }
+
+    public String getEquivalentWithholdingAmount() {
+        return equivalentWithholdingAmount;
+    }
+
+    public void setWithholdingCurrency(String withholdingCurrency) {
+        this.withholdingCurrency = withholdingCurrency;
+    }
+
+    public String getWithholdingCurrency() {
+        return withholdingCurrency;
+    }
+
+    public void setWithholdingAmount(String withholdingAmount) {
+        this.withholdingAmount = withholdingAmount;
+    }
+
+    public String getWithholdingAmount() {
+        return withholdingAmount;
+    }
 
     public String getId() {
         return id;
@@ -219,12 +252,7 @@ public class Payment {
      * @throws ca.paymentrails.Exceptions.InvalidFieldException
      */
     public static Payment find(String payment_id, String batch_id) throws Exception {
-        String response = Configuration.gateway().payment.find(payment_id, batch_id);
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        JsonNode node = mapper.readTree(response);
-        Payment payment = mapper.readValue(node.get("payment").traverse(), Payment.class);
-        return payment;
+        return Configuration.gateway().payment.find(payment_id, batch_id);
     }
 
     /**
@@ -238,13 +266,7 @@ public class Payment {
      * @throws ca.paymentrails.Exceptions.InvalidFieldException
      */
     public static Payment create(String body, String batch_id) throws Exception {
-        String response = Configuration.gateway().payment.create(body, batch_id);
-
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        JsonNode node = mapper.readTree(response);
-        Payment payment = mapper.readValue(node.get("payment").traverse(), Payment.class);
-        return payment;
+        return Configuration.gateway().payment.create(body, batch_id);
     }
 
     /**
@@ -258,7 +280,7 @@ public class Payment {
      * @throws ca.paymentrails.Exceptions.InvalidConnectionException
      * @throws ca.paymentrails.Exceptions.InvalidFieldException
      */
-    public static String update(String payment_id, String body, String batch_id) throws Exception {
+    public static boolean update(String payment_id, String body, String batch_id) throws Exception {
         return Configuration.gateway().payment.update(payment_id, body, batch_id);
     }
 
@@ -272,7 +294,7 @@ public class Payment {
      * @throws ca.paymentrails.Exceptions.InvalidConnectionException
      * @throws ca.paymentrails.Exceptions.InvalidFieldException
      */
-    public static String delete(String payment_id, String batch_id) throws Exception {
+    public static boolean delete(String payment_id, String batch_id) throws Exception {
         return Configuration.gateway().payment.delete(payment_id, batch_id);
     }
 
@@ -291,20 +313,8 @@ public class Payment {
      */
     public static List<Payment> query(String batch_id, int page, int pageSize, String message) throws Exception {
 
-        String response = Configuration.gateway().payment.query(batch_id, page, pageSize, message);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(response);
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        Object payment = mapper.readValue(node.get("payments").traverse(), Object.class);
-        @SuppressWarnings("unchecked")
-        List<Payment> paymens = (List<Payment>) payment;
-        List<Payment> payments = new ArrayList<Payment>();
-        for (int i = 0; i < paymens.size(); i++) {
-            Payment pojo = mapper.convertValue(paymens.get(i), Payment.class);
-            payments.add(pojo);
-        }
+        return Configuration.gateway().payment.query(batch_id, page, pageSize, message);
 
-        return payments;
     }
 
     /**

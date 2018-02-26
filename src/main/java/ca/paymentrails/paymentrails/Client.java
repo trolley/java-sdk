@@ -17,14 +17,7 @@ import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 
-import ca.paymentrails.Exceptions.AuthenticationException;
-import ca.paymentrails.Exceptions.AuthorizationException;
-import ca.paymentrails.Exceptions.DownForMaintenanceException;
-import ca.paymentrails.Exceptions.InvalidServerConnectionException;
-import ca.paymentrails.Exceptions.InvalidStatusCodeException;
-import ca.paymentrails.Exceptions.MalformedException;
-import ca.paymentrails.Exceptions.NotFoundException;
-import ca.paymentrails.Exceptions.TooManyRequestsException;
+import ca.paymentrails.Exceptions.*;
 
 public class Client {
 
@@ -43,29 +36,31 @@ public class Client {
         return new Client(config);
     }
 
-    /**
-     * Makes an HTTP GET request to the API
-     *
-     * @param endPoint
-     * @return The response
-     * @throws Exception
-     */
-    public String get(String endPoint) throws Exception {
+    private String sendRequest(String method, String endPoint, String body) throws Exception {
         String StringResponse = "";
+        HttpURLConnection con;
         try {
             String url = this.config.getApiBase() + endPoint;
             URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            con = (HttpURLConnection) obj.openConnection();
 
             int timeStamp = (int) (System.currentTimeMillis() / 1000L);
-            String authorizarion = generateAuthorization(timeStamp, "GET", endPoint);
+            String authorizarion = generateAuthorization(timeStamp, method, endPoint, body);
 
             //add request header
-            con.setRequestMethod("GET");
+            con.setRequestMethod(method);
 
             con.setRequestProperty("X-PR-Timestamp", timeStamp + "");
             con.setRequestProperty("Authorization", authorizarion);
             con.setRequestProperty("Content-Type", "application/json");
+            if (method == "POST" && body != "") {
+
+                con.setDoOutput(true);
+                try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
+                    wr.writeBytes(body);
+                    wr.flush();
+                }
+            }
             int responseCode = con.getResponseCode();
 
             if (responseCode != 200) {
@@ -78,13 +73,30 @@ public class Client {
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
+                StringResponse = response.toString();
+            } catch (IOException e) {
+                throw new UnexpectedException(StringResponse);
             }
-            StringResponse = response.toString();
 
         } catch (IOException e) {
             throw new UnexpectedException(StringResponse);
         }
         return StringResponse;
+    }
+
+    private String sendRequest(String method, String endPoint) throws Exception {
+        return sendRequest(method, endPoint, "");
+    }
+
+    /**
+     * Makes an HTTP GET request to the API
+     *
+     * @param endPoint
+     * @return The response
+     * @throws Exception
+     */
+    public String get(String endPoint) throws Exception {
+        return sendRequest("GET", endPoint);
     }
 
     /**
@@ -96,46 +108,7 @@ public class Client {
      * @throws Exception
      */
     public String post(String endPoint, String body) throws Exception {
-        String StringResponse = "";
-        try {
-            String url = this.config.getApiBase() + endPoint;
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-            int timeStamp = (int) (System.currentTimeMillis() / 1000L);
-            String authorizarion = generateAuthorization(timeStamp, "POST", endPoint, body);
-            //add request header
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Content-Type", "application/json");
-            con.setRequestProperty("X-PR-Timestamp", timeStamp + "");
-            con.setRequestProperty("Authorization", authorizarion);
-
-            // Send post request
-            con.setDoOutput(true);
-            try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
-                wr.writeBytes(body);
-                wr.flush();
-            }
-
-            int responseCode = con.getResponseCode();
-            if (responseCode != 200) {
-                throwStatusCodeException(responseCode, con.getResponseMessage());
-            }
-            StringBuffer response;
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
-                String inputLine;
-                response = new StringBuffer();
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-            }
-            StringResponse = response.toString();
-
-        } catch (IOException e) {
-            throw new UnexpectedException(StringResponse);
-        }
-
-        return StringResponse;
+        return sendRequest("POST", endPoint, body);
     }
 
     /**
@@ -146,43 +119,8 @@ public class Client {
      * @throws Exception
      */
     public String post(String endPoint) throws Exception {
-        String StringResponse = "";
-        try {
-            String url = this.config.getApiBase() + endPoint;
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-            int timeStamp = (int) (System.currentTimeMillis() / 1000L);
-            String authorizarion = generateAuthorization(timeStamp, "POST", endPoint);
-
-            //add request header
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Content-Type", "application/json");
-            con.setRequestProperty("X-PR-Timestamp", timeStamp + "");
-            con.setRequestProperty("Authorization", authorizarion);
-
-            int responseCode = con.getResponseCode();
-
-            if (responseCode != 200) {
-                throwStatusCodeException(responseCode, con.getResponseMessage());
-            }
-            StringBuffer response;
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
-                String inputLine;
-                response = new StringBuffer();
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-            }
-
-            StringResponse = response.toString();
-
-        } catch (IOException e) {
-            throw new UnexpectedException(StringResponse);
-        }
-        return StringResponse;
+        return sendRequest("POST", endPoint);
     }
-
     /**
      * Makes an HTTP PATCH request to the API
      *
@@ -240,42 +178,7 @@ public class Client {
      * @throws ca.paymentrails.Exceptions.InvalidConnectionException
      */
     public String delete(String endPoint) throws Exception {
-        String StringResponse = "";
-        try {
-            String url = this.config.getApiBase() + endPoint;
-
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-            int timeStamp = (int) (System.currentTimeMillis() / 1000L);
-            String authorizarion = generateAuthorization(timeStamp, "DELETE", endPoint);
-
-            //add request header
-            con.setRequestMethod("DELETE");
-            con.setRequestProperty("Content-Type", "application/json");
-            con.setRequestProperty("X-PR-Timestamp", timeStamp + "");
-            con.setRequestProperty("Authorization", authorizarion);
-
-            int responseCode = con.getResponseCode();
-
-            if (responseCode != 200) {
-                throwStatusCodeException(responseCode, con.getResponseMessage());
-            }
-            StringBuffer response;
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
-                String inputLine;
-                response = new StringBuffer();
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-            }
-
-            StringResponse = response.toString();
-
-        } catch (IOException e) {
-            throw new UnexpectedException(StringResponse);
-        }
-        return StringResponse;
+        return sendRequest("DELETE", endPoint);
     }
 
     private void throwStatusCodeException(int statusCode, String message) throws Exception {
@@ -297,7 +200,7 @@ public class Client {
         case 503:
             throw new DownForMaintenanceException(message);
         default:
-            throw new UnexpectedException(message);
+            throw new ca.paymentrails.Exceptions.UnexpectedException(message);
         }
     }
 
@@ -310,10 +213,6 @@ public class Client {
             return "prsign 1:1";
         }
 
-    }
-
-    private String generateAuthorization(int timeStamp, String method, String endPoint) {
-        return generateAuthorization(timeStamp, method, endPoint, "");
     }
 
     private String hmacDigest(String msg, String keyString, String algo) throws Exception {

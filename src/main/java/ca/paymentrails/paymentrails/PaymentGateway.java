@@ -1,6 +1,12 @@
 package ca.paymentrails.paymentrails;
 
 import ca.paymentrails.Exceptions.InvalidFieldException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import java.util.List;
+
 
 public class PaymentGateway {
     Client client;
@@ -9,7 +15,7 @@ public class PaymentGateway {
         this.client = new Client(config);
     }
 
-    public String find(String payment_id, String batch_id) throws Exception {
+    public Payment find(String payment_id, String batch_id) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
         }
@@ -19,24 +25,33 @@ public class PaymentGateway {
 
         String endPoint = "/v1/batches/" + batch_id + "/payments/" + payment_id;
         String response = this.client.get(endPoint);
-        return response;
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        JsonNode node = mapper.readTree(response);
+        Payment payment = mapper.readValue(node.get("payment").traverse(), Payment.class);
+        return payment;
     }
 
-    public String create(String body, String batch_id) throws Exception {
+    public Payment create(String body, String batch_id) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
         }
         if (body == null || body.isEmpty()) {
             throw new InvalidFieldException("Body cannot be null or empty.");
         }
-        //Client client = Client.create();
+        
 
         String endPoint = "/v1/batches/" + batch_id + "/payments";
         String response = this.client.post(endPoint, body);
-        return response;
+   
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        JsonNode node = mapper.readTree(response);
+        Payment payment = mapper.readValue(node.get("payment").traverse(), Payment.class);
+        return payment;
     }
 
-    public String update(String payment_id, String body, String batch_id) throws Exception {
+    public boolean update(String payment_id, String body, String batch_id) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
         }
@@ -47,28 +62,28 @@ public class PaymentGateway {
             throw new InvalidFieldException("Body cannot be null or empty.");
         }
 
-        //Client client = Client.create();
+        
 
         String endPoint = "/v1/batches/" + batch_id + "/payments/" + payment_id;
-        String response = this.client.patch(endPoint, body);
-        return response;
+        this.client.patch(endPoint, body);
+        return true;
     }
 
-    public String delete(String payment_id, String batch_id) throws Exception {
+    public boolean delete(String payment_id, String batch_id) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
         }
         if (payment_id == null || payment_id.isEmpty()) {
             throw new InvalidFieldException("Payment id cannot be null or empty.");
         }
-        //Client client = Client.create();
+        
 
         String endPoint = "/v1/batches/" + batch_id + "/payments/" + payment_id;
-        String response = this.client.delete(endPoint);
-        return response;
+        this.client.delete(endPoint);
+        return true;
     }
 
-    public String query(String batch_id, int page, int pageSize, String message) throws Exception {
+    public List<Payment> query(String batch_id, int page, int pageSize, String message) throws Exception {
 
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
@@ -82,11 +97,23 @@ public class PaymentGateway {
         if (message == null) {
             throw new InvalidFieldException("Message cannot be null");
         }
-        //Client client = Client.create();
+        
         String endPoint = "/v1/batches/" + batch_id + "/payments/?" + "&search=" + message + "&page=" + page
                 + "&pageSize=" + pageSize;
         String response = this.client.get(endPoint);
-        return response;
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.readTree(response);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        Object payment = mapper.readValue(node.get("payments").traverse(), Object.class);
+        @SuppressWarnings("unchecked")
+        List<Payment> paymens = (List<Payment>) payment;
+        List<Payment> payments = new ArrayList<Payment>();
+        for (int i = 0; i < paymens.size(); i++) {
+            Payment pojo = mapper.convertValue(paymens.get(i), Payment.class);
+            payments.add(pojo);
+        }
+
+        return payments;
     }
 
 }

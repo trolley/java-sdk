@@ -1,5 +1,12 @@
 package ca.paymentrails.paymentrails;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ca.paymentrails.Exceptions.InvalidFieldException;
 
 public class BatchGateway {
@@ -9,50 +16,55 @@ public class BatchGateway {
         this.client = new Client(config);
     }
 
-    public String find(String batch_id) throws Exception {
+    public Batch find(String batch_id) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
         }
-
-        //Client client = Client.create();
 
         String endPoint = "/v1/batches/" + batch_id;
         String response = this.client.get(endPoint);
-        return response;
+        ObjectMapper mapper = new ObjectMapper();
+        // mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        JsonNode node = mapper.readTree(response);
+        Batch batch = mapper.readValue(node.get("batch").traverse(), Batch.class);
+        return batch;
     }
 
-    public String update(String batch_id, String body) throws Exception {
+    public boolean update(String batch_id, String body) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
         }
         if (body == null || body.isEmpty()) {
             throw new InvalidFieldException("Body cannot be null or empty.");
         }
-        //Client client = Client.create();
+
         String endPoint = "/v1/batches/" + batch_id;
-        String response = this.client.patch(endPoint, body);
-        return response;
+        this.client.patch(endPoint, body);
+        return true;
     }
 
-    public String delete(String batch_id) throws Exception {
+    public boolean delete(String batch_id) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
         }
 
-        //Client client = Client.create();
         String endPoint = "/v1/batches/" + batch_id;
-        String response = this.client.delete(endPoint);
-        return response;
+        this.client.delete(endPoint);
+        return true;
     }
 
-    public String create(String body) throws Exception {
+    public Batch create(String body) throws Exception {
         if (body == null || body.isEmpty()) {
             throw new InvalidFieldException("Body cannot be null or empty.");
         }
-        //Client client = Client.create();
+
         String endPoint = "/v1/batches/";
         String response = this.client.post(endPoint, body);
-        return response;
+        ObjectMapper mapper = new ObjectMapper();
+        // mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        JsonNode node = mapper.readTree(response);
+        Batch batch = mapper.readValue(node.get("batch").traverse(), Batch.class);
+        return batch;
     }
 
     public String generateQuote(String batch_id) throws Exception {
@@ -60,7 +72,6 @@ public class BatchGateway {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
         }
 
-        //Client client = Client.create();
         String endPoint = "/v1/batches/" + batch_id + "/generate-quote";
         String response = this.client.post(endPoint);
         return response;
@@ -70,13 +81,12 @@ public class BatchGateway {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
         }
-        //Client client = Client.create();
         String endPoint = "/v1/batches/" + batch_id + "/start-processing";
         String response = this.client.post(endPoint);
         return response;
     }
 
-    public String query(int page, int pageSize, String message) throws Exception {
+    public List<Batch> query(int page, int pageSize, String message) throws Exception {
         if (page < 0) {
             throw new InvalidFieldException("Page cannot be less then 0");
         }
@@ -86,33 +96,46 @@ public class BatchGateway {
         if (message == null) {
             throw new InvalidFieldException("Message cannot be null");
         }
-        //Client client = Client.create();
         String endPoint = "/v1/batches/?" + "&search=" + message + "&page=" + page + "&pageSize=" + pageSize;
         String response = this.client.get(endPoint);
-        return response;
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.readTree(response);
+        Object batch = mapper.readValue(node.get("batches").traverse(), Object.class);
+        @SuppressWarnings("unchecked")
+        List<Batch> batchs = (List<Batch>) batch;
+        List<Batch> batches = new ArrayList<Batch>();
+        for (int i = 0; i < batchs.size(); i++) {
+            Batch pojo = mapper.convertValue(batchs.get(i), Batch.class);
+            batches.add(pojo);
+        }
+        return batches;
     }
 
-    public String query(String message) throws Exception {
+    public List<Batch> query(String message) throws Exception {
         return query(1, 10, message);
     }
 
-    public String query() throws Exception {
+    public List<Batch> query() throws Exception {
         return query(1, 10, "");
     }
 
-    public String query(int page, int pageNumber) throws Exception {
+    public List<Batch> query(int page, int pageNumber) throws Exception {
         return query(page, pageNumber, "");
     }
 
-    public String summary(String batch_id) throws Exception {
+    public BatchSummary summary(String batch_id) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null os empty");
         }
-        //Client client = Client.create();
 
         String endPoint = "/v1/batches/" + batch_id + "/summary";
         String response = this.client.get(endPoint);
-        return response;
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        JsonNode node = mapper.readTree(response);
+        BatchSummary batchSummary = mapper.readValue(node.get("batchSummary").traverse(), BatchSummary.class);
+        return batchSummary;
     }
 
 }

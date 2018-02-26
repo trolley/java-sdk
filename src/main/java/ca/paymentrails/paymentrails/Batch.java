@@ -1,11 +1,5 @@
 package ca.paymentrails.paymentrails;
 
-import java.util.HashMap;
-import java.util.Map;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import java.util.List;
 
 public class Batch {
@@ -122,12 +116,7 @@ public class Batch {
      * @throws ca.paymentrails.Exceptions.InvalidConnectionException
      */
     public static Batch find(String batch_id) throws Exception {
-        String response =  Configuration.gateway().batch.find(batch_id);
-        ObjectMapper mapper = new ObjectMapper();
-        // mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        JsonNode node = mapper.readTree(response);
-        Batch batch = mapper.readValue(node.get("batch").traverse(), Batch.class);
-        return batch;
+        return Configuration.gateway().batch.find(batch_id);
     }
 
     /**
@@ -140,7 +129,7 @@ public class Batch {
      * @throws ca.paymentrails.Exceptions.InvalidFieldException
      * @throws ca.paymentrails.Exceptions.InvalidConnectionException
      */
-    public static String update(String batch_id, String body) throws Exception {
+    public static boolean update(String batch_id, String body) throws Exception {
         return Configuration.gateway().batch.update(batch_id, body);
     }
 
@@ -153,7 +142,7 @@ public class Batch {
      * @throws ca.paymentrails.Exceptions.InvalidFieldException
      * @throws ca.paymentrails.Exceptions.InvalidConnectionException
      */
-    public static String delete(String batch_id) throws Exception {
+    public static boolean delete(String batch_id) throws Exception {
         return Configuration.gateway().batch.delete(batch_id);
     }
 
@@ -167,12 +156,7 @@ public class Batch {
      * @throws ca.paymentrails.Exceptions.InvalidConnectionException
      */
     public static Batch create(String body) throws Exception {
-        String response =  Configuration.gateway().batch.create(body);
-        ObjectMapper mapper = new ObjectMapper();
-        // mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        JsonNode node = mapper.readTree(response);
-        Batch batch = mapper.readValue(node.get("batch").traverse(), Batch.class);
-        return batch;
+        return Configuration.gateway().batch.create(body);
     }
 
     /**
@@ -214,18 +198,8 @@ public class Batch {
      * @throws ca.paymentrails.Exceptions.InvalidFieldException
      */
     public static List<Batch> query(int page, int pageSize, String message) throws Exception {
-        String response =  Configuration.gateway().batch.query(page, pageSize, message);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(response);
-        Object batch = mapper.readValue(node.get("batches").traverse(), Object.class);
-        @SuppressWarnings("unchecked")
-        List<Batch> batchs = (List<Batch>) batch;
-        List<Batch> batches = new ArrayList<Batch>();
-        for (int i = 0; i < batchs.size(); i++) {
-            Batch pojo = mapper.convertValue(batchs.get(i), Batch.class);
-            batches.add(pojo);
-        }
-        return batches;
+        return Configuration.gateway().batch.query(page, pageSize, message);
+
     }
 
     /**
@@ -278,12 +252,7 @@ public class Batch {
      * @throws ca.paymentrails.Exceptions.InvalidConnectionException
      */
     public static BatchSummary summary(String batch_id) throws Exception {
-        String response = Configuration.gateway().batch.summary(batch_id);
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        JsonNode node = mapper.readTree(response);
-        System.out.println(node);
-        BatchSummary batchSummary = mapper.readValue(node.get("batchSummary").traverse(), BatchSummary.class);
-        return batchSummary;
+        return Configuration.gateway().batch.summary(batch_id);
+        
     }
 }

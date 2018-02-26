@@ -2,13 +2,13 @@ package ca.paymentrails.paymentrails;
 
 public class Gateway {
 
-    Configuration config;
-    RecipientGateway recipient;
-    Client client;
-    BatchGateway batch;
-    RecipientAccountGateway recipientAccount;
-    BalancesGateway balances;
-    PaymentGateway payment;
+    public Configuration config;
+    public RecipientGateway recipient;
+    public Client client;
+    public BatchGateway batch;
+    public RecipientAccountGateway recipientAccount;
+    public BalancesGateway balances;
+    public PaymentGateway payment;
 
     public Gateway(Configuration config) {
         this.config = config;

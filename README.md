@@ -2,7 +2,6 @@
 
 A native JAVA SDK for the Payment Rails API
 
-
 ## Installation
 
 #
@@ -10,6 +9,7 @@ A native JAVA SDK for the Payment Rails API
 #### For [Java](https://www.oracle.com/java/index.html)
 
 #
+
 #### To install the reference:
 
 ### Maven
@@ -33,12 +33,11 @@ import ca.paymentrails.Exceptions.*;
 
 public class PaymentRailsExample {
     public static void main(String[] args) {
-        
-       Configuration.setPublicKey("YOUR-PUBLIC-KEY");
-       Configuration.setPrivateKey("YOU-PRIVATE-KEY");
+
+       Gateway client = new Gateway(new Configuration("YOUR_PUBLIC_KEY","YOUR_PRIVATE_KEY","production"));
 
         try {
-            Recipient recipient = Recipient.find("R-1a2B3c4D5e6F7g8H9i0J1k");
+            Recipient recipient = client.recipient.find("R-1a2B3c4D5e6F7g8H9i0J1k");
             System.out.println(recipient.getId());
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,39 +46,21 @@ public class PaymentRailsExample {
 }
 ```
 
+### Usage
+
+Methods should all have Java Doc comments to help you understand their usage. As mentioned the [full API documentation](http://docs.paymentrails.com)
+is the best source of information about the API.
+
+For more information please read the [Java API docs](https://github.com/PaymentRails/paymentrails_dotnet/tree/master/docs/) is available. The best starting point is:
+
+| Data Type | SDK Documentation |
+| ----- | ----- |
+| Batch | [API Docs for Batch](https://github.com/PaymentRails/paymentrails_dotnet/tree/master/docs/classes/batchgateway.md) |
+| Payment | [API Docs for Payment](https://github.com/PaymentRails/paymentrails_dotnet/tree/master/docs/classes/paymentgateway.md) |
+| Recipient | [API Docs for Recipient](https://github.com/PaymentRails/paymentrails_dotnet/tree/master/docs/classes/recipientgateway.md) |
+| Recipient Account | [API Docs for Recipient Account](https://github.com/PaymentRails/paymentrails_dotnet/tree/master/docs/classes/recipientaccountgateway.md) |
 
 
-## Documentation for API Endpoint Methods
-
-All URIs are relative to *https://api.paymentrails.com/*
-
-Class | Method | HTTP request | Description
------------- | ------------- | ------------- | -------------
-*Recipient | [**get**](docs/Recipient.md#get) | **GET** /recipient/ |
-*Recipient | [**post**](docs/Recipient.md#post) | **POST** /recipient/ |
-*Recipient | [**findLogs**](docs/Recipient.md#findLogs) | **GET**/recipient/logs
-*Recipient | [**findPayments**](docs/Recipient.md#findPayments) | **GET**/recipient/payments
-*Recipient | [**patch**](docs/Recipient.md#patch) | **PATCH** /recipient/ |
-*Recipient | [**delete**](docs/Recipient.md#delete) | **DELETE** /recipient/ |
-*Recipient | [**query**](docs/Recipient.md#query) | **GET** /recipient/ |
-*RecipientAccount | [**get**](docs/RecipientAccount.md#get) | **GET** /recipient/<recipient_id>/accounts<recipient_account_id>|
-*RecipientAccount | [**post**](docs/RecipientAccount.md#post) | **POST** /recipient/<recipient_id>/accounts |
-*RecipientAccount | [**patch**](docs/RecipientAccount.md#patch) | **PATCH** /recipient/<recipient_id>/accounts |
-*RecipientAccount | [**delete**](docs/RecipientAccount.md#delete) | **DELETE** /recipient/<recipient_id>/accounts/<recipient_account_id> |
-*Batch | [**get**](docs/Batch.md#get) | **GET** /batch/ |
-*Batch | [**post**](docs/Batch.md#post) | **POST** /batch/ |
-*Batch | [**patch**](docs/Batch.md#patch) | **PATCH** /batch/ |
-*Batch | [**delete**](docs/Batch.md#delete) | **DELETE** /batch/ |
-*Batch | [**query**](docs/Batch.md#query) | **GET** /batch/ |
-*Payment | [**get**](docs/Payment.md#get) | **GET** /payments/ |
-*Payment | [**post**](docs/Payment.md#post) | **POST** /batch/<batch_id>/payments |
-*Payment | [**patch**](docs/Payment.md#patch) | **PATCH** /batch/<batch_id>/payments |
-*Payment | [**delete**](docs/Payment.md#delete) | **DELETE** /batch/<batch_id>/payments |
-*Payment | [**query**](docs/Payment.md#query) | **GET** /payments/ |
-*Balances | [**get**](docs/Balances.md#get) | **GET** /balances/ |
-
- 
- ## Documentation for Authorization
 
 
 ### merchantKey
