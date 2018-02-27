@@ -47,7 +47,6 @@ public class Client {
             int timeStamp = (int) (System.currentTimeMillis() / 1000L);
             String authorizarion = generateAuthorization(timeStamp, method, endPoint, body);
 
-            //add request header
             con.setRequestMethod(method);
 
             con.setRequestProperty("X-PR-Timestamp", timeStamp + "");

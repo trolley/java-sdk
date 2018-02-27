@@ -3,6 +3,7 @@ package ca.paymentrails.paymentrails;
 import ca.paymentrails.Exceptions.InvalidFieldException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import java.util.ArrayList;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import java.util.List;
@@ -19,11 +20,68 @@ public class RecipientAccountGateway {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
-        // Client client = Client.create();
+
         String endPoint = "/v1/recipients/" + recipient_id + "/accounts";
         String response = this.client.get(endPoint);
+        return recipientAccountListFactory(response);
+    }
+
+    public RecipientAccount find(String recipient_id, String recipient_account_id) throws Exception {
+        if (recipient_id == null || recipient_id.isEmpty()) {
+            throw new InvalidFieldException("Recipient id cannot be null or empty.");
+        }
+
+        String endPoint = "/v1/recipients/" + recipient_id + "/accounts/" + recipient_account_id;
+        String response = this.client.get(endPoint);
+        return recipientAccountFactory(response);
+    }
+
+    public RecipientAccount create(String recipient_id, String body) throws Exception {
+        if (recipient_id == null || recipient_id.isEmpty()) {
+            throw new InvalidFieldException("Recipient id cannot be null or empty.");
+        }
+        if (body == null || body.isEmpty()) {
+            throw new InvalidFieldException("Body cannot be null or empty");
+        }
+        
+        String endPoint = "/v1/recipients/" + recipient_id + "/accounts";
+        String response = this.client.post(endPoint, body);
+        return recipientAccountFactory(response);
+    }
+
+    public RecipientAccount update(String recipient_id, String recipient_account_id, String body) throws Exception {
+        if (recipient_id == null || recipient_id.isEmpty()) {
+            throw new InvalidFieldException("Recipient id cannot be null or empty.");
+        }
+        if (body == null || body.isEmpty()) {
+            throw new InvalidFieldException("Body cannot be null or empty");
+        }
+
+        String endPoint = "/v1/recipients/" + recipient_id + "/accounts/" + recipient_account_id;
+        String response = this.client.patch(endPoint, body);
+        return recipientAccountFactory(response);
+    }
+
+    public boolean delete(String recipient_id, String recipient_account_id) throws Exception {
+        if (recipient_id == null || recipient_id.isEmpty()) {
+            throw new InvalidFieldException("Recipient id cannot be null or empty.");
+        }
+
+        String endPoint = "/v1/recipients/" + recipient_id + "/accounts/" + recipient_account_id;
+        this.client.delete(endPoint);
+        return true;
+    }
+
+    private RecipientAccount recipientAccountFactory(String data) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(response);
+        JsonNode node = mapper.readTree(data);
+        RecipientAccount recipientAccount = mapper.readValue(node.get("account").traverse(), RecipientAccount.class);
+        return recipientAccount;
+    }
+
+    private List<RecipientAccount> recipientAccountListFactory(String data) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.readTree(data);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         Object recipientAccount = mapper.readValue(node.get("accounts").traverse(), Object.class);
         @SuppressWarnings("unchecked")
@@ -35,58 +93,4 @@ public class RecipientAccountGateway {
         }
         return recipientAccounts;
     }
-
-    public RecipientAccount find(String recipient_id, String recipient_account_id) throws Exception {
-        if (recipient_id == null || recipient_id.isEmpty()) {
-            throw new InvalidFieldException("Recipient id cannot be null or empty.");
-        }
-        String endPoint = "/v1/recipients/" + recipient_id + "/accounts/" + recipient_account_id;
-        String response = this.client.get(endPoint);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(response);
-        RecipientAccount recipientAccount = mapper.readValue(node.get("account").traverse(), RecipientAccount.class);
-        return recipientAccount;
-    }
-
-    public RecipientAccount create(String recipient_id, String body) throws Exception {
-        if (recipient_id == null || recipient_id.isEmpty()) {
-            throw new InvalidFieldException("Recipient id cannot be null or empty.");
-        }
-        if (body == null || body.isEmpty()) {
-            throw new InvalidFieldException("Body cannot be null or empty");
-        }
-        String endPoint = "/v1/recipients/" + recipient_id + "/accounts";
-        String response = this.client.post(endPoint,body);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(response);
-        RecipientAccount recipientAccount = mapper.readValue(node.get("account").traverse(), RecipientAccount.class);
-        return recipientAccount;
-    }
-
-    public RecipientAccount update(String recipient_id, String recipient_account_id, String body) throws Exception {
-        if (recipient_id == null || recipient_id.isEmpty()) {
-            throw new InvalidFieldException("Recipient id cannot be null or empty.");
-        }
-        if (body == null || body.isEmpty()) {
-            throw new InvalidFieldException("Body cannot be null or empty");
-        }
-        
-        String endPoint = "/v1/recipients/" + recipient_id + "/accounts/" + recipient_account_id;
-        String response = this.client.patch(endPoint, body);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(response);
-        RecipientAccount recipientAccount = mapper.readValue(node.get("account").traverse(), RecipientAccount.class);
-        return recipientAccount;
-    }
-
-    public boolean delete(String recipient_id, String recipient_account_id) throws Exception {
-        if (recipient_id == null || recipient_id.isEmpty()) {
-            throw new InvalidFieldException("Recipient id cannot be null or empty.");
-        }
-        
-        String endPoint = "/v1/recipients/" + recipient_id + "/accounts/" + recipient_account_id;
-        this.client.delete(endPoint);
-        return true;
-    }
-
 }

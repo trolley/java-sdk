@@ -3,6 +3,7 @@ package ca.paymentrails.paymentrails;
 import ca.paymentrails.Exceptions.InvalidFieldException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -22,11 +23,7 @@ public class RecipientGateway {
 
         String endPoint = "/v1/recipients/" + recipient_id;
         String response = this.client.get(endPoint);
-
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(response);
-        Recipient recipient = mapper.readValue(node.get("recipient").traverse(), Recipient.class);
-        return recipient;
+        return recipientFactory(response);
     }
 
     public String findLogs(String recipient_id) throws Exception {
@@ -57,13 +54,9 @@ public class RecipientGateway {
         if (body == null || body.isEmpty()) {
             throw new InvalidFieldException("Body cannot be null or empty");
         }
-
         String endPoint = "/v1/recipients/";
         String response = this.client.post(endPoint, body);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(response);
-        Recipient recipient = mapper.readValue(node.get("recipient").traverse(), Recipient.class);
-        return recipient;
+        return recipientFactory(response);
     }
 
     public boolean update(String recipient_id, String body) throws Exception {
@@ -91,10 +84,10 @@ public class RecipientGateway {
 
     public List<Recipient> search(int page, int pageSize, String term) throws Exception {
         if (page < 0) {
-            throw new InvalidFieldException("Page cannot be less then 0");
+            throw new InvalidFieldException("Page cannot be less than 0");
         }
         if (pageSize < 0) {
-            throw new InvalidFieldException("Page size cannot be less then 0");
+            throw new InvalidFieldException("Page size cannot be less than 0");
         }
         if (term == null) {
             throw new InvalidFieldException("Message cannot be null");
@@ -102,8 +95,20 @@ public class RecipientGateway {
 
         String endPoint = "/v1/recipients/?" + "&search=" + term + "&page=" + page + "&pageSize=" + pageSize;
         String response = this.client.get(endPoint);
+
+        return recipientListFactory(response);
+    }
+
+    private Recipient recipientFactory(String data) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(response);
+        JsonNode node = mapper.readTree(data);
+        Recipient recipient = mapper.readValue(node.get("recipient").traverse(), Recipient.class);
+        return recipient;
+    }
+
+    private List<Recipient> recipientListFactory(String data) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.readTree(data);
 
         Object recipient = mapper.readValue(node.get("recipients").traverse(), Object.class);
         @SuppressWarnings("unchecked")

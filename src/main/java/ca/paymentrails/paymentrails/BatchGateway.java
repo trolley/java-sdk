@@ -1,5 +1,6 @@
 package ca.paymentrails.paymentrails;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,11 +24,7 @@ public class BatchGateway {
 
         String endPoint = "/v1/batches/" + batch_id;
         String response = this.client.get(endPoint);
-        ObjectMapper mapper = new ObjectMapper();
-        // mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        JsonNode node = mapper.readTree(response);
-        Batch batch = mapper.readValue(node.get("batch").traverse(), Batch.class);
-        return batch;
+        return batchFactory(response);
     }
 
     public boolean update(String batch_id, String body) throws Exception {
@@ -60,11 +57,7 @@ public class BatchGateway {
 
         String endPoint = "/v1/batches/";
         String response = this.client.post(endPoint, body);
-        ObjectMapper mapper = new ObjectMapper();
-        // mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        JsonNode node = mapper.readTree(response);
-        Batch batch = mapper.readValue(node.get("batch").traverse(), Batch.class);
-        return batch;
+        return batchFactory(response);
     }
 
     public String generateQuote(String batch_id) throws Exception {
@@ -88,27 +81,17 @@ public class BatchGateway {
 
     public List<Batch> query(int page, int pageSize, String message) throws Exception {
         if (page < 0) {
-            throw new InvalidFieldException("Page cannot be less then 0");
+            throw new InvalidFieldException("Page cannot be less than 0");
         }
         if (pageSize < 0) {
-            throw new InvalidFieldException("Page size cannot be less then 0");
+            throw new InvalidFieldException("Page size cannot be less than 0");
         }
         if (message == null) {
             throw new InvalidFieldException("Message cannot be null");
         }
         String endPoint = "/v1/batches/?" + "&search=" + message + "&page=" + page + "&pageSize=" + pageSize;
         String response = this.client.get(endPoint);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(response);
-        Object batch = mapper.readValue(node.get("batches").traverse(), Object.class);
-        @SuppressWarnings("unchecked")
-        List<Batch> batchs = (List<Batch>) batch;
-        List<Batch> batches = new ArrayList<Batch>();
-        for (int i = 0; i < batchs.size(); i++) {
-            Batch pojo = mapper.convertValue(batchs.get(i), Batch.class);
-            batches.add(pojo);
-        }
-        return batches;
+        return batchListFactory(response);
     }
 
     public List<Batch> query(String message) throws Exception {
@@ -138,4 +121,24 @@ public class BatchGateway {
         return batchSummary;
     }
 
+    private Batch batchFactory(String data) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.readTree(data);
+        Batch batch = mapper.readValue(node.get("batch").traverse(), Batch.class);
+        return batch;
+    }
+
+    private List<Batch> batchListFactory(String data) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.readTree(data);
+        Object batch = mapper.readValue(node.get("batches").traverse(), Object.class);
+        @SuppressWarnings("unchecked")
+        List<Batch> batchs = (List<Batch>) batch;
+        List<Batch> batches = new ArrayList<Batch>();
+        for (int i = 0; i < batchs.size(); i++) {
+            Batch pojo = mapper.convertValue(batchs.get(i), Batch.class);
+            batches.add(pojo);
+        }
+        return batches;
+    }
 }
