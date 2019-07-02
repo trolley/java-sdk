@@ -55,10 +55,10 @@ For more information please read the [Java API docs](https://github.com/PaymentR
 
 | Data Type | SDK Documentation |
 | ----- | ----- |
-| Batch | [API Docs for Batch](https://github.com/PaymentRails/paymentrails_dotnet/tree/master/docs/classes/batchgateway.md) |
-| Payment | [API Docs for Payment](https://github.com/PaymentRails/paymentrails_dotnet/tree/master/docs/classes/paymentgateway.md) |
-| Recipient | [API Docs for Recipient](https://github.com/PaymentRails/paymentrails_dotnet/tree/master/docs/classes/recipientgateway.md) |
-| Recipient Account | [API Docs for Recipient Account](https://github.com/PaymentRails/paymentrails_dotnet/tree/master/docs/classes/recipientaccountgateway.md) |
+| Batch | [API Docs for Batch](https://github.com/PaymentRails/java-sdk/tree/master/docs/classes/batchgateway.md) |
+| Payment | [API Docs for Payment](https://github.com/PaymentRails/java-sdk/tree/master/docs/classes/paymentgateway.md) |
+| Recipient | [API Docs for Recipient](https://github.com/PaymentRails/java-sdk/tree/master/docs/classes/recipientgateway.md) |
+| Recipient Account | [API Docs for Recipient Account](https://github.com/PaymentRails/java-sdk/tree/master/docs/classes/recipientaccountgateway.md) |
 
 
 
