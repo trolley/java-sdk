@@ -13,7 +13,7 @@ public class BalancesGateway {
         if (term == null) {
             throw new InvalidFieldException("Term cannot be null");
         }
-        String endPoint = "/v1/profile/balances/" + term;
+        String endPoint = "/v1/balances/" + term;
         String response = this.client.get(endPoint);
         return response;
     }
