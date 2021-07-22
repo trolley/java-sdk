@@ -8,6 +8,7 @@ public class RecipientAccount {
     Boolean primary;
     String currency;
     String id;
+    String recipientId;
     String recipientAccountId;
     String routeType;
     String recipientFees;
@@ -47,6 +48,13 @@ public class RecipientAccount {
     }
     public void setStatus(String status){
         this.status = status;
+    }
+
+    public String getRecipientId(){
+        return recipientId;
+    }
+    public void setRecipientId(String recipientId){
+        this.recipientId = recipientId;
     }
 
     public String getType() {

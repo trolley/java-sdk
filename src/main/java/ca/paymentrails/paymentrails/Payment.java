@@ -9,6 +9,13 @@ public class Payment {
     private String status;
     private Boolean isSupplyPayment;
     private String returnedAmount;
+
+    private String amount;
+    private String currency;
+    private String category;
+    private RecipientAccount account;
+    private List<String> tags;
+
     private String sourceAmount;
     private String sourceCurrency;
     private String targetAmount;
@@ -51,6 +58,46 @@ public class Payment {
 
     public void setWithholdingCurrency(String withholdingCurrency) {
         this.withholdingCurrency = withholdingCurrency;
+    }
+
+    public List<String> getTags() {
+        return this.tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public RecipientAccount getAccount() {
+        return account;
+    }
+
+    public void setAccount(RecipientAccount account) {
+        this.account = account;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 
     public String getWithholdingCurrency() {

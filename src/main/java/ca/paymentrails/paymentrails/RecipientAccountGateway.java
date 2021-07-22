@@ -75,6 +75,7 @@ public class RecipientAccountGateway {
     private RecipientAccount recipientAccountFactory(String data) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(data);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         RecipientAccount recipientAccount = mapper.readValue(node.get("account").traverse(), RecipientAccount.class);
         return recipientAccount;
     }

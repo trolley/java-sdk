@@ -25,6 +25,8 @@ public class Recipient {
     String governmentId;
     String ssn;
     String primaryCurrency;
+    String placeOfBirth;
+    List<String> tags;
     String merchantId;
     String payoutMethod;
     public Object payout;
@@ -45,6 +47,14 @@ public class Recipient {
 
     public void setTaxFormStatus(String taxFormStatus) {
         this.taxFormStatus = taxForm;
+    }
+
+    public List<String> getTags() {
+        return this.tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 
     public String getTaxWithholdingPercentage() {
@@ -257,6 +267,14 @@ public class Recipient {
 
     public void setPrimaryCurrency(String primaryCurrency) {
         this.primaryCurrency = primaryCurrency;
+    }
+
+    public String getPlaceOfBirth() {
+        return placeOfBirth;
+    }
+
+    public void setPlaceOfBirth(String placeOfBirth) {
+        this.placeOfBirth = placeOfBirth;
     }
 
     public String getMerchantId() {
