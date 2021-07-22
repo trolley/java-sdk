@@ -26,11 +26,12 @@ public class BatchTest {
 
         String email = "\"create.recipient" + uuid.toString() + "@example.com\"";
         String body = "{\"type\": \"individual\",\"firstName\": \"John\",\"lastName\": \"Smith\",\"email\":" + email
-                + ",\"address\":{\"street1\": \"123 Main St\",\"city\": \"San Francisco\",\"region\": \"CA\",\"postalCode\": \"94131\",\"country\": \"US\",\"phone\" : \"18005551212\"}}";
+                + ",\"address\":{\"street1\": \"123 Main St\",\"city\": \"San Francisco\",\"region\": \"CA\",\"postalCode\": \"94131\",\"country\": \"DE\",\"phone\" : \"18005551212\"}}";
 
         Recipient recipient = client.recipient.create(body);
 
-        body = "{\"type\": \"bank-transfer\", \"primary\": \"true\", \"country\": \"CA\", \"currency\": \"CAD\",\"accountNum\": \"604622847\", \"bankId\": \"123\", \"branchId\": \"47261\",  \"accountHolderName\": \"John Smith\"}";
+        body = "{\"type\": \"bank-transfer\", \"primary\": true, \"country\": \"DE\", \"currency\": \"EUR\", \"iban\": \"DE89 3704 0044 0532 0130 00\", \"accountHolderName\": \"John Smith\"}";
+
         client.recipientAccount.create(recipient.getId(), body);
 
         return recipient;
@@ -38,20 +39,21 @@ public class BatchTest {
 
     @Test
     public void testCreate() throws Exception {
-        Gateway client = new Gateway(new Configuration("YOUR-API-KEY", "YOUR-API-SECRET", "production"));
+        Gateway client = new Gateway(new Configuration("Your-API-KEY", "YOUR-API-SECRET", "production"));
 
-        String body = "{\"sourceCurrency\": \"USD\", \"description\":\"Integration Test Create\"}";
+
+        String body = "{\"sourceCurrency\": \"GBP\", \"description\":\"Integration Test Create\"}";
         Batch batch = client.batch.create(body);
-        assertEquals(batch.getCurrency(), "USD");
+        assertEquals(batch.getCurrency(), "GBP");
     }
 
     @Test
     public void testUpdate() throws Exception {
-        Gateway client = new Gateway(new Configuration("YOUR-API-KEY", "YOUR-API-SECRET", "production"));
+        Gateway client = new Gateway(new Configuration("Your-API-KEY", "YOUR-API-SECRET", "production"));
 
-        String body = "{\"sourceCurrency\": \"USD\", \"description\":\"Integration Test Create\"}";
+        String body = "{\"sourceCurrency\": \"GBP\", \"description\":\"Integration Test Create\"}";
         Batch batch = client.batch.create(body);
-        assertEquals(batch.getCurrency(), "USD");
+        assertEquals(batch.getCurrency(), "GBP");
 
         body = "{\"description\" : \"Integration Update\"}";
         boolean response = client.batch.update(batch.getId(), body);
@@ -66,14 +68,13 @@ public class BatchTest {
 
     @Test
     public void testCreateWithPayments() throws Exception {
-        Gateway client = new Gateway(new Configuration("YOUR-API-KEY", "YOUR-API-SECRET", "production"));
+        Gateway client = new Gateway(new Configuration("Your-API-KEY", "YOUR-API-SECRET", "production"));
+
 
         Recipient recipientAlpha = createRecipient();
-        Recipient recipientBeta = createRecipient();
 
         String body = "{\"payments\": [{\"recipient\": {\"id\": " + "\"" + recipientAlpha.getId() + "\""
-                + "},\"targetAmount\": \"10.00\", \"targetCurrency\": \"CAD\"},{\"recipient\": {\"id\": " + "\""
-                + recipientBeta.getId() + "\"" + "},\"sourceAmount\": \"10\", \"sourceCurrency\": \"CAD\"}]}";
+                + "},\"amount\": \"10.00\", \"currency\": \"EUR\"}]}";
         Batch batch = client.batch.create(body);
 
         assertNotNull(batch);
@@ -82,16 +83,17 @@ public class BatchTest {
         Batch batch1 = client.batch.find(batch.getId());
         assertNotNull(batch1);
 
-        assertEquals(2, batch1.getPayments().getPayments().size());
+        assertEquals(1, batch1.getPayments().getPayments().size());
     }
 
     @Test
     public void testPayments() throws Exception {
-        Gateway client = new Gateway(new Configuration("YOUR-API-KEY", "YOUR-API-SECRET", "production"));
+        Gateway client = new Gateway(new Configuration("Your-API-KEY", "YOUR-API-SECRET", "production"));
 
-        String body = "{\"sourceCurrency\": \"CAD\", \"description\":\"Integration Test Create\"}";
+
+        String body = "{\"sourceCurrency\": \"GBP\", \"description\":\"Integration Test Create\"}";
         Batch batch = client.batch.create(body);
-        assertEquals(batch.getCurrency(), "CAD");
+        assertEquals(batch.getCurrency(), "GBP");
 
         Recipient recipient = createRecipient();
         body = "{\"sourceAmount\":\"10.00\", \"recipient\": {\"id\": " + "\"" + recipient.getId() + "\"" + "}}";
@@ -110,12 +112,11 @@ public class BatchTest {
     public void testProcessing() throws Exception {
         Gateway client = new Gateway(new Configuration("Your-API-KEY", "YOUR-API-SECRET", "production"));
 
+
         Recipient recipientAlpha = createRecipient();
-        Recipient recipientBeta = createRecipient();
 
         String body = "{\"payments\": [{\"recipient\": {\"id\": " + "\"" + recipientAlpha.getId() + "\""
-                + "},\"targetAmount\": \"10.00\", \"targetCurrency\": \"CAD\"},{\"recipient\": {\"id\": " + "\""
-                + recipientBeta.getId() + "\"" + "},\"sourceAmount\": \"10\", \"sourceCurrency\": \"CAD\"}]}";
+                + "},\"amount\": \"10.00\", \"currency\": \"EUR\"}]}";
 
         Batch batch = client.batch.create(body);
         assertNotNull(batch);
@@ -123,7 +124,6 @@ public class BatchTest {
 
         BatchSummary batchSummary = client.batch.summary(batch.getId());
         assertNotNull(batchSummary);
-        assertEquals(2, batchSummary.detail.bankTransfer.count.intValue());
 
         String batch1 = client.batch.generateQuote(batch.getId());
         assertNotNull(batch1);
