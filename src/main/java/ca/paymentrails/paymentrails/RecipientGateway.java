@@ -101,6 +101,7 @@ public class RecipientGateway {
 
     private Recipient recipientFactory(String data) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         JsonNode node = mapper.readTree(data);
         Recipient recipient = mapper.readValue(node.get("recipient").traverse(), Recipient.class);
         return recipient;
@@ -108,6 +109,7 @@ public class RecipientGateway {
 
     private List<Recipient> recipientListFactory(String data) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         JsonNode node = mapper.readTree(data);
 
         Object recipient = mapper.readValue(node.get("recipients").traverse(), Object.class);

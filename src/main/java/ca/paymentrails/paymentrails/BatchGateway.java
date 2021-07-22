@@ -124,6 +124,7 @@ public class BatchGateway {
     private Batch batchFactory(String data) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(data);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         Batch batch = mapper.readValue(node.get("batch").traverse(), Batch.class);
         return batch;
     }
@@ -131,6 +132,7 @@ public class BatchGateway {
     private List<Batch> batchListFactory(String data) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(data);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         Object batch = mapper.readValue(node.get("batches").traverse(), Object.class);
         @SuppressWarnings("unchecked")
         List<Batch> batchs = (List<Batch>) batch;

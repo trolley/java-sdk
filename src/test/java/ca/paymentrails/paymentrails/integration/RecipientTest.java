@@ -76,13 +76,13 @@ public class RecipientTest {
         assertEquals(recipient.getEmail(), "account.create" + uuid.toString() + "@example.com");
         assertNotNull(recipient.getId());
 
-        body = "{\"type\": \"bank-transfer\", \"primary\": \"true\", \"country\": \"CA\", \"currency\": \"CAD\",\"accountNum\": \"604622847\", \"bankId\": \"123\", \"branchId\": \"47261\",  \"accountHolderName\": \"Tom Jones\"}";
+        body = "{\"type\": \"bank-transfer\", \"primary\": true, \"country\": \"DE\", \"currency\": \"EUR\", \"iban\": \"DE89 3704 0044 0532 0130 00\", \"accountHolderName\": \"Tom Jones\"}";
         RecipientAccount recipientAccount = client.recipientAccount.create(recipient.getId(), body);
         assertEquals("Tom Jones", recipientAccount.getAccountHolderName());
 
-        body = "{\"type\": \"bank-transfer\", \"primary\": \"true\", \"country\": \"CA\", \"currency\": \"CAD\",\"accountNum\": \"604622848\", \"bankId\": \"123\", \"branchId\": \"47261\",  \"accountHolderName\": \"Tom Jones\"}";
+        body = "{\"type\": \"bank-transfer\", \"primary\": true, \"country\": \"DE\", \"currency\": \"EUR\", \"iban\": \"DE89 3704 0044 0532 0130 00\", \"accountHolderName\": \"Tom Jones2\"}";
         RecipientAccount recipientAccount1 = client.recipientAccount.create(recipient.getId(), body);
-        assertEquals("Tom Jones", recipientAccount1.getAccountHolderName());
+        assertEquals("Tom Jones2", recipientAccount1.getAccountHolderName());
 
         RecipientAccount recipAccount = client.recipientAccount.find(recipient.getId(), recipientAccount.getId());
         assertEquals(recipAccount.getCountry(), recipientAccount.getCountry());
