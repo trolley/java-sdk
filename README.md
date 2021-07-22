@@ -15,11 +15,12 @@ A native JAVA SDK for the Payment Rails API
 ### Maven
 
 Add this dependency to your project's POM:
+
 ```xml
 <dependency>
     <groupId>ca.paymentrails</groupId>
     <artifactId>paymentrails</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
@@ -53,15 +54,12 @@ is the best source of information about the API.
 
 For more information please read the [Java API docs](https://github.com/PaymentRails/paymentrails_dotnet/tree/master/docs/) is available. The best starting point is:
 
-| Data Type | SDK Documentation |
-| ----- | ----- |
-| Batch | [API Docs for Batch](https://github.com/PaymentRails/java-sdk/tree/master/docs/classes/batchgateway.md) |
-| Payment | [API Docs for Payment](https://github.com/PaymentRails/java-sdk/tree/master/docs/classes/paymentgateway.md) |
-| Recipient | [API Docs for Recipient](https://github.com/PaymentRails/java-sdk/tree/master/docs/classes/recipientgateway.md) |
+| Data Type         | SDK Documentation                                                                                                              |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Batch             | [API Docs for Batch](https://github.com/PaymentRails/java-sdk/tree/master/docs/classes/batchgateway.md)                        |
+| Payment           | [API Docs for Payment](https://github.com/PaymentRails/java-sdk/tree/master/docs/classes/paymentgateway.md)                    |
+| Recipient         | [API Docs for Recipient](https://github.com/PaymentRails/java-sdk/tree/master/docs/classes/recipientgateway.md)                |
 | Recipient Account | [API Docs for Recipient Account](https://github.com/PaymentRails/java-sdk/tree/master/docs/classes/recipientaccountgateway.md) |
-
-
-
 
 ### merchantKey
 
