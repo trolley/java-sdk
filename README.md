@@ -1,6 +1,8 @@
-# Payment Rails JAVA SDK
+# Payment Rails[^1] JAVA SDK
 
 A native JAVA SDK for the Payment Rails API
+
+[^1]: [Payment Rails is now Trolley](https://www.trolley.com/payment-rails-is-now-trolley-series-a), we'll be updating our SDKs to support the new domain during the first half of 2022.
 
 ## Installation
 
