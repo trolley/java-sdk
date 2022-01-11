@@ -2,6 +2,11 @@ package ca.paymentrails.paymentrails;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_NULL)
 public class Batch {
 
     private String id;
@@ -14,9 +19,9 @@ public class Batch {
     private Object completedAt;
     private String createdAt;
     private String updatedAt;
-    private Payments payments;
+    @JsonAnyGetter
+    private List<Payment> payments;
     public String quoteExpiredAt;
-
 
     public String getId() {
         return id;
@@ -98,11 +103,15 @@ public class Batch {
         this.updatedAt = updatedAt;
     }
 
-    public Payments getPayments() {
+    public List<Payment> getPayments() {
         return payments;
     }
 
-    public void setPayments(Payments payments) {
+    // public void setPayments(Payments payments) {
+    //     this.payments = payments;
+    // }
+
+    public void setPayments(List<Payment> payments) {
         this.payments = payments;
     }
 
@@ -156,6 +165,10 @@ public class Batch {
      * @throws ca.paymentrails.Exceptions.InvalidConnectionException
      */
     public static Batch create(String body) throws Exception {
+        return Configuration.gateway().batch.create(body);
+    }
+
+    public static Batch create(Batch body) throws Exception {
         return Configuration.gateway().batch.create(body);
     }
 

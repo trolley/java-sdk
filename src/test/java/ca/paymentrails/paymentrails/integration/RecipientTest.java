@@ -20,7 +20,7 @@ public class RecipientTest {
 
     @Test
     public void testCreateRecipient() throws Exception {
-        Gateway client = new Gateway(new Configuration("YOUR-API-KEY", "YOUR-API-KEY", "production"));
+        Gateway client = new Gateway(new Configuration("ASXQRXUnW02MCRVZ8ZBVJGFH", "4m5t5xap00dy9cyetthfxwy6vunef55ern0bed3r", "production"));
 
         UUID uuid = UUID.randomUUID();
 
@@ -36,7 +36,7 @@ public class RecipientTest {
 
     @Test
     public void testLifecycle() throws Exception {
-        Gateway client = new Gateway(new Configuration("YOUR-API-KEY", "YOUR-API-KEY", "production"));
+        Gateway client = new Gateway(new Configuration("ASXQRXUnW02MCRVZ8ZBVJGFH", "4m5t5xap00dy9cyetthfxwy6vunef55ern0bed3r", "production"));
 
         UUID uuid = UUID.randomUUID();
 
@@ -64,7 +64,7 @@ public class RecipientTest {
 
     @Test
     public void testAccount() throws Exception {
-        Gateway client = new Gateway(new Configuration("YOUR-API-KEY", "YOUR-API-KEY", "production"));
+        Gateway client = new Gateway(new Configuration("ASXQRXUnW02MCRVZ8ZBVJGFH", "4m5t5xap00dy9cyetthfxwy6vunef55ern0bed3r", "production"));
 
         UUID uuid = UUID.randomUUID();
 

@@ -11,6 +11,8 @@ import java.rmi.UnexpectedException;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPatch;
@@ -109,6 +111,12 @@ public class Client {
     public String post(String endPoint, String body) throws Exception {
         return sendRequest("POST", endPoint, body);
     }
+
+    // public String post(String endPoint, Object body) throws Exception {
+    //     String result = new ObjectMapper().writeValueAsString(body);
+
+    //     return sendRequest("POST", endPoint, result);
+    // }
 
     /**
      * Makes an HTTP POST request to the API

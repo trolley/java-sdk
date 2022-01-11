@@ -60,6 +60,21 @@ public class BatchGateway {
         return batchFactory(response);
     }
 
+    public Batch create(Batch batch) throws Exception {
+        if (batch == null) {
+            throw new InvalidFieldException("Batch cannot be null.");
+        }
+        
+        String result = new ObjectMapper().writeValueAsString(batch);
+
+        System.out.println("YOOO");
+        System.out.println(result);
+
+        String endPoint = "/v1/batches/";
+        String response = this.client.post(endPoint, result);
+        return batchFactory(response);
+    }
+
     public String generateQuote(String batch_id) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
