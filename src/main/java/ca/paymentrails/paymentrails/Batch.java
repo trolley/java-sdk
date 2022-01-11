@@ -1,8 +1,6 @@
 package ca.paymentrails.paymentrails;
 
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -19,8 +17,9 @@ public class Batch {
     private Object completedAt;
     private String createdAt;
     private String updatedAt;
-    @JsonAnyGetter
+
     private List<Payment> payments;
+
     public String quoteExpiredAt;
 
     public String getId() {
@@ -106,10 +105,6 @@ public class Batch {
     public List<Payment> getPayments() {
         return payments;
     }
-
-    // public void setPayments(Payments payments) {
-    //     this.payments = payments;
-    // }
 
     public void setPayments(List<Payment> payments) {
         this.payments = payments;

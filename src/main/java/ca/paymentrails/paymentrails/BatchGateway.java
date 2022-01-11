@@ -3,7 +3,6 @@ package ca.paymentrails.paymentrails;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,6 +39,22 @@ public class BatchGateway {
         return true;
     }
 
+    public boolean update(String batch_id, Batch batch) throws Exception {
+        if (batch_id == null || batch_id.isEmpty()) {
+            throw new InvalidFieldException("Batch id cannot be null or empty.");
+        }
+        if (batch == null) {
+            throw new InvalidFieldException("Body cannot be null or empty.");
+        }
+
+        String jsonBatch = new ObjectMapper().writeValueAsString(batch);
+
+        String endPoint = "/v1/batches/" + batch_id;
+        this.client.patch(endPoint, jsonBatch);
+
+        return true;
+    }
+
     public boolean delete(String batch_id) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
@@ -66,12 +81,9 @@ public class BatchGateway {
         }
         
         String result = new ObjectMapper().writeValueAsString(batch);
-
-        System.out.println("YOOO");
-        System.out.println(result);
-
         String endPoint = "/v1/batches/";
         String response = this.client.post(endPoint, result);
+        
         return batchFactory(response);
     }
 
@@ -139,8 +151,23 @@ public class BatchGateway {
     private Batch batchFactory(String data) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(data);
+
+        mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        Object payments = mapper.readValue(node.get("batch").get("payments").get("payments").traverse(), Object.class);
+
+        @SuppressWarnings("unchecked")
+        List<Payment> castPayments = (List<Payment>) payments;
+        List<Payment> paymentList = new ArrayList<Payment>();
+
+        for (int i = 0; i < castPayments.size(); i++) {
+            Payment payment = mapper.convertValue(castPayments.get(i), Payment.class);
+            paymentList.add(payment);
+        }
+
         Batch batch = mapper.readValue(node.get("batch").traverse(), Batch.class);
+        batch.setPayments(paymentList);
         return batch;
     }
 

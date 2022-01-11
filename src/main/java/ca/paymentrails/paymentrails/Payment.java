@@ -1,7 +1,10 @@
 package ca.paymentrails.paymentrails;
 
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+@JsonInclude(Include.NON_NULL)
 public class Payment {
 
     private String id;
@@ -408,3 +411,19 @@ public class Payment {
         return query(batch_id, page, pageSize, "");
     }
 }
+
+// class PaymentSerializer extends JsonSerializer<List<Payment>> {
+
+//     @Override
+//     public void serialize(List<Payment> value, JsonGenerator jgen,
+//             SerializerProvider provider) throws IOException {
+//         jgen.writeStartArray();
+//         for (Payment payment : value) {
+//             jgen.writeStartObject();
+//             jgen.writeObjectField("payment", payment);
+//             jgen.writeEndObject();    
+//         }
+//         jgen.writeEndArray();
+//     }
+
+// }

@@ -59,6 +59,18 @@ public class RecipientGateway {
         return recipientFactory(response);
     }
 
+    public Recipient create(Recipient recipient) throws Exception {
+        if (recipient == null) {
+            throw new InvalidFieldException("Body cannot be null or empty");
+        }
+
+        String jsonRecipient = new ObjectMapper().writeValueAsString(recipient);
+
+        String endPoint = "/v1/recipients/";
+        String response = this.client.post(endPoint, jsonRecipient);
+        return recipientFactory(response);
+    }
+
     public boolean update(String recipient_id, String body) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
@@ -69,6 +81,21 @@ public class RecipientGateway {
 
         String endPoint = "/v1/recipients/" + recipient_id;
         this.client.patch(endPoint, body);
+        return true;
+    }
+
+    public boolean update(String recipient_id, Recipient recipient) throws Exception {
+        if (recipient_id == null || recipient_id.isEmpty()) {
+            throw new InvalidFieldException("Recipient id cannot be null or empty.");
+        }
+        if (recipient == null) {
+            throw new InvalidFieldException("Body cannot be null or empty");
+        }
+
+        String jsonRecipient = new ObjectMapper().writeValueAsString(recipient);
+
+        String endPoint = "/v1/recipients/" + recipient_id;
+        this.client.patch(endPoint, jsonRecipient);
         return true;
     }
 

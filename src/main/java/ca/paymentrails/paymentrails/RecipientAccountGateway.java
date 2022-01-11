@@ -49,6 +49,21 @@ public class RecipientAccountGateway {
         return recipientAccountFactory(response);
     }
 
+    public RecipientAccount create(String recipient_id, RecipientAccount account) throws Exception {
+        if (recipient_id == null || recipient_id.isEmpty()) {
+            throw new InvalidFieldException("Recipient id cannot be null or empty.");
+        }
+        if (account == null) {
+            throw new InvalidFieldException("Body cannot be null or empty");
+        }
+
+        String jsonAccount = new ObjectMapper().writeValueAsString(account);
+        
+        String endPoint = "/v1/recipients/" + recipient_id + "/accounts";
+        String response = this.client.post(endPoint, jsonAccount);
+        return recipientAccountFactory(response);
+    }
+
     public RecipientAccount update(String recipient_id, String recipient_account_id, String body) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
@@ -59,6 +74,21 @@ public class RecipientAccountGateway {
 
         String endPoint = "/v1/recipients/" + recipient_id + "/accounts/" + recipient_account_id;
         String response = this.client.patch(endPoint, body);
+        return recipientAccountFactory(response);
+    }
+
+    public RecipientAccount update(String recipient_id, String recipient_account_id, RecipientAccount account) throws Exception {
+        if (recipient_id == null || recipient_id.isEmpty()) {
+            throw new InvalidFieldException("Recipient id cannot be null or empty.");
+        }
+        if (account == null) {
+            throw new InvalidFieldException("Body cannot be null or empty");
+        }
+
+        String jsonAccount = new ObjectMapper().writeValueAsString(account);
+
+        String endPoint = "/v1/recipients/" + recipient_id + "/accounts/" + recipient_account_id;
+        String response = this.client.patch(endPoint, jsonAccount);
         return recipientAccountFactory(response);
     }
 

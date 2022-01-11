@@ -11,8 +11,6 @@ import java.rmi.UnexpectedException;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPatch;

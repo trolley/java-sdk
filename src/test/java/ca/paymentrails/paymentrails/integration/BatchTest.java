@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-// import com.fasterxml.jackson.annotation.JsonCreator;
-
 import org.junit.Test;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
@@ -18,9 +16,8 @@ import ca.paymentrails.paymentrails.BatchSummary;
 import ca.paymentrails.paymentrails.Configuration;
 import ca.paymentrails.paymentrails.Gateway;
 import ca.paymentrails.paymentrails.Payment;
-// import ca.paymentrails.paymentrails.Payments;
+import ca.paymentrails.paymentrails.Payments;
 import ca.paymentrails.paymentrails.Recipient;
-// import javassist.compiler.ast.Variable;
 
 @PrepareForTest(Recipient.class)
 public class BatchTest {
@@ -63,6 +60,9 @@ public class BatchTest {
         Batch createdBatch = client.batch.create(batchToCreate);
         assertEquals(createdBatch.getCurrency(), "GBP");
         assertEquals(createdBatch.getDescription(), "Integration Test Create");
+
+        client.batch.delete(createdBatch.getId());
+
     }
 
     @Test
@@ -85,36 +85,56 @@ public class BatchTest {
     }
 
     @Test
-    public void testCreateWithPayments() throws Exception {
+    public void testUpdateObject() throws Exception {
         Gateway client = new Gateway(new Configuration("ASXQRXUnW02MCRVZ8ZBVJGFH", "4m5t5xap00dy9cyetthfxwy6vunef55ern0bed3r", "production"));
 
+        String body = "{\"sourceCurrency\": \"GBP\", \"description\":\"Integration Test Create\"}";
+        
+        Batch batch = client.batch.create(body);
+        assertEquals(batch.getCurrency(), "GBP");
+
+        Batch updatedBatch = new Batch();
+        updatedBatch.setDescription("Integration Update Object");
+        boolean response = client.batch.update(batch.getId(), updatedBatch);
+
+        assertNotNull(response);
+        Batch batch1 = client.batch.find(batch.getId());
+        assertEquals(batch1.getDescription(), "Integration Update Object");
+
+        response = client.batch.delete(batch1.getId());
+        assertNotNull(response);
+    }
+
+    @Test
+    public void testCreateWithPayments() throws Exception {
+        Gateway client = new Gateway(new Configuration("ASXQRXUnW02MCRVZ8ZBVJGFH", "4m5t5xap00dy9cyetthfxwy6vunef55ern0bed3r", "production"));
         Recipient recipientAlpha = createRecipient();
-
-        // String body = "{\"payments\": [{\"recipient\": {\"id\": " + "\"" + recipientAlpha.getId() + "\""
-        //         + "},\"amount\": \"10.00\", \"currency\": \"EUR\"}]}";
-
-        // String body = "{\"payments\": [{\"recipient\": {\"id\": \"" + recipientAlpha.getId() + "\"}, \"amount\": \"15\", \"memo\": \"Test\", \"currency\": \"USD\"}]}";
         Payment payment = new Payment();
+
         payment.setAmount("15");
         payment.setCurrency("USD");
         payment.setRecipient(recipientAlpha);
 
-        List<Payment> payments = new ArrayList<Payment>();
-        payments.add(payment);
+        List<Payment> paymentList = new ArrayList<Payment>();
+        paymentList.add(payment);
+
+        Payments payments = new Payments();
+        payments.setPayments(paymentList);
 
         Batch batchToCreate = new Batch();
-        batchToCreate.setPayments(payments);
-
+        batchToCreate.setPayments(paymentList);
 
         Batch batch = client.batch.create(batchToCreate);
 
         assertNotNull(batch);
         assertNotNull(batch.getId());
 
-        Batch batch1 = client.batch.find(batch.getId());
-        assertNotNull(batch1);
+        List<Payment> batchPayments = batch.getPayments();
+        assertEquals(1, batchPayments.size());
 
-        assertEquals(1, batch1.getPayments().size());
+        assertEquals("15.00", batchPayments.get(0).getAmount());
+        assertEquals("USD", batchPayments.get(0).getCurrency());
+
     }
 
     @Test
