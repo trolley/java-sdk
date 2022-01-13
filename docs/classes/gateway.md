@@ -6,12 +6,12 @@
 
 ### Properties
 
-* [balances](gateway.md#balances)
-* [batch](gateway.md#batch)
-* [config](gateway.md#config)
-* [payment](gateway.md#payment)
-* [recipient](gateway.md#recipient)
-* [recipientAccount](gateway.md#recipientaccount)
+- [balances](gateway.md#balances)
+- [batch](gateway.md#batch)
+- [config](gateway.md#config)
+- [payment](gateway.md#payment)
+- [recipient](gateway.md#recipient)
+- [recipientAccount](gateway.md#recipientaccount)
 
 ---
 
@@ -21,9 +21,9 @@
 
 ### balances
 
-**●  balances**:  *[BalancesGateway](balancesgateway.md)*
+**● balances**: _[BalancesGateway](balancesgateway.md)_
 
-*Defined in [Gateway.md:15]*
+_Defined in [Gateway.md:15]_
 
 ---
 
@@ -31,9 +31,9 @@
 
 ### batch
 
-**●  batch**:  *[BatchGateway](batchgateway.md)*
+**● batch**: _[BatchGateway](batchgateway.md)_
 
-*Defined in [Gateway.java:13](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Gateway.java#L13)*
+_Defined in [Gateway.java:13](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Gateway.java#L13)_
 
 ---
 
@@ -41,9 +41,9 @@
 
 ### config
 
-**●  config**:  *[Configuration](configuration.md)*
+**● config**: _[Configuration](configuration.md)_
 
-*Defined in [Gateway.java:10](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Gateway.java#L10)*
+_Defined in [Gateway.java:10](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Gateway.java#L10)_
 
 ---
 
@@ -51,9 +51,9 @@
 
 ### payment
 
-**●  payment**:  *[PaymentGateway](paymentgateway.md)*
+**● payment**: _[PaymentGateway](paymentgateway.md)_
 
-*Defined in [Gateway.java:16](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Gateway.java#L16)*
+_Defined in [Gateway.java:16](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Gateway.java#L16)_
 
 ---
 
@@ -61,9 +61,9 @@
 
 ### recipient
 
-**●  recipient**:  *[RecipientGateway](recipientgateway.md)*
+**● recipient**: _[RecipientGateway](recipientgateway.md)_
 
-*Defined in [Gateway.java:12](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Gateway.java#L12)*
+_Defined in [Gateway.java:12](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Gateway.java#L12)_
 
 ---
 
@@ -71,8 +71,8 @@
 
 ### recipientAccount
 
-**●  recipientAccount**:  *[RecipientAccountGateway](recipientaccountgateway.md)*
+**● recipientAccount**: _[RecipientAccountGateway](recipientaccountgateway.md)_
 
-*Defined in [Gateway.java:14](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Gateway.java#L14)*
+_Defined in [Gateway.java:14](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Gateway.java#L14)_
 
 ---

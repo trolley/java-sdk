@@ -2,7 +2,7 @@
 
 # Types: Recipient
 
-*__type__*: Recipient
+_**type**_: Recipient
 
 ## Properties
 
@@ -10,9 +10,9 @@
 
 ### «Optional» account
 
-**●  account**:  *`any`*
+**● account**: _`any`_
 
-*Defined in [Recipient.java:30](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Recipient.java#L29)*
+_Defined in [Recipient.java:30](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Recipient.java#L29)_
 
 ---
 
@@ -20,9 +20,9 @@
 
 ### «Optional» address
 
-**●  address**:  *`undefined`⎮`object`*
+**● address**: _`undefined`⎮`object`_
 
-*Defined in [Recipient.java:20](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Recipient.java#L20)*
+_Defined in [Recipient.java:20](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Recipient.java#L20)_
 
 ---
 
@@ -30,9 +30,9 @@
 
 ### «Optional» dob
 
-**●  dob**:  *`undefined`⎮`string`*
+**● dob**: _`undefined`⎮`string`_
 
-*Defined in [Recipient.java:15](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Recipient.java#L15)*
+_Defined in [Recipient.java:15](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Recipient.java#L15)_
 
 ---
 
@@ -40,9 +40,9 @@
 
 ### «Optional» email
 
-**●  email**:  *`undefined`⎮`string`*
+**● email**: _`undefined`⎮`string`_
 
-*Defined in [Recipient.java:10](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Recipient.java#L10)*
+_Defined in [Recipient.java:10](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Recipient.java#L10)_
 
 ---
 
@@ -50,9 +50,9 @@
 
 ### «Optional» firstName
 
-**●  firstName**:  *`undefined`⎮`string`*
+**● firstName**: _`undefined`⎮`string`_
 
-*Defined in [Recipient.java:12](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Recipient.java#L12)*
+_Defined in [Recipient.java:12](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Recipient.java#L12)_
 
 ---
 
@@ -60,9 +60,9 @@
 
 ### «Optional» governmentId
 
-**●  governmentId**:  *`undefined`⎮`string`*
+**● governmentId**: _`undefined`⎮`string`_
 
-*Defined in [Recipient.java:17](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Recipient.java#L17)*
+_Defined in [Recipient.java:17](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Recipient.java#L17)_
 
 ---
 
@@ -70,9 +70,9 @@
 
 ### «Optional» language
 
-**●  language**:  *`undefined`⎮`string`*
+**● language**: _`undefined`⎮`string`_
 
-*Defined in [Recipient.java:19](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Recipient.java#L19)*
+_Defined in [Recipient.java:19](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Recipient.java#L19)_
 
 ---
 
@@ -80,9 +80,9 @@
 
 ### «Optional» lastName
 
-**●  lastName**:  *`undefined`⎮`string`*
+**● lastName**: _`undefined`⎮`string`_
 
-*Defined in [Recipient.java:13](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Recipient.java#L13)*
+_Defined in [Recipient.java:13](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Recipient.java#L13)_
 
 ---
 
@@ -90,9 +90,9 @@
 
 ### «Optional» name
 
-**●  name**:  *`undefined`⎮`string`*
+**● name**: _`undefined`⎮`string`_
 
-*Defined in [Recipient.java:11](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Recipient.java#L11)*
+_Defined in [Recipient.java:11](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Recipient.java#L11)_
 
 ---
 
@@ -100,9 +100,9 @@
 
 ### «Optional» passport
 
-**●  passport**:  *`undefined`⎮`string`*
+**● passport**: _`undefined`⎮`string`_
 
-*Defined in [Recipient.java:18](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Recipient.java#L18)*
+_Defined in [Recipient.java:18](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Recipient.java#L18)_
 
 ---
 
@@ -110,9 +110,9 @@
 
 ### «Optional» referenceId
 
-**●  referenceId**:  *`undefined`⎮`string`*
+**● referenceId**: _`undefined`⎮`string`_
 
-*Defined in [Recipient.java:9](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Recipient.java#L9)*
+_Defined in [Recipient.java:9](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Recipient.java#L9)_
 
 ---
 
@@ -120,9 +120,9 @@
 
 ### «Optional» ssn
 
-**●  ssn**:  *`undefined`⎮`string`*
+**● ssn**: _`undefined`⎮`string`_
 
-*Defined in [Recipient.java:16](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Recipient.java#L16)*
+_Defined in [Recipient.java:16](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Recipient.java#L16)_
 
 ---
 
@@ -130,8 +130,8 @@
 
 ### «Optional» type
 
-**●  type**:  *"individual"⎮"business"*
+**● type**: _"individual"⎮"business"_
 
-*Defined in [Recipient.java:14](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Recipient.java#L14)*
+_Defined in [Recipient.java:14](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Recipient.java#L14)_
 
 ---
