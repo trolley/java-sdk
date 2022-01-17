@@ -19,10 +19,21 @@ import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 
+/**
+ * <p>Client class.</p>
+ *
+ * @author joshua
+ * @version $Id: $Id
+ */
 public class Client {
 
     private Configuration config;
 
+    /**
+     * <p>Constructor for Client.</p>
+     *
+     * @param config a {@link com.trolley.trolley.Configuration} object.
+     */
     public Client(Configuration config) {
         this.config = config;
     }
@@ -31,6 +42,7 @@ public class Client {
      * Factory Method to create an instance of Client
      *
      * @return Client
+     * @param config a {@link com.trolley.trolley.Configuration} object.
      */
     public static Client create(Configuration config) {
         return new Client(config);
@@ -90,9 +102,9 @@ public class Client {
     /**
      * Makes an HTTP GET request to the API
      *
-     * @param endPoint
+     * @param endPoint a {@link java.lang.String} object.
      * @return The response
-     * @throws Exception
+     * @throws java.lang.Exception if any.
      */
     public String get(String endPoint) throws Exception {
         return sendRequest("GET", endPoint);
@@ -101,10 +113,10 @@ public class Client {
     /**
      * Makes an HTTP POST request to the API
      *
-     * @param endPoint
-     * @param body
+     * @param endPoint a {@link java.lang.String} object.
+     * @param body a {@link java.lang.String} object.
      * @return The response
-     * @throws Exception
+     * @throws java.lang.Exception if any.
      */
     public String post(String endPoint, String body) throws Exception {
         return sendRequest("POST", endPoint, body);
@@ -119,9 +131,9 @@ public class Client {
     /**
      * Makes an HTTP POST request to the API
      *
-     * @param endPoint
+     * @param endPoint a {@link java.lang.String} object.
      * @return The response
-     * @throws Exception
+     * @throws java.lang.Exception if any.
      */
     public String post(String endPoint) throws Exception {
         return sendRequest("POST", endPoint);
@@ -129,11 +141,12 @@ public class Client {
     /**
      * Makes an HTTP PATCH request to the API
      *
-     * @param endPoint
-     * @param body
+     * @param endPoint a {@link java.lang.String} object.
+     * @param body a {@link java.lang.String} object.
      * @return The response
-     * @throws com.trolley.Exceptions.InvalidStatusCodeException
-     * @throws com.trolley.Exceptions.InvalidConnectionException
+     * @throws com.trolley.Exceptions.InvalidStatusCodeException if any.
+     * @throws com.trolley.Exceptions.InvalidServerConnectionException if any.
+     * @throws java.lang.Exception if any.
      */
     public String patch(String endPoint, String body) throws Exception {
         String StringResponse = "";
@@ -177,10 +190,11 @@ public class Client {
     /**
      * Makes an HTTP DELETE request to the API
      *
-     * @param endPoint
+     * @param endPoint a {@link java.lang.String} object.
      * @return The response
-     * @throws InvalidStatusCodeException
-     * @throws com.trolley.Exceptions.InvalidConnectionException
+     * @throws InvalidStatusCodeException if any.
+     * @throws com.trolley.Exceptions.InvalidServerConnectionException if any.
+     * @throws java.lang.Exception if any.
      */
     public String delete(String endPoint) throws Exception {
         return sendRequest("DELETE", endPoint);

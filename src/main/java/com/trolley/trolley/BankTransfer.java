@@ -1,5 +1,11 @@
 package com.trolley.trolley;
 
+/**
+ * <p>BankTransfer class.</p>
+ *
+ * @author joshua
+ * @version $Id: $Id
+ */
 public class BankTransfer {
 
     public Integer count;

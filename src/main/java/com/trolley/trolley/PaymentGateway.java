@@ -9,13 +9,32 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import java.util.List;
 
+/**
+ * <p>PaymentGateway class.</p>
+ *
+ * @author joshua
+ * @version $Id: $Id
+ */
 public class PaymentGateway {
     Client client;
 
+    /**
+     * <p>Constructor for PaymentGateway.</p>
+     *
+     * @param config a {@link com.trolley.trolley.Configuration} object.
+     */
     public PaymentGateway(Configuration config) {
         this.client = new Client(config);
     }
 
+    /**
+     * <p>find.</p>
+     *
+     * @param payment_id a {@link java.lang.String} object.
+     * @param batch_id a {@link java.lang.String} object.
+     * @return a {@link com.trolley.trolley.Payment} object.
+     * @throws java.lang.Exception if any.
+     */
     public Payment find(String payment_id, String batch_id) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
@@ -29,6 +48,14 @@ public class PaymentGateway {
         return paymentFactory(response);
     }
 
+    /**
+     * <p>create.</p>
+     *
+     * @param body a {@link java.lang.String} object.
+     * @param batch_id a {@link java.lang.String} object.
+     * @return a {@link com.trolley.trolley.Payment} object.
+     * @throws java.lang.Exception if any.
+     */
     public Payment create(String body, String batch_id) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
@@ -43,6 +70,15 @@ public class PaymentGateway {
         return paymentFactory(response);
     }
 
+    /**
+     * <p>update.</p>
+     *
+     * @param payment_id a {@link java.lang.String} object.
+     * @param body a {@link java.lang.String} object.
+     * @param batch_id a {@link java.lang.String} object.
+     * @return a boolean.
+     * @throws java.lang.Exception if any.
+     */
     public boolean update(String payment_id, String body, String batch_id) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
@@ -59,6 +95,14 @@ public class PaymentGateway {
         return true;
     }
 
+    /**
+     * <p>delete.</p>
+     *
+     * @param payment_id a {@link java.lang.String} object.
+     * @param batch_id a {@link java.lang.String} object.
+     * @return a boolean.
+     * @throws java.lang.Exception if any.
+     */
     public boolean delete(String payment_id, String batch_id) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
@@ -72,6 +116,16 @@ public class PaymentGateway {
         return true;
     }
 
+    /**
+     * <p>query.</p>
+     *
+     * @param batch_id a {@link java.lang.String} object.
+     * @param page a int.
+     * @param pageSize a int.
+     * @param message a {@link java.lang.String} object.
+     * @return a {@link java.util.List} object.
+     * @throws java.lang.Exception if any.
+     */
     public List<Payment> query(String batch_id, int page, int pageSize, String message) throws Exception {
 
         if (batch_id == null || batch_id.isEmpty()) {

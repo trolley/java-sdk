@@ -21,7 +21,7 @@ public class RecipientTest {
 
     @Test
     public void testCreateRecipient() throws Exception {
-        Gateway client = new Gateway(new Configuration("ASXQRXUnW02MCRVZ8ZBVJGFH", "4m5t5xap00dy9cyetthfxwy6vunef55ern0bed3r", "production"));
+        Gateway client = new Gateway(new Configuration("key", "secret", "production"));
 
         UUID uuid = UUID.randomUUID();
 
@@ -37,7 +37,7 @@ public class RecipientTest {
 
     @Test
     public void testCreateRecipientObject() throws Exception {
-        Gateway client = new Gateway(new Configuration("ASXQRXUnW02MCRVZ8ZBVJGFH", "4m5t5xap00dy9cyetthfxwy6vunef55ern0bed3r", "production"));
+        Gateway client = new Gateway(new Configuration("key", "secret", "production"));
 
         UUID uuid = UUID.randomUUID();
 
@@ -66,7 +66,7 @@ public class RecipientTest {
 
     @Test
     public void testLifecycle() throws Exception {
-        Gateway client = new Gateway(new Configuration("ASXQRXUnW02MCRVZ8ZBVJGFH", "4m5t5xap00dy9cyetthfxwy6vunef55ern0bed3r", "production"));
+        Gateway client = new Gateway(new Configuration("key", "secret", "production"));
 
         UUID uuid = UUID.randomUUID();
 
@@ -96,7 +96,7 @@ public class RecipientTest {
 
     @Test
     public void testAccount() throws Exception {
-        Gateway client = new Gateway(new Configuration("ASXQRXUnW02MCRVZ8ZBVJGFH", "4m5t5xap00dy9cyetthfxwy6vunef55ern0bed3r", "production"));
+        Gateway client = new Gateway(new Configuration("key", "secret", "production"));
 
         UUID uuid = UUID.randomUUID();
 
@@ -131,7 +131,7 @@ public class RecipientTest {
 
     @Test
     public void testAccountObject() throws Exception {
-        Gateway client = new Gateway(new Configuration("ASXQRXUnW02MCRVZ8ZBVJGFH", "4m5t5xap00dy9cyetthfxwy6vunef55ern0bed3r", "production"));
+        Gateway client = new Gateway(new Configuration("key", "secret", "production"));
 
         UUID uuid = UUID.randomUUID();
 

@@ -9,14 +9,32 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import java.util.List;
 
+/**
+ * <p>RecipientAccountGateway class.</p>
+ *
+ * @author joshua
+ * @version $Id: $Id
+ */
 public class RecipientAccountGateway {
 
     Client client;
 
+    /**
+     * <p>Constructor for RecipientAccountGateway.</p>
+     *
+     * @param config a {@link com.trolley.trolley.Configuration} object.
+     */
     public RecipientAccountGateway(Configuration config) {
         this.client = new Client(config);
     }
 
+    /**
+     * <p>findAll.</p>
+     *
+     * @param recipient_id a {@link java.lang.String} object.
+     * @return a {@link java.util.List} object.
+     * @throws java.lang.Exception if any.
+     */
     public List<RecipientAccount> findAll(String recipient_id) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
@@ -27,6 +45,14 @@ public class RecipientAccountGateway {
         return recipientAccountListFactory(response);
     }
 
+    /**
+     * <p>find.</p>
+     *
+     * @param recipient_id a {@link java.lang.String} object.
+     * @param recipient_account_id a {@link java.lang.String} object.
+     * @return a {@link com.trolley.trolley.RecipientAccount} object.
+     * @throws java.lang.Exception if any.
+     */
     public RecipientAccount find(String recipient_id, String recipient_account_id) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
@@ -37,6 +63,14 @@ public class RecipientAccountGateway {
         return recipientAccountFactory(response);
     }
 
+    /**
+     * <p>create.</p>
+     *
+     * @param recipient_id a {@link java.lang.String} object.
+     * @param body a {@link java.lang.String} object.
+     * @return a {@link com.trolley.trolley.RecipientAccount} object.
+     * @throws java.lang.Exception if any.
+     */
     public RecipientAccount create(String recipient_id, String body) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
@@ -50,6 +84,14 @@ public class RecipientAccountGateway {
         return recipientAccountFactory(response);
     }
 
+    /**
+     * <p>create.</p>
+     *
+     * @param recipient_id a {@link java.lang.String} object.
+     * @param account a {@link com.trolley.trolley.RecipientAccount} object.
+     * @return a {@link com.trolley.trolley.RecipientAccount} object.
+     * @throws java.lang.Exception if any.
+     */
     public RecipientAccount create(String recipient_id, RecipientAccount account) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
@@ -65,6 +107,15 @@ public class RecipientAccountGateway {
         return recipientAccountFactory(response);
     }
 
+    /**
+     * <p>update.</p>
+     *
+     * @param recipient_id a {@link java.lang.String} object.
+     * @param recipient_account_id a {@link java.lang.String} object.
+     * @param body a {@link java.lang.String} object.
+     * @return a {@link com.trolley.trolley.RecipientAccount} object.
+     * @throws java.lang.Exception if any.
+     */
     public RecipientAccount update(String recipient_id, String recipient_account_id, String body) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
@@ -78,6 +129,15 @@ public class RecipientAccountGateway {
         return recipientAccountFactory(response);
     }
 
+    /**
+     * <p>update.</p>
+     *
+     * @param recipient_id a {@link java.lang.String} object.
+     * @param recipient_account_id a {@link java.lang.String} object.
+     * @param account a {@link com.trolley.trolley.RecipientAccount} object.
+     * @return a {@link com.trolley.trolley.RecipientAccount} object.
+     * @throws java.lang.Exception if any.
+     */
     public RecipientAccount update(String recipient_id, String recipient_account_id, RecipientAccount account) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
@@ -93,6 +153,14 @@ public class RecipientAccountGateway {
         return recipientAccountFactory(response);
     }
 
+    /**
+     * <p>delete.</p>
+     *
+     * @param recipient_id a {@link java.lang.String} object.
+     * @param recipient_account_id a {@link java.lang.String} object.
+     * @return a boolean.
+     * @throws java.lang.Exception if any.
+     */
     public boolean delete(String recipient_id, String recipient_account_id) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");

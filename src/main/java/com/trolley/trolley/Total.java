@@ -1,5 +1,11 @@
 package com.trolley.trolley;
 
+/**
+ * <p>Total class.</p>
+ *
+ * @author joshua
+ * @version $Id: $Id
+ */
 public class Total {
 
     public Integer count;

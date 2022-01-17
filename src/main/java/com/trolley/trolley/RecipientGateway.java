@@ -9,14 +9,32 @@ import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 
+/**
+ * <p>RecipientGateway class.</p>
+ *
+ * @author joshua
+ * @version $Id: $Id
+ */
 public class RecipientGateway {
 
     Client client;
 
+    /**
+     * <p>Constructor for RecipientGateway.</p>
+     *
+     * @param config a {@link com.trolley.trolley.Configuration} object.
+     */
     public RecipientGateway(Configuration config) {
         this.client = new Client(config);
     }
 
+    /**
+     * <p>find.</p>
+     *
+     * @param recipient_id a {@link java.lang.String} object.
+     * @return a {@link com.trolley.trolley.Recipient} object.
+     * @throws java.lang.Exception if any.
+     */
     public Recipient find(String recipient_id) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
@@ -27,12 +45,26 @@ public class RecipientGateway {
         return recipientFactory(response);
     }
 
+    /**
+     * <p>findLogs.</p>
+     *
+     * @param recipient_id a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     * @throws java.lang.Exception if any.
+     */
     public String findLogs(String recipient_id) throws Exception {
         String endPoint = "/v1/recipients/" + recipient_id + "/logs";
         String response = this.client.get(endPoint);
         return response;
     }
 
+    /**
+     * <p>findPayments.</p>
+     *
+     * @param recipient_id a {@link java.lang.String} object.
+     * @return a {@link java.util.List} object.
+     * @throws java.lang.Exception if any.
+     */
     public List<Payment> findPayments(String recipient_id) throws Exception {
         String endPoint = "/v1/recipients/" + recipient_id + "/payments";
         String response = this.client.get(endPoint);
@@ -51,6 +83,13 @@ public class RecipientGateway {
         return payments;
     }
 
+    /**
+     * <p>create.</p>
+     *
+     * @param body a {@link java.lang.String} object.
+     * @return a {@link com.trolley.trolley.Recipient} object.
+     * @throws java.lang.Exception if any.
+     */
     public Recipient create(String body) throws Exception {
         if (body == null || body.isEmpty()) {
             throw new InvalidFieldException("Body cannot be null or empty");
@@ -60,6 +99,13 @@ public class RecipientGateway {
         return recipientFactory(response);
     }
 
+    /**
+     * <p>create.</p>
+     *
+     * @param recipient a {@link com.trolley.trolley.Recipient} object.
+     * @return a {@link com.trolley.trolley.Recipient} object.
+     * @throws java.lang.Exception if any.
+     */
     public Recipient create(Recipient recipient) throws Exception {
         if (recipient == null) {
             throw new InvalidFieldException("Body cannot be null or empty");
@@ -72,6 +118,14 @@ public class RecipientGateway {
         return recipientFactory(response);
     }
 
+    /**
+     * <p>update.</p>
+     *
+     * @param recipient_id a {@link java.lang.String} object.
+     * @param body a {@link java.lang.String} object.
+     * @return a boolean.
+     * @throws java.lang.Exception if any.
+     */
     public boolean update(String recipient_id, String body) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
@@ -85,6 +139,14 @@ public class RecipientGateway {
         return true;
     }
 
+    /**
+     * <p>update.</p>
+     *
+     * @param recipient_id a {@link java.lang.String} object.
+     * @param recipient a {@link com.trolley.trolley.Recipient} object.
+     * @return a boolean.
+     * @throws java.lang.Exception if any.
+     */
     public boolean update(String recipient_id, Recipient recipient) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
@@ -100,6 +162,13 @@ public class RecipientGateway {
         return true;
     }
 
+    /**
+     * <p>delete.</p>
+     *
+     * @param recipient_id a {@link java.lang.String} object.
+     * @return a boolean.
+     * @throws java.lang.Exception if any.
+     */
     public boolean delete(String recipient_id) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
@@ -110,6 +179,15 @@ public class RecipientGateway {
         return true;
     }
 
+    /**
+     * <p>search.</p>
+     *
+     * @param page a int.
+     * @param pageSize a int.
+     * @param term a {@link java.lang.String} object.
+     * @return a {@link java.util.List} object.
+     * @throws java.lang.Exception if any.
+     */
     public List<Recipient> search(int page, int pageSize, String term) throws Exception {
         if (page < 0) {
             throw new InvalidFieldException("Page cannot be less than 0");

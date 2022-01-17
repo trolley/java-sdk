@@ -19,11 +19,11 @@ import com.trolley.trolley.Recipient;
 import org.junit.Test;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
-@PrepareForTest(Recipient.class)
+@PrepareForTest(Batch.class)
 public class BatchTest {
 
     private Recipient createRecipient() throws Exception {
-        Gateway client = new Gateway(new Configuration("ASXQRXUnW02MCRVZ8ZBVJGFH", "4m5t5xap00dy9cyetthfxwy6vunef55ern0bed3r", "production"));
+        Gateway client = new Gateway(new Configuration("key", "secret", "production"));
 
         UUID uuid = UUID.randomUUID();
 
@@ -42,7 +42,7 @@ public class BatchTest {
 
     @Test
     public void testCreate() throws Exception {
-        Gateway client = new Gateway(new Configuration("ASXQRXUnW02MCRVZ8ZBVJGFH", "4m5t5xap00dy9cyetthfxwy6vunef55ern0bed3r", "production"));
+        Gateway client = new Gateway(new Configuration("key", "secret", "production"));
 
         String body = "{\"sourceCurrency\": \"GBP\", \"description\":\"Integration Test Create\"}";
         Batch batch = client.batch.create(body);
@@ -51,7 +51,7 @@ public class BatchTest {
 
     @Test
     public void testCreateObject() throws Exception {
-        Gateway client = new Gateway(new Configuration("ASXQRXUnW02MCRVZ8ZBVJGFH", "4m5t5xap00dy9cyetthfxwy6vunef55ern0bed3r", "production"));
+        Gateway client = new Gateway(new Configuration("key", "secret", "production"));
 
         Batch batchToCreate = new Batch();
         batchToCreate.setCurrency("GBP");
@@ -67,7 +67,7 @@ public class BatchTest {
 
     @Test
     public void testUpdate() throws Exception {
-        Gateway client = new Gateway(new Configuration("ASXQRXUnW02MCRVZ8ZBVJGFH", "4m5t5xap00dy9cyetthfxwy6vunef55ern0bed3r", "production"));
+        Gateway client = new Gateway(new Configuration("key", "secret", "production"));
 
         String body = "{\"sourceCurrency\": \"GBP\", \"description\":\"Integration Test Create\"}";
         Batch batch = client.batch.create(body);
@@ -86,7 +86,7 @@ public class BatchTest {
 
     @Test
     public void testUpdateObject() throws Exception {
-        Gateway client = new Gateway(new Configuration("ASXQRXUnW02MCRVZ8ZBVJGFH", "4m5t5xap00dy9cyetthfxwy6vunef55ern0bed3r", "production"));
+        Gateway client = new Gateway(new Configuration("key", "secret", "production"));
 
         String body = "{\"sourceCurrency\": \"GBP\", \"description\":\"Integration Test Create\"}";
         
@@ -107,7 +107,7 @@ public class BatchTest {
 
     @Test
     public void testCreateWithPayments() throws Exception {
-        Gateway client = new Gateway(new Configuration("ASXQRXUnW02MCRVZ8ZBVJGFH", "4m5t5xap00dy9cyetthfxwy6vunef55ern0bed3r", "production"));
+        Gateway client = new Gateway(new Configuration("key", "secret", "production"));
         Recipient recipientAlpha = createRecipient();
         Payment payment = new Payment();
 
@@ -139,7 +139,7 @@ public class BatchTest {
 
     @Test
     public void testPayments() throws Exception {
-        Gateway client = new Gateway(new Configuration("ASXQRXUnW02MCRVZ8ZBVJGFH", "4m5t5xap00dy9cyetthfxwy6vunef55ern0bed3r", "production"));
+        Gateway client = new Gateway(new Configuration("key", "secret", "production"));
 
         String body = "{\"sourceCurrency\": \"GBP\", \"description\":\"Integration Test Create\"}";
         Batch batch = client.batch.create(body);
@@ -160,7 +160,7 @@ public class BatchTest {
 
     @Test
     public void testProcessing() throws Exception {
-        Gateway client = new Gateway(new Configuration("ASXQRXUnW02MCRVZ8ZBVJGFH", "4m5t5xap00dy9cyetthfxwy6vunef55ern0bed3r", "production"));
+        Gateway client = new Gateway(new Configuration("key", "secret", "production"));
 
         Recipient recipientAlpha = createRecipient();
 

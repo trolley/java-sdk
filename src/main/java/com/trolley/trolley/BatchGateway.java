@@ -8,13 +8,31 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trolley.Exceptions.InvalidFieldException;
 
+/**
+ * <p>BatchGateway class.</p>
+ *
+ * @author joshua
+ * @version $Id: $Id
+ */
 public class BatchGateway {
     Client client;
 
+    /**
+     * <p>Constructor for BatchGateway.</p>
+     *
+     * @param config a {@link com.trolley.trolley.Configuration} object.
+     */
     public BatchGateway(Configuration config) {
         this.client = new Client(config);
     }
 
+    /**
+     * <p>find.</p>
+     *
+     * @param batch_id a {@link java.lang.String} object.
+     * @return a {@link com.trolley.trolley.Batch} object.
+     * @throws java.lang.Exception if any.
+     */
     public Batch find(String batch_id) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
@@ -25,6 +43,14 @@ public class BatchGateway {
         return batchFactory(response);
     }
 
+    /**
+     * <p>update.</p>
+     *
+     * @param batch_id a {@link java.lang.String} object.
+     * @param body a {@link java.lang.String} object.
+     * @return a boolean.
+     * @throws java.lang.Exception if any.
+     */
     public boolean update(String batch_id, String body) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
@@ -38,6 +64,14 @@ public class BatchGateway {
         return true;
     }
 
+    /**
+     * <p>update.</p>
+     *
+     * @param batch_id a {@link java.lang.String} object.
+     * @param batch a {@link com.trolley.trolley.Batch} object.
+     * @return a boolean.
+     * @throws java.lang.Exception if any.
+     */
     public boolean update(String batch_id, Batch batch) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
@@ -54,6 +88,13 @@ public class BatchGateway {
         return true;
     }
 
+    /**
+     * <p>delete.</p>
+     *
+     * @param batch_id a {@link java.lang.String} object.
+     * @return a boolean.
+     * @throws java.lang.Exception if any.
+     */
     public boolean delete(String batch_id) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
@@ -64,6 +105,13 @@ public class BatchGateway {
         return true;
     }
 
+    /**
+     * <p>create.</p>
+     *
+     * @param body a {@link java.lang.String} object.
+     * @return a {@link com.trolley.trolley.Batch} object.
+     * @throws java.lang.Exception if any.
+     */
     public Batch create(String body) throws Exception {
         if (body == null || body.isEmpty()) {
             throw new InvalidFieldException("Body cannot be null or empty.");
@@ -74,6 +122,13 @@ public class BatchGateway {
         return batchFactory(response);
     }
 
+    /**
+     * <p>create.</p>
+     *
+     * @param batch a {@link com.trolley.trolley.Batch} object.
+     * @return a {@link com.trolley.trolley.Batch} object.
+     * @throws java.lang.Exception if any.
+     */
     public Batch create(Batch batch) throws Exception {
         if (batch == null) {
             throw new InvalidFieldException("Batch cannot be null.");
@@ -86,6 +141,13 @@ public class BatchGateway {
         return batchFactory(response);
     }
 
+    /**
+     * <p>generateQuote.</p>
+     *
+     * @param batch_id a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     * @throws java.lang.Exception if any.
+     */
     public String generateQuote(String batch_id) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
@@ -96,6 +158,13 @@ public class BatchGateway {
         return response;
     }
 
+    /**
+     * <p>processBatch.</p>
+     *
+     * @param batch_id a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     * @throws java.lang.Exception if any.
+     */
     public String processBatch(String batch_id) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
@@ -105,6 +174,15 @@ public class BatchGateway {
         return response;
     }
 
+    /**
+     * <p>query.</p>
+     *
+     * @param page a int.
+     * @param pageSize a int.
+     * @param message a {@link java.lang.String} object.
+     * @return a {@link java.util.List} object.
+     * @throws java.lang.Exception if any.
+     */
     public List<Batch> query(int page, int pageSize, String message) throws Exception {
         if (page < 0) {
             throw new InvalidFieldException("Page cannot be less than 0");
@@ -120,18 +198,46 @@ public class BatchGateway {
         return batchListFactory(response);
     }
 
+    /**
+     * <p>query.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     * @return a {@link java.util.List} object.
+     * @throws java.lang.Exception if any.
+     */
     public List<Batch> query(String message) throws Exception {
         return query(1, 10, message);
     }
 
+    /**
+     * <p>query.</p>
+     *
+     * @return a {@link java.util.List} object.
+     * @throws java.lang.Exception if any.
+     */
     public List<Batch> query() throws Exception {
         return query(1, 10, "");
     }
 
+    /**
+     * <p>query.</p>
+     *
+     * @param page a int.
+     * @param pageNumber a int.
+     * @return a {@link java.util.List} object.
+     * @throws java.lang.Exception if any.
+     */
     public List<Batch> query(int page, int pageNumber) throws Exception {
         return query(page, pageNumber, "");
     }
 
+    /**
+     * <p>summary.</p>
+     *
+     * @param batch_id a {@link java.lang.String} object.
+     * @return a {@link com.trolley.trolley.BatchSummary} object.
+     * @throws java.lang.Exception if any.
+     */
     public BatchSummary summary(String batch_id) throws Exception {
         if (batch_id == null || batch_id.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null os empty");

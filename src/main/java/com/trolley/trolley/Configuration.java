@@ -1,17 +1,39 @@
 package com.trolley.trolley;
 
+/**
+ * <p>Configuration class.</p>
+ *
+ * @author joshua
+ * @version $Id: $Id
+ */
 public class Configuration {
 
     String apiBase = "https://api.paymentrails.com";
     String privateKey = "";
     String publicKey = "";
 
+    /**
+     * <p>Constructor for Configuration.</p>
+     */
     public Configuration() {
     }
+    /**
+     * <p>Constructor for Configuration.</p>
+     *
+     * @param publicKey a {@link java.lang.String} object.
+     * @param privateKey a {@link java.lang.String} object.
+     */
     public Configuration(String publicKey, String privateKey){
         this.publicKey = publicKey;
         this.privateKey = privateKey;
     }
+    /**
+     * <p>Constructor for Configuration.</p>
+     *
+     * @param publicKey a {@link java.lang.String} object.
+     * @param privateKey a {@link java.lang.String} object.
+     * @param apiBase a {@link java.lang.String} object.
+     */
     public Configuration(String publicKey, String privateKey, String apiBase) {
         this.publicKey = publicKey;
         this.privateKey = privateKey;
@@ -30,7 +52,7 @@ public class Configuration {
     /**
      * Setter for the api base
      *
-     * @param apiBase
+     * @param apiBase a {@link java.lang.String} object.
      */
     public void setApiBase(String apiBase) {
         this.apiBase = apiBase;
@@ -38,7 +60,7 @@ public class Configuration {
 
     /**
      * Getter for the public static api key
-     * 
+     *
      * @return publicKey
      */
     public String getPublicKey() {
@@ -47,8 +69,8 @@ public class Configuration {
 
     /**
      * Setter for the public static key
-     * 
-     * @param publicKey
+     *
+     * @param publicKey a {@link java.lang.String} object.
      */
     public void setPublicKey(String publicKey) {
         this.publicKey = publicKey;
@@ -56,8 +78,8 @@ public class Configuration {
 
     /**
      * Getter for the private key
-     * 
-     * @param privateKey
+     *
+     * @return a {@link java.lang.String} object.
      */
     public String getPrivateKey() {
         return this.privateKey;
@@ -65,29 +87,46 @@ public class Configuration {
 
     /**
      * Setter for the private key
-     * 
-     * @param privateKey
+     *
+     * @param privatKey a {@link java.lang.String} object.
      */
     public void setPrivateKey(String privatKey) {
         this.privateKey = privatKey;
     }
 
+    /**
+     * <p>gateway.</p>
+     *
+     * @return a {@link com.trolley.trolley.Gateway} object.
+     */
     public static Gateway gateway() {
         return new Gateway(Configuration.instantiate());
     }
 
+    /**
+     * <p>client.</p>
+     *
+     * @param config a {@link com.trolley.trolley.Configuration} object.
+     * @return a {@link com.trolley.trolley.Client} object.
+     */
     public static Client client(Configuration config) {
         return new Client(config);
     }
 
+    /**
+     * <p>instantiate.</p>
+     *
+     * @return a {@link com.trolley.trolley.Configuration} object.
+     */
     public static Configuration instantiate() {
         return new Configuration();
     }
 
     /**
      * Set the API enviroment
-     * 
-     * @param enviroment
+     *
+     * @param enviroment a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
      */
     public String setEnviroment(String enviroment) {
         switch (enviroment) {
