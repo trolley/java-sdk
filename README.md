@@ -51,7 +51,7 @@ public class PaymentRailsExample {
 
 ### Usage
 
-Methods should all have Java Doc comments to help you understand their usage. As mentioned the [full API documentation](http://docs.paymentrails.com)
+Methods should all have Java Doc comments to help you understand their usage. As mentioned the [full API documentation](https://docs.trolley.com)
 is the best source of information about the API.
 
 For more information please read the [Java API docs](https://github.com/PaymentRails/paymentrails_dotnet/tree/master/docs/) is available. The best starting point is:

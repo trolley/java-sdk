@@ -2,7 +2,7 @@ package ca.paymentrails.paymentrails;
 
 public class Configuration {
 
-    String apiBase = "https://api.paymentrails.com";
+    String apiBase = "https://api.trolley.com";
     String privateKey = "";
     String publicKey = "";
 
@@ -93,7 +93,7 @@ public class Configuration {
         switch (enviroment) {
         case "production":
         case "PRODUCTION":
-            return "https://api.paymentrails.com";
+            return "https://api.trolley.com";
         case "development":
         case "DEVELOPMENT":
             return "http://api.railz.io";
@@ -102,8 +102,8 @@ public class Configuration {
             return "http://api.local.dev:3000";
         case "sandbox":
         case "SANDBOX":
-        return "https://api.paymentrails.com";
+        return "https://api.trolley.com";
         }
-        return "https://api.paymentrails.com";
+        return "https://api.trolley.com";
     }
 }

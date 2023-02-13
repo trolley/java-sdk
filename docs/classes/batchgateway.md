@@ -31,7 +31,7 @@ Gateway class for batches
 
 *Defined in [BatchGateway.java:95](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/BatchGateway.java#L95)*
 
-Creates a batch with optional payments. This is the interface that is provide by the [Create Batch](http://docs.paymentrails.com/api/#create-a-batch) API
+Creates a batch with optional payments. This is the interface that is provide by the [Create Batch](https://docs.trolley.com/api/#create-a-batch) API
 
     Batch batch = client.batch.create("{\"sourceCurrency\": \"USD\", \"description\":\"Docs Create\"}");
 
