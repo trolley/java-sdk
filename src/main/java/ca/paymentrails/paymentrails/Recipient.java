@@ -6,6 +6,7 @@ public class Recipient {
 
     String id;
     String routeType;
+    String routeMinimum;
     String estimatedFees;
     String referenceId;
     String email;
@@ -115,6 +116,14 @@ public class Recipient {
 
     public void setRouteType(String routeType) {
         this.routeType = routeType;
+    }
+
+    public String getRouteMinimum() {
+        return this.routeMinimum;
+    }
+
+    public void setRouteMinimum(String routeMinimum) {
+        this.routeMinimum = routeMinimum;
     }
 
     public String getEstimatedFees() {
