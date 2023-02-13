@@ -1,4 +1,4 @@
-[Payment Rails Java SDK](../README.md) > [Gateway](../classes/gateway.md)
+[Trolley Java SDK](../README.md) > [Gateway](../classes/gateway.md)
 
 # Class: Gateway
 

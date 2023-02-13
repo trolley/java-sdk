@@ -1,4 +1,4 @@
-[Payment Rails Python SDK](../README.md) > [Exceptions](../packages/exceptions.md) > [Authorization](../classes/exceptions.authorization.md)
+[Trolley Java SDK](../README.md) > [Exceptions](../packages/exceptions.md) > [Authorization](../classes/exceptions.authorization.md)
 
 # Class: Authorization
 

@@ -1,4 +1,4 @@
-[Payment Rails Java SDK](../README.md) > [RecipientAccount](../types/recipientaccount.md)
+[Trolley Java SDK](../README.md) > [RecipientAccount](../types/recipientaccount.md)
 
 # Types: RecipientAccount
 
