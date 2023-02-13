@@ -51,6 +51,7 @@ public class Client {
 
             con.setRequestProperty("X-PR-Timestamp", timeStamp + "");
             con.setRequestProperty("Authorization", authorizarion);
+            con.setRequestProperty("Trolley-Source", "java-sdk_1.0.2");
             con.setRequestProperty("Content-Type", "application/json");
             if (method == "POST" && body != "") {
 
@@ -144,6 +145,7 @@ public class Client {
 
             httpPatch.setEntity(params);
             httpPatch.addHeader("X-PR-Timestamp", timeStamp + "");
+            httpPatch.addHeader("Trolley-Source", "java-sdk_1.0.2");
             httpPatch.addHeader("Authorization", authorizarion);
 
             HttpResponse response = httpclient.execute(httpPatch);
