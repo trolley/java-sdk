@@ -52,7 +52,7 @@
 
 *Defined in [Configuration.java:90](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Configuration.java#L90)*
 
-Set the Trolley API environment that your using
+Set the Trolley API environment that you're using
 
 **Parameters:**
 
