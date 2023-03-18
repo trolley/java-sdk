@@ -1,4 +1,4 @@
-[Payment Rails Java SDK](../README.md) > [Configuration](../classes/Configuration.md)
+[Trolley Java SDK](../README.md) > [Configuration](../classes/Configuration.md)
 
 # Class: Configuration
 
@@ -14,11 +14,11 @@
 
 ## Properties
 
-<a id="enviroment"></a>
+<a id="environment"></a>
 
-### enviroment
+### environment
 
-**●  enviroment**:  *`string`*
+**●  environment**:  *`string`*
 
 *Defined in [Configuration.java:35](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Configuration.java#L35)*
 
@@ -52,7 +52,7 @@
 
 *Defined in [Configuration.java:90](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Configuration.java#L90)*
 
-Set the Payment Rails API environment that your using
+Set the Trolley API environment that you're using
 
 **Parameters:**
 

@@ -1,4 +1,4 @@
-[Payment Rails Java SDK](../README.md) > [ConfigurationParams](../types/configurationparams.md)
+[Trolley Java SDK](../README.md) > [ConfigurationParams](../types/configurationparams.md)
 
 # Interface: Configuration
 
@@ -24,7 +24,7 @@ The environment that you're using, most likely one of "production" or "sandbox"
 
 *Defined in [Configuration.java:7](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Configuration.java#L7)*
 
-The Payment Rails public key
+The Trolley public key
 
 ---
 
@@ -36,6 +36,6 @@ The Payment Rails public key
 
 *Defined in [Configuration.java:11](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Configuration.java#L11)*
 
-The Payment Rails private key
+The Trolley private key
 
 ---

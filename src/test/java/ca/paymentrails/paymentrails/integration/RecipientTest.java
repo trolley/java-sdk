@@ -3,7 +3,9 @@ package ca.paymentrails.paymentrails.integration;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
@@ -12,15 +14,30 @@ import ca.paymentrails.paymentrails.Recipient;
 import ca.paymentrails.paymentrails.RecipientAccount;
 import ca.paymentrails.paymentrails.Gateway;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @PrepareForTest(Recipient.class)
 public class RecipientTest {
 
+    // Testing order: alphabetical
+
+    private static Configuration config;
+
+    @BeforeClass 
+    public static void setupConfig() {
+        final String ACCESS_KEY = "YourAccessKey";
+        final String SECRET_KEY = "YourSecretKey";
+        final String ENVIRONMENT = "production";
+
+        // RecipientTest recipientTest = new RecipientTest();
+        config = new Configuration(ACCESS_KEY, SECRET_KEY, ENVIRONMENT);
+     }
+
     @Test
     public void testCreateRecipient() throws Exception {
-        Gateway client = new Gateway(new Configuration("YOUR-API-KEY", "YOUR-API-KEY", "production"));
+        Gateway client = new Gateway(config);
 
         UUID uuid = UUID.randomUUID();
 
@@ -36,7 +53,7 @@ public class RecipientTest {
 
     @Test
     public void testLifecycle() throws Exception {
-        Gateway client = new Gateway(new Configuration("YOUR-API-KEY", "YOUR-API-KEY", "production"));
+        Gateway client = new Gateway(config);
 
         UUID uuid = UUID.randomUUID();
 
@@ -52,8 +69,8 @@ public class RecipientTest {
         boolean response = client.recipient.update(recipient.getId(), body);
         assertNotNull(response);
 
-        Recipient anotheRecipient = client.recipient.find(recipient.getId());
-        assertEquals(anotheRecipient.getFirstName(), "Bob");
+        Recipient anotherRecipient = client.recipient.find(recipient.getId());
+        assertEquals(anotherRecipient.getFirstName(), "Bob");
 
         response = client.recipient.delete(recipient.getId());
         assertNotNull(response);
@@ -63,8 +80,8 @@ public class RecipientTest {
     }
 
     @Test
-    public void testAccount() throws Exception {
-        Gateway client = new Gateway(new Configuration("YOUR-API-KEY", "YOUR-API-KEY", "production"));
+    public void testRecipientAccount() throws Exception {
+        Gateway client = new Gateway(config);
 
         UUID uuid = UUID.randomUUID();
 
@@ -97,4 +114,13 @@ public class RecipientTest {
         assertEquals(1, recipientAccounts1.size());
     }
 
+    @Test
+    public void testRecipientRouteMinimum() throws Exception {
+        Gateway client = new Gateway(config);
+        ArrayList<Recipient> recipients = (ArrayList)client.recipient.search(1,20,"");
+        //Making sure routeMinimum is not null before asserting it's value
+        assertNotNull(recipients.get(0).getRouteMinimum());
+        //Making sure routeMinium is set to a non-null value
+        assertTrue(Integer.parseInt(recipients.get(0).getRouteMinimum()) >= 0);
+    }
 }

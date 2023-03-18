@@ -1,4 +1,4 @@
-[Payment Rails Python SDK](../README.md) > [Exceptions](../modules/exceptions.md) > [Malformed](../classes/exceptions.malformed.md)
+[Trolley Java SDK](../README.md) > [Exceptions](../modules/exceptions.md) > [Malformed](../classes/exceptions.malformed.md)
 
 # Class: Malformed
 

@@ -1,4 +1,4 @@
-[Payment Rails Java SDK](../README.md) > [PaymentInput](../types/payment.md)
+[Trolley Java SDK](../README.md) > [PaymentInput](../types/payment.md)
 
 # Types: Payment
 
