@@ -1,18 +1,12 @@
+
 package com.trolley.trolley;
 
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;;
 
-/**
- * <p>RecipientAccount class.</p>
- *
- * @author joshua
- * @version $Id: $Id
- */
-@JsonInclude(Include.NON_NULL)
-public class RecipientAccount {
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class RecipientAccount
+{
     String type;
     Boolean primary;
     String currency;
@@ -36,476 +30,208 @@ public class RecipientAccount {
     String emailAddress;
     String status;
     String disabledAt;
-
-    /**
-     * <p>Getter for the field <code>emailAddress</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getEmailAddress(){
-        return emailAddress;
+    
+    public String getEmailAddress() {
+        return this.emailAddress;
     }
-    /**
-     * <p>Setter for the field <code>emailAddress</code>.</p>
-     *
-     * @param emailAddress a {@link java.lang.String} object.
-     */
-    public void setEmailAddress(String emailAddress){
+    
+    public void setEmailAddress(final String emailAddress) {
         this.emailAddress = emailAddress;
     }
-
-
-    /**
-     * <p>Getter for the field <code>disabledAt</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getDisabledAt(){
-        return disabledAt;
+    
+    public String getDisabledAt() {
+        return this.disabledAt;
     }
-    /**
-     * <p>Setter for the field <code>disabledAt</code>.</p>
-     *
-     * @param disabledAt a {@link java.lang.String} object.
-     */
-    public void setDisabledAt(String disabledAt){
+    
+    public void setDisabledAt(final String disabledAt) {
         this.disabledAt = disabledAt;
     }
-
-    /**
-     * <p>Getter for the field <code>status</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getStatus(){
-        return status;
+    
+    public String getStatus() {
+        return this.status;
     }
-    /**
-     * <p>Setter for the field <code>status</code>.</p>
-     *
-     * @param status a {@link java.lang.String} object.
-     */
-    public void setStatus(String status){
+    
+    public void setStatus(final String status) {
         this.status = status;
     }
-
-    /**
-     * <p>Getter for the field <code>recipientId</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getRecipientId(){
-        return recipientId;
+    
+    public String getRecipientId() {
+        return this.recipientId;
     }
-    /**
-     * <p>Setter for the field <code>recipientId</code>.</p>
-     *
-     * @param recipientId a {@link java.lang.String} object.
-     */
-    public void setRecipientId(String recipientId){
+    
+    public void setRecipientId(final String recipientId) {
         this.recipientId = recipientId;
     }
-
-    /**
-     * <p>Getter for the field <code>type</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
+    
     public String getType() {
-        return type;
+        return this.type;
     }
-
-    /**
-     * <p>Setter for the field <code>type</code>.</p>
-     *
-     * @param type a {@link java.lang.String} object.
-     */
-    public void setType(String type) {
+    
+    public void setType(final String type) {
         this.type = type;
     }
-
-    /**
-     * <p>Getter for the field <code>primary</code>.</p>
-     *
-     * @return a {@link java.lang.Boolean} object.
-     */
+    
     public Boolean getPrimary() {
-        return primary;
+        return this.primary;
     }
-
-    /**
-     * <p>Setter for the field <code>primary</code>.</p>
-     *
-     * @param primary a {@link java.lang.Boolean} object.
-     */
-    public void setPrimary(Boolean primary) {
+    
+    public void setPrimary(final Boolean primary) {
         this.primary = primary;
     }
-
-    /**
-     * <p>Getter for the field <code>currency</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
+    
     public String getCurrency() {
-        return currency;
+        return this.currency;
     }
-
-    /**
-     * <p>Setter for the field <code>currency</code>.</p>
-     *
-     * @param currency a {@link java.lang.String} object.
-     */
-    public void setCurrency(String currency) {
+    
+    public void setCurrency(final String currency) {
         this.currency = currency;
     }
-
-    /**
-     * <p>Getter for the field <code>id</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
+    
     public String getId() {
-        return id;
+        return this.id;
     }
-
-    /**
-     * <p>Setter for the field <code>id</code>.</p>
-     *
-     * @param id a {@link java.lang.String} object.
-     */
-    public void setId(String id) {
+    
+    public void setId(final String id) {
         this.id = id;
     }
-
-    /**
-     * <p>Getter for the field <code>recipientAccountId</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
+    
     public String getRecipientAccountId() {
-        return recipientAccountId;
+        return this.recipientAccountId;
     }
-
-    /**
-     * <p>Setter for the field <code>recipientAccountId</code>.</p>
-     *
-     * @param recipientAccountId a {@link java.lang.String} object.
-     */
-    public void setRecipientAccountId(String recipientAccountId) {
+    
+    public void setRecipientAccountId(final String recipientAccountId) {
         this.recipientAccountId = recipientAccountId;
     }
-
-    /**
-     * <p>Getter for the field <code>routeType</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
+    
     public String getRouteType() {
-        return routeType;
+        return this.routeType;
     }
-
-    /**
-     * <p>Setter for the field <code>routeType</code>.</p>
-     *
-     * @param routeType a {@link java.lang.String} object.
-     */
-    public void setRouteType(String routeType) {
+    
+    public void setRouteType(final String routeType) {
         this.routeType = routeType;
     }
-
-    /**
-     * <p>Getter for the field <code>recipientFees</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
+    
     public String getRecipientFees() {
-        return recipientFees;
+        return this.recipientFees;
     }
-
-    /**
-     * <p>Setter for the field <code>recipientFees</code>.</p>
-     *
-     * @param recipientFees a {@link java.lang.String} object.
-     */
-    public void setRecipientFees(String recipientFees) {
+    
+    public void setRecipientFees(final String recipientFees) {
         this.recipientFees = recipientFees;
     }
-
-    /**
-     * <p>Getter for the field <code>country</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
+    
     public String getCountry() {
-        return country;
+        return this.country;
     }
-
-    /**
-     * <p>Setter for the field <code>country</code>.</p>
-     *
-     * @param country a {@link java.lang.String} object.
-     */
-    public void setCountry(String country) {
+    
+    public void setCountry(final String country) {
         this.country = country;
     }
-
-    /**
-     * <p>Getter for the field <code>iban</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
+    
     public String getIban() {
-        return iban;
+        return this.iban;
     }
-
-    /**
-     * <p>Setter for the field <code>iban</code>.</p>
-     *
-     * @param iban a {@link java.lang.String} object.
-     */
-    public void setIban(String iban) {
+    
+    public void setIban(final String iban) {
         this.iban = iban;
     }
-
-    /**
-     * <p>Getter for the field <code>accountNum</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
+    
     public String getAccountNum() {
-        return accountNum;
+        return this.accountNum;
     }
-
-    /**
-     * <p>Setter for the field <code>accountNum</code>.</p>
-     *
-     * @param accountNum a {@link java.lang.String} object.
-     */
-    public void setAccountNum(String accountNum) {
+    
+    public void setAccountNum(final String accountNum) {
         this.accountNum = accountNum;
     }
-
-    /**
-     * <p>Getter for the field <code>accountHolderName</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
+    
     public String getAccountHolderName() {
-        return accountHolderName;
+        return this.accountHolderName;
     }
-
-    /**
-     * <p>Setter for the field <code>accountHolderName</code>.</p>
-     *
-     * @param accountHolderName a {@link java.lang.String} object.
-     */
-    public void setAccountHolderName(String accountHolderName) {
+    
+    public void setAccountHolderName(final String accountHolderName) {
         this.accountHolderName = accountHolderName;
     }
-
-    /**
-     * <p>Getter for the field <code>swiftBic</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
+    
     public String getSwiftBic() {
-        return swiftBic;
+        return this.swiftBic;
     }
-
-    /**
-     * <p>Setter for the field <code>swiftBic</code>.</p>
-     *
-     * @param swiftBic a {@link java.lang.String} object.
-     */
-    public void setSwiftBic(String swiftBic) {
+    
+    public void setSwiftBic(final String swiftBic) {
         this.swiftBic = swiftBic;
     }
-
-    /**
-     * <p>Getter for the field <code>branchId</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
+    
     public String getBranchId() {
-        return branchId;
+        return this.branchId;
     }
-
-    /**
-     * <p>Setter for the field <code>branchId</code>.</p>
-     *
-     * @param branchId a {@link java.lang.String} object.
-     */
-    public void setBranchId(String branchId) {
+    
+    public void setBranchId(final String branchId) {
         this.branchId = branchId;
     }
-
-    /**
-     * <p>Getter for the field <code>bankId</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
+    
     public String getBankId() {
-        return bankId;
+        return this.bankId;
     }
-
-    /**
-     * <p>Setter for the field <code>bankId</code>.</p>
-     *
-     * @param bankId a {@link java.lang.String} object.
-     */
-    public void setBankId(String bankId) {
+    
+    public void setBankId(final String bankId) {
         this.bankId = bankId;
     }
-
-    /**
-     * <p>Getter for the field <code>bankName</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
+    
     public String getBankName() {
-        return bankName;
+        return this.bankName;
     }
-
-    /**
-     * <p>Setter for the field <code>bankName</code>.</p>
-     *
-     * @param bankName a {@link java.lang.String} object.
-     */
-    public void setBankName(String bankName) {
+    
+    public void setBankName(final String bankName) {
         this.bankName = bankName;
     }
-
-    /**
-     * <p>Getter for the field <code>bankAddress</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
+    
     public String getBankAddress() {
-        return bankAddress;
+        return this.bankAddress;
     }
-
-    /**
-     * <p>Setter for the field <code>bankAddress</code>.</p>
-     *
-     * @param bankAddress a {@link java.lang.String} object.
-     */
-    public void setBankAddress(String bankAddress) {
+    
+    public void setBankAddress(final String bankAddress) {
         this.bankAddress = bankAddress;
     }
-
-    /**
-     * <p>Getter for the field <code>bankCity</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
+    
     public String getBankCity() {
-        return bankCity;
+        return this.bankCity;
     }
-
-    /**
-     * <p>Setter for the field <code>bankCity</code>.</p>
-     *
-     * @param bankCity a {@link java.lang.String} object.
-     */
-    public void setBankCity(String bankCity) {
+    
+    public void setBankCity(final String bankCity) {
         this.bankCity = bankCity;
     }
-
-    /**
-     * <p>Getter for the field <code>bankRegionCode</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
+    
     public String getBankRegionCode() {
-        return bankRegionCode;
+        return this.bankRegionCode;
     }
-
-    /**
-     * <p>Setter for the field <code>bankRegionCode</code>.</p>
-     *
-     * @param bankRegionCode a {@link java.lang.String} object.
-     */
-    public void setBankRegionCode(String bankRegionCode) {
+    
+    public void setBankRegionCode(final String bankRegionCode) {
         this.bankRegionCode = bankRegionCode;
     }
-
-    /**
-     * <p>Getter for the field <code>bankPostalCode</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
+    
     public String getBankPostalCode() {
-        return bankPostalCode;
+        return this.bankPostalCode;
     }
-
-    /**
-     * <p>Setter for the field <code>bankPostalCode</code>.</p>
-     *
-     * @param bankPostalCode a {@link java.lang.String} object.
-     */
-    public void setBankPostalCode(String bankPostalCode) {
+    
+    public void setBankPostalCode(final String bankPostalCode) {
         this.bankPostalCode = bankPostalCode;
     }
-
-    /**
-     * <p>findAll.</p>
-     *
-     * @param recipient_id a {@link java.lang.String} object.
-     * @return a {@link java.util.List} object.
-     * @throws java.lang.Exception if any.
-     */
-    public static List<RecipientAccount> findAll(String recipient_id) throws Exception {
+    
+    public static List<RecipientAccount> findAll(final String recipient_id) throws Exception {
         return Configuration.gateway().recipientAccount.findAll(recipient_id);
     }
-
-    /**
-     * <p>find.</p>
-     *
-     * @param recipient_id a {@link java.lang.String} object.
-     * @param recipient_account_id a {@link java.lang.String} object.
-     * @return a {@link com.trolley.trolley.RecipientAccount} object.
-     * @throws java.lang.Exception if any.
-     */
-    public static RecipientAccount find(String recipient_id, String recipient_account_id) throws Exception {
-       return Configuration.gateway().recipientAccount.find(recipient_id, recipient_account_id);
+    
+    public static RecipientAccount find(final String recipient_id, final String recipient_account_id) throws Exception {
+        return Configuration.gateway().recipientAccount.find(recipient_id, recipient_account_id);
     }
-
-    /**
-     * <p>create.</p>
-     *
-     * @param recipient_id a {@link java.lang.String} object.
-     * @param body a {@link java.lang.String} object.
-     * @return a {@link com.trolley.trolley.RecipientAccount} object.
-     * @throws java.lang.Exception if any.
-     */
-    public static RecipientAccount create(String recipient_id, String body) throws Exception {
-       return Configuration.gateway().recipientAccount.create(recipient_id, body);
+    
+    public static RecipientAccount create(final String recipient_id, final String body) throws Exception {
+        return Configuration.gateway().recipientAccount.create(recipient_id, body);
     }
-
-    /**
-     * <p>update.</p>
-     *
-     * @param recipient_id a {@link java.lang.String} object.
-     * @param recipient_account_id a {@link java.lang.String} object.
-     * @param body a {@link java.lang.String} object.
-     * @return a {@link com.trolley.trolley.RecipientAccount} object.
-     * @throws java.lang.Exception if any.
-     */
-    public static RecipientAccount update(String recipient_id, String recipient_account_id, String body) throws Exception {
+    
+    public static RecipientAccount update(final String recipient_id, final String recipient_account_id, final String body) throws Exception {
         return Configuration.gateway().recipientAccount.update(recipient_id, recipient_account_id, body);
     }
-
-    /**
-     * <p>delete.</p>
-     *
-     * @param recipient_id a {@link java.lang.String} object.
-     * @param recipient_account_id a {@link java.lang.String} object.
-     * @return a boolean.
-     * @throws java.lang.Exception if any.
-     */
-    public static boolean delete(String recipient_id, String recipient_account_id) throws Exception {
+    
+    public static boolean delete(final String recipient_id, final String recipient_account_id) throws Exception {
         return Configuration.gateway().recipientAccount.delete(recipient_id, recipient_account_id);
     }
-
 }

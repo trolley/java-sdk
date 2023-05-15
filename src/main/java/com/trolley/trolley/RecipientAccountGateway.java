@@ -1,194 +1,116 @@
+
 package com.trolley.trolley;
 
+import java.util.ArrayList;
+import java.io.IOException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trolley.Exceptions.InvalidFieldException;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import java.util.List;
 
-/**
- * <p>RecipientAccountGateway class.</p>
- *
- * @author joshua
- * @version $Id: $Id
- */
-public class RecipientAccountGateway {
-
+public class RecipientAccountGateway
+{
     Client client;
-
-    /**
-     * <p>Constructor for RecipientAccountGateway.</p>
-     *
-     * @param config a {@link com.trolley.trolley.Configuration} object.
-     */
-    public RecipientAccountGateway(Configuration config) {
+    
+    public RecipientAccountGateway(final Configuration config) {
         this.client = new Client(config);
     }
-
-    /**
-     * <p>findAll.</p>
-     *
-     * @param recipient_id a {@link java.lang.String} object.
-     * @return a {@link java.util.List} object.
-     * @throws java.lang.Exception if any.
-     */
-    public List<RecipientAccount> findAll(String recipient_id) throws Exception {
+    
+    public List<RecipientAccount> findAll(final String recipient_id) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
-
-        String endPoint = "/v1/recipients/" + recipient_id + "/accounts";
-        String response = this.client.get(endPoint);
-        return recipientAccountListFactory(response);
+        final String endPoint = "/v1/recipients/" + recipient_id + "/accounts";
+        final String response = this.client.get(endPoint);
+        return this.recipientAccountListFactory(response);
     }
-
-    /**
-     * <p>find.</p>
-     *
-     * @param recipient_id a {@link java.lang.String} object.
-     * @param recipient_account_id a {@link java.lang.String} object.
-     * @return a {@link com.trolley.trolley.RecipientAccount} object.
-     * @throws java.lang.Exception if any.
-     */
-    public RecipientAccount find(String recipient_id, String recipient_account_id) throws Exception {
+    
+    public RecipientAccount find(final String recipient_id, final String recipient_account_id) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
-
-        String endPoint = "/v1/recipients/" + recipient_id + "/accounts/" + recipient_account_id;
-        String response = this.client.get(endPoint);
-        return recipientAccountFactory(response);
+        final String endPoint = "/v1/recipients/" + recipient_id + "/accounts/" + recipient_account_id;
+        final String response = this.client.get(endPoint);
+        return this.recipientAccountFactory(response);
     }
-
-    /**
-     * <p>create.</p>
-     *
-     * @param recipient_id a {@link java.lang.String} object.
-     * @param body a {@link java.lang.String} object.
-     * @return a {@link com.trolley.trolley.RecipientAccount} object.
-     * @throws java.lang.Exception if any.
-     */
-    public RecipientAccount create(String recipient_id, String body) throws Exception {
+    
+    public RecipientAccount create(final String recipient_id, final String body) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
         if (body == null || body.isEmpty()) {
             throw new InvalidFieldException("Body cannot be null or empty");
         }
-        
-        String endPoint = "/v1/recipients/" + recipient_id + "/accounts";
-        String response = this.client.post(endPoint, body);
-        return recipientAccountFactory(response);
+        final String endPoint = "/v1/recipients/" + recipient_id + "/accounts";
+        final String response = this.client.post(endPoint, body);
+        return this.recipientAccountFactory(response);
     }
-
-    /**
-     * <p>create.</p>
-     *
-     * @param recipient_id a {@link java.lang.String} object.
-     * @param account a {@link com.trolley.trolley.RecipientAccount} object.
-     * @return a {@link com.trolley.trolley.RecipientAccount} object.
-     * @throws java.lang.Exception if any.
-     */
-    public RecipientAccount create(String recipient_id, RecipientAccount account) throws Exception {
+    
+    public RecipientAccount create(final String recipient_id, final RecipientAccount account) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
         if (account == null) {
             throw new InvalidFieldException("Body cannot be null or empty");
         }
-
-        String jsonAccount = new ObjectMapper().writeValueAsString(account);
-        
-        String endPoint = "/v1/recipients/" + recipient_id + "/accounts";
-        String response = this.client.post(endPoint, jsonAccount);
-        return recipientAccountFactory(response);
+        final String jsonAccount = new ObjectMapper().writeValueAsString((Object)account);
+        final String endPoint = "/v1/recipients/" + recipient_id + "/accounts";
+        final String response = this.client.post(endPoint, jsonAccount);
+        return this.recipientAccountFactory(response);
     }
-
-    /**
-     * <p>update.</p>
-     *
-     * @param recipient_id a {@link java.lang.String} object.
-     * @param recipient_account_id a {@link java.lang.String} object.
-     * @param body a {@link java.lang.String} object.
-     * @return a {@link com.trolley.trolley.RecipientAccount} object.
-     * @throws java.lang.Exception if any.
-     */
-    public RecipientAccount update(String recipient_id, String recipient_account_id, String body) throws Exception {
+    
+    public RecipientAccount update(final String recipient_id, final String recipient_account_id, final String body) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
         if (body == null || body.isEmpty()) {
             throw new InvalidFieldException("Body cannot be null or empty");
         }
-
-        String endPoint = "/v1/recipients/" + recipient_id + "/accounts/" + recipient_account_id;
-        String response = this.client.patch(endPoint, body);
-        return recipientAccountFactory(response);
+        final String endPoint = "/v1/recipients/" + recipient_id + "/accounts/" + recipient_account_id;
+        final String response = this.client.patch(endPoint, body);
+        return this.recipientAccountFactory(response);
     }
-
-    /**
-     * <p>update.</p>
-     *
-     * @param recipient_id a {@link java.lang.String} object.
-     * @param recipient_account_id a {@link java.lang.String} object.
-     * @param account a {@link com.trolley.trolley.RecipientAccount} object.
-     * @return a {@link com.trolley.trolley.RecipientAccount} object.
-     * @throws java.lang.Exception if any.
-     */
-    public RecipientAccount update(String recipient_id, String recipient_account_id, RecipientAccount account) throws Exception {
+    
+    public RecipientAccount update(final String recipient_id, final String recipient_account_id, final RecipientAccount account) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
         if (account == null) {
             throw new InvalidFieldException("Body cannot be null or empty");
         }
-
-        String jsonAccount = new ObjectMapper().writeValueAsString(account);
-
-        String endPoint = "/v1/recipients/" + recipient_id + "/accounts/" + recipient_account_id;
-        String response = this.client.patch(endPoint, jsonAccount);
-        return recipientAccountFactory(response);
+        final String jsonAccount = new ObjectMapper().writeValueAsString((Object)account);
+        final String endPoint = "/v1/recipients/" + recipient_id + "/accounts/" + recipient_account_id;
+        final String response = this.client.patch(endPoint, jsonAccount);
+        return this.recipientAccountFactory(response);
     }
-
-    /**
-     * <p>delete.</p>
-     *
-     * @param recipient_id a {@link java.lang.String} object.
-     * @param recipient_account_id a {@link java.lang.String} object.
-     * @return a boolean.
-     * @throws java.lang.Exception if any.
-     */
-    public boolean delete(String recipient_id, String recipient_account_id) throws Exception {
+    
+    public boolean delete(final String recipient_id, final String recipient_account_id) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
-
-        String endPoint = "/v1/recipients/" + recipient_id + "/accounts/" + recipient_account_id;
+        final String endPoint = "/v1/recipients/" + recipient_id + "/accounts/" + recipient_account_id;
         this.client.delete(endPoint);
         return true;
     }
-
-    private RecipientAccount recipientAccountFactory(String data) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(data);
+    
+    private RecipientAccount recipientAccountFactory(final String data) throws IOException {
+        final ObjectMapper mapper = new ObjectMapper();
+        final JsonNode node = mapper.readTree(data);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        RecipientAccount recipientAccount = mapper.readValue(node.get("account").traverse(), RecipientAccount.class);
+        final RecipientAccount recipientAccount = (RecipientAccount)mapper.readValue(node.get("account").traverse(), (Class)RecipientAccount.class);
         return recipientAccount;
     }
-
-    private List<RecipientAccount> recipientAccountListFactory(String data) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(data);
+    
+    private List<RecipientAccount> recipientAccountListFactory(final String data) throws IOException {
+        final ObjectMapper mapper = new ObjectMapper();
+        final JsonNode node = mapper.readTree(data);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        Object recipientAccount = mapper.readValue(node.get("accounts").traverse(), Object.class);
-        @SuppressWarnings("unchecked")
-        List<RecipientAccount> recipAccounts = (List<RecipientAccount>) recipientAccount;
-        List<RecipientAccount> recipientAccounts = new ArrayList<RecipientAccount>();
-        for (int i = 0; i < recipAccounts.size(); i++) {
-            RecipientAccount pojo = mapper.convertValue(recipAccounts.get(i), RecipientAccount.class);
+        final Object recipientAccount = mapper.readValue(node.get("accounts").traverse(), (Class)Object.class);
+        final List<RecipientAccount> recipAccounts = (List<RecipientAccount>)recipientAccount;
+        final List<RecipientAccount> recipientAccounts = new ArrayList<RecipientAccount>();
+        for (int i = 0; i < recipAccounts.size(); ++i) {
+            final RecipientAccount pojo = (RecipientAccount)mapper.convertValue((Object)recipAccounts.get(i), (Class)RecipientAccount.class);
             recipientAccounts.add(pojo);
         }
         return recipientAccounts;

@@ -1,194 +1,107 @@
+
 package com.trolley.trolley;
 
+import java.io.IOException;
 import com.fasterxml.jackson.databind.JsonNode;
+import java.util.ArrayList;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
 import com.trolley.Exceptions.InvalidFieldException;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-
-/**
- * <p>RecipientGateway class.</p>
- *
- * @author joshua
- * @version $Id: $Id
- */
-public class RecipientGateway {
-
+public class RecipientGateway
+{
     Client client;
-
-    /**
-     * <p>Constructor for RecipientGateway.</p>
-     *
-     * @param config a {@link com.trolley.trolley.Configuration} object.
-     */
-    public RecipientGateway(Configuration config) {
+    
+    public RecipientGateway(final Configuration config) {
         this.client = new Client(config);
     }
-
-    /**
-     * <p>find.</p>
-     *
-     * @param recipient_id a {@link java.lang.String} object.
-     * @return a {@link com.trolley.trolley.Recipient} object.
-     * @throws java.lang.Exception if any.
-     */
-    public Recipient find(String recipient_id) throws Exception {
+    
+    public Recipient find(final String recipient_id) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
-
-        String endPoint = "/v1/recipients/" + recipient_id;
-        String response = this.client.get(endPoint);
-        return recipientFactory(response);
+        final String endPoint = "/v1/recipients/" + recipient_id;
+        final String response = this.client.get(endPoint);
+        return this.recipientFactory(response);
     }
-
-    /**
-     * <p>findLogs.</p>
-     *
-     * @param recipient_id a {@link java.lang.String} object.
-     * @return a {@link java.lang.String} object.
-     * @throws java.lang.Exception if any.
-     */
-    public String findLogs(String recipient_id) throws Exception {
-        String endPoint = "/v1/recipients/" + recipient_id + "/logs";
-        String response = this.client.get(endPoint);
+    
+    public String findLogs(final String recipient_id) throws Exception {
+        final String endPoint = "/v1/recipients/" + recipient_id + "/logs";
+        final String response = this.client.get(endPoint);
         return response;
     }
-
-    /**
-     * <p>findPayments.</p>
-     *
-     * @param recipient_id a {@link java.lang.String} object.
-     * @return a {@link java.util.List} object.
-     * @throws java.lang.Exception if any.
-     */
-    public List<Payment> findPayments(String recipient_id) throws Exception {
-        String endPoint = "/v1/recipients/" + recipient_id + "/payments";
-        String response = this.client.get(endPoint);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(response);
+    
+    public List<Payment> findPayments(final String recipient_id) throws Exception {
+        final String endPoint = "/v1/recipients/" + recipient_id + "/payments";
+        final String response = this.client.get(endPoint);
+        final ObjectMapper mapper = new ObjectMapper();
+        final JsonNode node = mapper.readTree(response);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        Object payment = mapper.readValue(node.get("payments").traverse(), Object.class);
-        @SuppressWarnings("unchecked")
-        List<Payment> paymens = (List<Payment>) payment;
-        List<Payment> payments = new ArrayList<Payment>();
-        for (int i = 0; i < paymens.size(); i++) {
-            Payment pojo = mapper.convertValue(paymens.get(i), Payment.class);
+        final Object payment = mapper.readValue(node.get("payments").traverse(), (Class)Object.class);
+        final List<Payment> paymens = (List<Payment>)payment;
+        final List<Payment> payments = new ArrayList<Payment>();
+        for (int i = 0; i < paymens.size(); ++i) {
+            final Payment pojo = (Payment)mapper.convertValue((Object)paymens.get(i), (Class)Payment.class);
             payments.add(pojo);
         }
-
         return payments;
     }
-
-    /**
-     * <p>create.</p>
-     *
-     * @param body a {@link java.lang.String} object.
-     * @return a {@link com.trolley.trolley.Recipient} object.
-     * @throws java.lang.Exception if any.
-     */
-    public Recipient create(String body) throws Exception {
+    
+    public Recipient create(final String body) throws Exception {
         if (body == null || body.isEmpty()) {
             throw new InvalidFieldException("Body cannot be null or empty");
         }
-        String endPoint = "/v1/recipients/";
-        String response = this.client.post(endPoint, body);
-        return recipientFactory(response);
+        final String endPoint = "/v1/recipients/";
+        final String response = this.client.post(endPoint, body);
+        return this.recipientFactory(response);
     }
-
-    /**
-     * <p>create.</p>
-     *
-     * @param recipient a {@link com.trolley.trolley.Recipient} object.
-     * @return a {@link com.trolley.trolley.Recipient} object.
-     * @throws java.lang.Exception if any.
-     */
-    public Recipient create(Recipient recipient) throws Exception {
+    
+    public Recipient create(final Recipient recipient) throws Exception {
         if (recipient == null) {
             throw new InvalidFieldException("Body cannot be null or empty");
         }
-
-        String jsonRecipient = new ObjectMapper().writeValueAsString(recipient);
-
-        String endPoint = "/v1/recipients/";
-        String response = this.client.post(endPoint, jsonRecipient);
-        return recipientFactory(response);
+        final String jsonRecipient = new ObjectMapper().writeValueAsString((Object)recipient);
+        final String endPoint = "/v1/recipients/";
+        final String response = this.client.post(endPoint, jsonRecipient);
+        return this.recipientFactory(response);
     }
-
-    /**
-     * <p>update.</p>
-     *
-     * @param recipient_id a {@link java.lang.String} object.
-     * @param body a {@link java.lang.String} object.
-     * @return a boolean.
-     * @throws java.lang.Exception if any.
-     */
-    public boolean update(String recipient_id, String body) throws Exception {
+    
+    public boolean update(final String recipient_id, final String body) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
         if (body == null || body.isEmpty()) {
             throw new InvalidFieldException("Body cannot be null or empty");
         }
-
-        String endPoint = "/v1/recipients/" + recipient_id;
+        final String endPoint = "/v1/recipients/" + recipient_id;
         this.client.patch(endPoint, body);
         return true;
     }
-
-    /**
-     * <p>update.</p>
-     *
-     * @param recipient_id a {@link java.lang.String} object.
-     * @param recipient a {@link com.trolley.trolley.Recipient} object.
-     * @return a boolean.
-     * @throws java.lang.Exception if any.
-     */
-    public boolean update(String recipient_id, Recipient recipient) throws Exception {
+    
+    public boolean update(final String recipient_id, final Recipient recipient) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
         if (recipient == null) {
             throw new InvalidFieldException("Body cannot be null or empty");
         }
-
-        String jsonRecipient = new ObjectMapper().writeValueAsString(recipient);
-
-        String endPoint = "/v1/recipients/" + recipient_id;
+        final String jsonRecipient = new ObjectMapper().writeValueAsString((Object)recipient);
+        final String endPoint = "/v1/recipients/" + recipient_id;
         this.client.patch(endPoint, jsonRecipient);
         return true;
     }
-
-    /**
-     * <p>delete.</p>
-     *
-     * @param recipient_id a {@link java.lang.String} object.
-     * @return a boolean.
-     * @throws java.lang.Exception if any.
-     */
-    public boolean delete(String recipient_id) throws Exception {
+    
+    public boolean delete(final String recipient_id) throws Exception {
         if (recipient_id == null || recipient_id.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
-
-        String endPoint = "/v1/recipients/" + recipient_id;
+        final String endPoint = "/v1/recipients/" + recipient_id;
         this.client.delete(endPoint);
         return true;
     }
-
-    /**
-     * <p>search.</p>
-     *
-     * @param page a int.
-     * @param pageSize a int.
-     * @param term a {@link java.lang.String} object.
-     * @return a {@link java.util.List} object.
-     * @throws java.lang.Exception if any.
-     */
-    public List<Recipient> search(int page, int pageSize, String term) throws Exception {
+    
+    public List<Recipient> search(final int page, final int pageSize, final String term) throws Exception {
         if (page < 0) {
             throw new InvalidFieldException("Page cannot be less than 0");
         }
@@ -198,32 +111,28 @@ public class RecipientGateway {
         if (term == null) {
             throw new InvalidFieldException("Message cannot be null");
         }
-
-        String endPoint = "/v1/recipients/?" + "&search=" + term + "&page=" + page + "&pageSize=" + pageSize;
-        String response = this.client.get(endPoint);
-
-        return recipientListFactory(response);
+        final String endPoint = "/v1/recipients/?&search=" + term + "&page=" + page + "&pageSize=" + pageSize;
+        final String response = this.client.get(endPoint);
+        return this.recipientListFactory(response);
     }
-
-    private Recipient recipientFactory(String data) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
+    
+    private Recipient recipientFactory(final String data) throws IOException {
+        final ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        JsonNode node = mapper.readTree(data);
-        Recipient recipient = mapper.readValue(node.get("recipient").traverse(), Recipient.class);
+        final JsonNode node = mapper.readTree(data);
+        final Recipient recipient = (Recipient)mapper.readValue(node.get("recipient").traverse(), (Class)Recipient.class);
         return recipient;
     }
-
-    private List<Recipient> recipientListFactory(String data) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
+    
+    private List<Recipient> recipientListFactory(final String data) throws IOException {
+        final ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        JsonNode node = mapper.readTree(data);
-
-        Object recipient = mapper.readValue(node.get("recipients").traverse(), Object.class);
-        @SuppressWarnings("unchecked")
-        List<Recipient> recips = (List<Recipient>) recipient;
-        List<Recipient> recipients = new ArrayList<Recipient>();
-        for (int i = 0; i < recips.size(); i++) {
-            Recipient pojo = mapper.convertValue(recips.get(i), Recipient.class);
+        final JsonNode node = mapper.readTree(data);
+        final Object recipient = mapper.readValue(node.get("recipients").traverse(), (Class)Object.class);
+        final List<Recipient> recips = (List<Recipient>)recipient;
+        final List<Recipient> recipients = new ArrayList<Recipient>();
+        for (int i = 0; i < recips.size(); ++i) {
+            final Recipient pojo = (Recipient)mapper.convertValue((Object)recips.get(i), (Class)Recipient.class);
             recipients.add(pojo);
         }
         return recipients;

@@ -1,250 +1,212 @@
 package com.trolley.trolley;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.rmi.UnexpectedException;
-
+import java.security.Key;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-
-import com.trolley.Exceptions.*;
-
+import com.trolley.Exceptions.DownForMaintenanceException;
+import com.trolley.Exceptions.InvalidServerConnectionException;
+import com.trolley.Exceptions.TooManyRequestsException;
+import com.trolley.Exceptions.InvalidStatusCodeException;
+import com.trolley.Exceptions.NotFoundException;
+import com.trolley.Exceptions.AuthorizationException;
+import com.trolley.Exceptions.AuthenticationException;
+import com.trolley.Exceptions.MalformedException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPatch;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.HttpEntity;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.impl.client.HttpClients;
+import java.io.IOException;
+import java.rmi.UnexpectedException;
+import java.io.Reader;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.DataOutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
-/**
- * <p>Client class.</p>
- *
- * @author joshua
- * @version $Id: $Id
- */
-public class Client {
-
+public class Client
+{
     private Configuration config;
-
-    /**
-     * <p>Constructor for Client.</p>
-     *
-     * @param config a {@link com.trolley.trolley.Configuration} object.
-     */
-    public Client(Configuration config) {
+    
+    public Client(final Configuration config) {
         this.config = config;
     }
-
-    /**
-     * Factory Method to create an instance of Client
-     *
-     * @return Client
-     * @param config a {@link com.trolley.trolley.Configuration} object.
-     */
-    public static Client create(Configuration config) {
+    
+    public static Client create(final Configuration config) {
         return new Client(config);
     }
-
-    private String sendRequest(String method, String endPoint, String body) throws Exception {
+    
+    private String sendRequest(final String method, final String endPoint, final String body) throws Exception {
         String StringResponse = "";
-        HttpURLConnection con;
         try {
-            String url = this.config.getApiBase() + endPoint;
-            URL obj = new URL(url);
-            con = (HttpURLConnection) obj.openConnection();
-
-            int timeStamp = (int) (System.currentTimeMillis() / 1000L);
-            String authorizarion = generateAuthorization(timeStamp, method, endPoint, body);
-
+            final String url = this.config.getApiBase() + endPoint;
+            final URL obj = new URL(url);
+            final HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+            final int timeStamp = (int)(System.currentTimeMillis() / 1000L);
+            final String authorizarion = this.generateAuthorization(timeStamp, method, endPoint, body);
             con.setRequestMethod(method);
-
             con.setRequestProperty("X-PR-Timestamp", timeStamp + "");
             con.setRequestProperty("Authorization", authorizarion);
             con.setRequestProperty("Content-Type", "application/json");
             if (method == "POST" && body != "") {
-
                 con.setDoOutput(true);
-                try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
+                final DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+                try {
                     wr.writeBytes(body);
                     wr.flush();
+                    wr.close();
+                }
+                catch (Throwable t) {
+                    try {
+                        wr.close();
+                    }
+                    catch (Throwable exception) {
+                        t.addSuppressed(exception);
+                    }
+                    throw t;
                 }
             }
-            int responseCode = con.getResponseCode();
-
+            final int responseCode = con.getResponseCode();
             if (responseCode != 200) {
-                throwStatusCodeException(responseCode, con.getResponseMessage());
+                this.throwStatusCodeException(responseCode, con.getResponseMessage());
             }
-            StringBuffer response;
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
-                String inputLine;
-                response = new StringBuffer();
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
+            try {
+                final BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                try {
+                    final StringBuffer response = new StringBuffer();
+                    String inputLine;
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    StringResponse = response.toString();
+                    in.close();
                 }
-                StringResponse = response.toString();
-            } catch (IOException e) {
+                catch (Throwable t2) {
+                    try {
+                        in.close();
+                    }
+                    catch (Throwable exception2) {
+                        t2.addSuppressed(exception2);
+                    }
+                    throw t2;
+                }
+            }
+            catch (IOException e) {
                 throw new UnexpectedException(StringResponse);
             }
-
-        } catch (IOException e) {
+        }
+        catch (IOException e2) {
             throw new UnexpectedException(StringResponse);
         }
         return StringResponse;
     }
-
-    private String sendRequest(String method, String endPoint) throws Exception {
-        return sendRequest(method, endPoint, "");
+    
+    private String sendRequest(final String method, final String endPoint) throws Exception {
+        return this.sendRequest(method, endPoint, "");
     }
-
-    /**
-     * Makes an HTTP GET request to the API
-     *
-     * @param endPoint a {@link java.lang.String} object.
-     * @return The response
-     * @throws java.lang.Exception if any.
-     */
-    public String get(String endPoint) throws Exception {
-        return sendRequest("GET", endPoint);
+    
+    public String get(final String endPoint) throws Exception {
+        return this.sendRequest("GET", endPoint);
     }
-
-    /**
-     * Makes an HTTP POST request to the API
-     *
-     * @param endPoint a {@link java.lang.String} object.
-     * @param body a {@link java.lang.String} object.
-     * @return The response
-     * @throws java.lang.Exception if any.
-     */
-    public String post(String endPoint, String body) throws Exception {
-        return sendRequest("POST", endPoint, body);
+    
+    public String post(final String endPoint, final String body) throws Exception {
+        return this.sendRequest("POST", endPoint, body);
     }
-
-    // public String post(String endPoint, Object body) throws Exception {
-    //     String result = new ObjectMapper().writeValueAsString(body);
-
-    //     return sendRequest("POST", endPoint, result);
-    // }
-
-    /**
-     * Makes an HTTP POST request to the API
-     *
-     * @param endPoint a {@link java.lang.String} object.
-     * @return The response
-     * @throws java.lang.Exception if any.
-     */
-    public String post(String endPoint) throws Exception {
-        return sendRequest("POST", endPoint);
+    
+    public String post(final String endPoint) throws Exception {
+        return this.sendRequest("POST", endPoint);
     }
-    /**
-     * Makes an HTTP PATCH request to the API
-     *
-     * @param endPoint a {@link java.lang.String} object.
-     * @param body a {@link java.lang.String} object.
-     * @return The response
-     * @throws com.trolley.Exceptions.InvalidStatusCodeException if any.
-     * @throws com.trolley.Exceptions.InvalidServerConnectionException if any.
-     * @throws java.lang.Exception if any.
-     */
-    public String patch(String endPoint, String body) throws Exception {
+    
+    public String patch(final String endPoint, final String body) throws Exception {
         String StringResponse = "";
         try {
-
-            HttpClient httpclient = HttpClients.createDefault();
-            HttpPatch httpPatch = new HttpPatch(this.config.getApiBase() + endPoint);
-            StringEntity params = new StringEntity(body);
-
-            int timeStamp = (int) (System.currentTimeMillis() / 1000L);
-            String authorizarion = generateAuthorization(timeStamp, "PATCH", endPoint, body);
-
+            final HttpClient httpclient = (HttpClient)HttpClients.createDefault();
+            final HttpPatch httpPatch = new HttpPatch(this.config.getApiBase() + endPoint);
+            final StringEntity params = new StringEntity(body);
+            final int timeStamp = (int)(System.currentTimeMillis() / 1000L);
+            final String authorizarion = this.generateAuthorization(timeStamp, "PATCH", endPoint, body);
             params.setContentType("application/json");
-
-            httpPatch.setEntity(params);
+            httpPatch.setEntity((HttpEntity)params);
             httpPatch.addHeader("X-PR-Timestamp", timeStamp + "");
             httpPatch.addHeader("Authorization", authorizarion);
-
-            HttpResponse response = httpclient.execute(httpPatch);
-            StringBuffer result = new StringBuffer();
+            final HttpResponse response = httpclient.execute((HttpUriRequest)httpPatch);
+            final StringBuffer result = new StringBuffer();
             String line = "";
-
-            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            final BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
             while ((line = rd.readLine()) != null) {
                 result.append(line);
             }
-
             StringResponse = result.toString();
-
-            int responseCode = response.getStatusLine().getStatusCode();
+            final int responseCode = response.getStatusLine().getStatusCode();
             if (responseCode != 200) {
-                throwStatusCodeException(responseCode, StringResponse);
+                this.throwStatusCodeException(responseCode, StringResponse);
             }
-
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new UnexpectedException(StringResponse);
         }
         return StringResponse;
     }
-
-    /**
-     * Makes an HTTP DELETE request to the API
-     *
-     * @param endPoint a {@link java.lang.String} object.
-     * @return The response
-     * @throws InvalidStatusCodeException if any.
-     * @throws com.trolley.Exceptions.InvalidServerConnectionException if any.
-     * @throws java.lang.Exception if any.
-     */
-    public String delete(String endPoint) throws Exception {
-        return sendRequest("DELETE", endPoint);
+    
+    public String delete(final String endPoint) throws Exception {
+        return this.sendRequest("DELETE", endPoint);
     }
-
-    private void throwStatusCodeException(int statusCode, String message) throws Exception {
+    
+    private void throwStatusCodeException(final int statusCode, final String message) throws Exception {
         switch (statusCode) {
-        case 400:
-            throw new MalformedException(message);
-        case 401:
-            throw new AuthenticationException(message);
-        case 403:
-            throw new AuthorizationException(message);
-        case 404:
-            throw new NotFoundException(statusCode + " " + message);
-        case 406:
-            throw new InvalidStatusCodeException(message);
-        case 429:
-            throw new TooManyRequestsException(message);
-        case 500:
-            throw new InvalidServerConnectionException(message);
-        case 503:
-            throw new DownForMaintenanceException(message);
-        default:
-            throw new com.trolley.Exceptions.UnexpectedException(message);
+            case 400: {
+                throw new MalformedException(message);
+            }
+            case 401: {
+                throw new AuthenticationException(message);
+            }
+            case 403: {
+                throw new AuthorizationException(message);
+            }
+            case 404: {
+                throw new NotFoundException(statusCode + " " + message);
+            }
+            case 406: {
+                throw new InvalidStatusCodeException(message);
+            }
+            case 429: {
+                throw new TooManyRequestsException(message);
+            }
+            case 500: {
+                throw new InvalidServerConnectionException(message);
+            }
+            case 503: {
+                throw new DownForMaintenanceException(message);
+            }
+            default: {
+                throw new com.trolley.Exceptions.UnexpectedException(message);
+            }
         }
     }
-
-    private String generateAuthorization(int timeStamp, String method, String endPoint, String body) {
-        String message = timeStamp + "\n" + method + "\n" + endPoint + "\n" + body + "\n";
+    
+    private String generateAuthorization(final int timeStamp, final String method, final String endPoint, final String body) {
+        final String message = timeStamp + "\n" + method + "\n" + endPoint + "\n" + body + "\n";
         try {
-            String hash = hmacDigest(message, this.config.getPrivateKey(), "HmacSHA256");
+            final String hash = this.hmacDigest(message, this.config.getPrivateKey(), "HmacSHA256");
             return "prsign " + this.config.getPublicKey() + ":" + hash;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             return "prsign 1:1";
         }
-
     }
-
-    private String hmacDigest(String msg, String keyString, String algo) throws Exception {
+    
+    private String hmacDigest(final String msg, final String keyString, final String algo) throws Exception {
         String digest = null;
-        SecretKeySpec key = new SecretKeySpec((keyString).getBytes("UTF-8"), algo);
-        Mac mac = Mac.getInstance(algo);
+        final SecretKeySpec key = new SecretKeySpec(keyString.getBytes("UTF-8"), algo);
+        final Mac mac = Mac.getInstance(algo);
         mac.init(key);
-
-        byte[] bytes = mac.doFinal(msg.getBytes("ASCII"));
-
-        StringBuffer hash = new StringBuffer();
-        for (int i = 0; i < bytes.length; i++) {
-            String hex = Integer.toHexString(0xFF & bytes[i]);
+        final byte[] bytes = mac.doFinal(msg.getBytes("ASCII"));
+        final StringBuffer hash = new StringBuffer();
+        for (int i = 0; i < bytes.length; ++i) {
+            final String hex = Integer.toHexString(0xFF & bytes[i]);
             if (hex.length() == 1) {
                 hash.append('0');
             }

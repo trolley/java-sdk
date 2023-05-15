@@ -1,13 +1,7 @@
 package com.trolley.trolley;
 
-/**
- * <p>Gateway class.</p>
- *
- * @author joshua
- * @version $Id: $Id
- */
-public class Gateway {
-
+public class Gateway
+{
     public Configuration config;
     public RecipientGateway recipient;
     public Client client;
@@ -15,13 +9,8 @@ public class Gateway {
     public RecipientAccountGateway recipientAccount;
     public BalancesGateway balances;
     public PaymentGateway payment;
-
-    /**
-     * <p>Constructor for Gateway.</p>
-     *
-     * @param config a {@link com.trolley.trolley.Configuration} object.
-     */
-    public Gateway(Configuration config) {
+    
+    public Gateway(final Configuration config) {
         this.config = config;
         this.client = new Client(config);
         this.recipient = new RecipientGateway(config);
@@ -29,6 +18,5 @@ public class Gateway {
         this.recipientAccount = new RecipientAccountGateway(config);
         this.balances = new BalancesGateway(config);
         this.payment = new PaymentGateway(config);
-
     }
 }

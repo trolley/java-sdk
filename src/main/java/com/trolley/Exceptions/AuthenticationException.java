@@ -1,27 +1,11 @@
 package com.trolley.Exceptions;
 
-/**
- * <p>AuthenticationException class.</p>
- *
- * @author joshua
- * @version $Id: $Id
- */
-public class AuthenticationException extends Exception {
-
-    /**
-     * <p>Constructor for AuthenticationException.</p>
-     */
+public class AuthenticationException extends Exception
+{
     public AuthenticationException() {
-        super();
     }
-
-    /**
-     * <p>Constructor for AuthenticationException.</p>
-     *
-     * @param message a {@link java.lang.String} object.
-     */
-    public AuthenticationException(String message) {
+    
+    public AuthenticationException(final String message) {
         super(message);
     }
-
 }
