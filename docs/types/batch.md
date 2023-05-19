@@ -1,4 +1,4 @@
-[Payment Rails Java SDK](../README.md) > [BatchInput](../types/batch.md)
+[Trolley Java SDK](../README.md) > [BatchInput](../types/batch.md)
 
 # Types: Batch
 

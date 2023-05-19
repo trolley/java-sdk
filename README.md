@@ -1,6 +1,8 @@
-# Payment Rails JAVA SDK
+# Trolley Java SDK (Previously Payment Rails[^1])
 
-A native JAVA SDK for the Payment Rails API
+A native Java SDK for Trolley
+
+[^1]: [Payment Rails is now Trolley](https://www.trolley.com/payment-rails-is-now-trolley-series-a). We're in the process of updating our SDKs to support the new domain. In this transition phase, you might still see "PaymentRails" at some places.
 
 ## Installation
 
@@ -24,7 +26,7 @@ Add this dependency to your project's POM:
 </dependency>
 ```
 
-The library is hosted at [insert github link]
+The library is hosted at [https://github.com/paymentRails/java-sdk](https://github.com/paymentRails/java-sdk)
 
 ## Getting Started
 
@@ -52,7 +54,7 @@ public class PaymentRailsExample {
 Methods should all have Java Doc comments to help you understand their usage. As mentioned the [full API documentation](http://docs.trolley.com)
 is the best source of information about the API.
 
-For more information please read the [Java API docs](https://github.com/PaymentRails/paymentrails_dotnet/tree/master/docs/) is available. The best starting point is:
+For more information please read the [Java API docs](https://github.com/PaymentRails/java-sdk/tree/master/docs) is available. The best starting point is:
 
 | Data Type         | SDK Documentation                                                                                                              |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------ |

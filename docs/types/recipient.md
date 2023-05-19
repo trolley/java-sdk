@@ -1,4 +1,4 @@
-[Payment Rails Java SDK](../README.md) > [RecipientInput](../types/recipient.md)
+[Trolley Java SDK](../README.md) > [RecipientInput](../types/recipient.md)
 
 # Types: Recipient
 

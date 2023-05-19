@@ -1,4 +1,4 @@
-[Payment Rails Java SDK](../README.md) > [RecipientGateway](../classes/RecipientGateway.md)
+[Trolley Java SDK](../README.md) > [RecipientGateway](../classes/RecipientGateway.md)
 
 # Class: RecipientGateway
 
@@ -48,15 +48,15 @@ Create a given recipient
 
 _Defined in [RecipientGateway.java:58](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/RecipientGateway.java#L58)_
 
-Find a specific recipient by their Payment Rails recipient ID
+Find a specific recipient by their Trolley recipient ID
 
 Recipient recipient = client.recipient.find(R-efr313md8cj);
 
 **Parameters:**
 
-| Param       | Type     | Description                                   |
-| ----------- | -------- | --------------------------------------------- |
-| recipientId | `string` | The Payment Rails recipient ID (e.g. R-xyzzy) |
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| recipientId | `string`   |  The Trolley recipient ID (e.g. R-xyzzy) |
 
 **Returns:** `Recipient`
 
@@ -76,9 +76,9 @@ Delete the given recipient.
 
 **Parameters:**
 
-| Param       | Type     | Description                                   |
-| ----------- | -------- | --------------------------------------------- |
-| recipientId | `string` | The Payment Rails recipient ID (e.g. R-xyzzy) |
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| recipientId | `string`   |  The Trolley recipient ID (e.g. R-xyzzy) |
 
 **Returns:** `boolean`
 

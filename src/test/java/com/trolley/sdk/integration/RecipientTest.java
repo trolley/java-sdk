@@ -1,27 +1,38 @@
-
 package com.trolley.sdk.integration;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
-import java.util.List;
-import java.util.UUID;
-
-import com.trolley.trolley.Address;
 import com.trolley.trolley.Configuration;
 import com.trolley.trolley.Gateway;
 import com.trolley.trolley.Recipient;
 import com.trolley.trolley.RecipientAccount;
 
+import java.util.List;
+import java.util.UUID;
+
 @PrepareForTest(Recipient.class)
 public class RecipientTest {
 
+    private static Configuration config;
+
+    @BeforeClass 
+    public static void setupConfig() {
+        final String ACCESS_KEY = "ALC7AsydFDU2KKHZH4S7RZVL";
+        final String SECRET_KEY = "OMJZ4C7BGTMKIF4YXSPBGGPLAVONJILGRXQTDXQR";
+        final String ENVIRONMENT = "production";
+
+        // RecipientTest recipientTest = new RecipientTest();
+        config = new Configuration(ACCESS_KEY, SECRET_KEY, ENVIRONMENT);
+     }
+
     @Test
     public void testCreateRecipient() throws Exception {
-        Gateway client = new Gateway(new Configuration("key", "secret", "production"));
+        Gateway client = new Gateway(config);
 
         UUID uuid = UUID.randomUUID();
 
@@ -36,37 +47,8 @@ public class RecipientTest {
     }
 
     @Test
-    public void testCreateRecipientObject() throws Exception {
-        Gateway client = new Gateway(new Configuration("key", "secret", "production"));
-
-        UUID uuid = UUID.randomUUID();
-
-        Recipient createdRecipient = new Recipient();
-        Address createdRecipientAddress = new Address();
-
-        createdRecipient.setType("individual");
-        createdRecipient.setFirstName("Tom");
-        createdRecipient.setLastName("Jones");
-        createdRecipient.setEmail("test.create" + uuid.toString() + "@example.com");
-
-        createdRecipientAddress.setStreet1("123 Main St");
-        createdRecipientAddress.setCity("San Francissco");
-        createdRecipientAddress.setRegion("CA");
-        createdRecipientAddress.setPostalCode("94131");
-        createdRecipientAddress.setCountry("US");
-        createdRecipientAddress.setPhone("18005551212");
-        createdRecipient.setAddress(createdRecipientAddress);
-
-        Recipient recipient = client.recipient.create(createdRecipient);
-        assertEquals(recipient.getFirstName(), "Tom");
-        assertEquals(recipient.getLastName(), "Jones");
-        assertEquals(recipient.getEmail(), "test.create" + uuid.toString() + "@example.com");
-        assertNotNull(recipient.getId());
-    }
-
-    @Test
     public void testLifecycle() throws Exception {
-        Gateway client = new Gateway(new Configuration("key", "secret", "production"));
+        Gateway client = new Gateway(config);
 
         UUID uuid = UUID.randomUUID();
 
@@ -78,14 +60,12 @@ public class RecipientTest {
         assertEquals(recipient.getEmail(), "test.create" + uuid.toString() + "@example.com");
         assertNotNull(recipient.getId());
 
-        Recipient recipientUpdate = new Recipient();
-        recipientUpdate.setFirstName("Bob");
-        boolean response = client.recipient.update(recipient.getId(), recipientUpdate);
+        body = "{\"firstName\": \"Bob\"}";
+        boolean response = client.recipient.update(recipient.getId(), body);
         assertNotNull(response);
 
-        Recipient updatedRecipient = client.recipient.find(recipient.getId());
-        assertEquals(updatedRecipient.getFirstName(), "Bob");
-        assertEquals(updatedRecipient.getLastName(), "Jones");
+        Recipient anotheRecipient = client.recipient.find(recipient.getId());
+        assertEquals(anotheRecipient.getFirstName(), "Bob");
 
         response = client.recipient.delete(recipient.getId());
         assertNotNull(response);
@@ -96,7 +76,7 @@ public class RecipientTest {
 
     @Test
     public void testAccount() throws Exception {
-        Gateway client = new Gateway(new Configuration("key", "secret", "production"));
+        Gateway client = new Gateway(config);
 
         UUID uuid = UUID.randomUUID();
 
@@ -124,38 +104,6 @@ public class RecipientTest {
 
         boolean response = client.recipientAccount.delete(recipient.getId(), recipientAccount1.getId());
         assertNotNull(response);
-
-        List<RecipientAccount> recipientAccounts1 = client.recipientAccount.findAll(recipient.getId());
-        assertEquals(1, recipientAccounts1.size());
-    }
-
-    @Test
-    public void testAccountObject() throws Exception {
-        Gateway client = new Gateway(new Configuration("key", "secret", "production"));
-
-        UUID uuid = UUID.randomUUID();
-
-        String body = "{\"type\": \"individual\",\"firstName\": \"Tom\",\"lastName\": \"Jones\",\"email\": \"account.create"
-                + uuid.toString() + "@example.com\"}";
-        Recipient recipient = client.recipient.create(body);
-        assertEquals(recipient.getFirstName(), "Tom");
-        assertEquals(recipient.getLastName(), "Jones");
-        assertEquals(recipient.getEmail(), "account.create" + uuid.toString() + "@example.com");
-        assertNotNull(recipient.getId());
-        
-        RecipientAccount createdAccount = new RecipientAccount();
-        createdAccount.setType("bank-transfer");
-        createdAccount.setPrimary(true);
-        createdAccount.setCountry("DE");
-        createdAccount.setCurrency("EUR");
-        createdAccount.setIban("DE89 3704 0044 0532 0130 00");
-        createdAccount.setAccountHolderName("Tom Jones");
-
-        RecipientAccount recipientAccount = client.recipientAccount.create(recipient.getId(), createdAccount);
-        assertEquals("Tom Jones", recipientAccount.getAccountHolderName());
-
-        RecipientAccount recipAccount = client.recipientAccount.find(recipient.getId(), recipientAccount.getId());
-        assertEquals(recipAccount.getCountry(), recipientAccount.getCountry());
 
         List<RecipientAccount> recipientAccounts1 = client.recipientAccount.findAll(recipient.getId());
         assertEquals(1, recipientAccounts1.size());

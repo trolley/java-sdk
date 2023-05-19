@@ -1,4 +1,4 @@
-[Payment Rails Java SDK](../README.md) > [BatchGateway](../classes/BatchGateway.md)
+[Trolley Java SDK](../README.md) > [BatchGateway](../classes/BatchGateway.md)
 
 # Class: BatchGateway
 
@@ -59,9 +59,9 @@ Retrieves a batch based on the batch id
 
 **Parameters:**
 
-| Param   | Type     | Description                               |
-| ------- | -------- | ----------------------------------------- |
-| batchId | `string` | Payment Rails batch id (e.g. "B-xx999bb") |
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| batchId | `string`   |  Trolley batch id (e.g. "B-xx999bb") |
 
 **Returns:** `Batch`
 
@@ -79,9 +79,9 @@ Generate a FX quote for this batch
 
 **Parameters:**
 
-| Param   | Type     | Description                                 |
-| ------- | -------- | ------------------------------------------- |
-| batchId | `string` | Payment Rails payment id (e.g. "B-xx999bb") |
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| batchId | `string`   |  Trolley payment id (e.g. "B-xx999bb") |
 
 **Returns:** `Batch`
 
@@ -99,11 +99,11 @@ Return a paginated list of payments for this batch
 
 **Parameters:**
 
-| Param    | Type     | Default value | Description                                 |
-| -------- | -------- | ------------- | ------------------------------------------- |
-| batchId  | `string` | -             | Payment Rails payment id (e.g. "B-xx999bb") |
-| page     | `number` | 1             | starting a 1                                |
-| pageSize | `number` | 10            | in the range 0...1000                       |
+| Param | Type | Default value | Description |
+| ------ | ------ | ------ | ------ |
+| batchId | `string`  | - |   Trolley payment id (e.g. "B-xx999bb") |
+| page | `number`  | 1 |   starting a 1 |
+| pageSize | `number`  | 10 |   in the range 0...1000 |
 
 **Returns:** `Payment`[]
 
@@ -123,9 +123,9 @@ Delete the given batch
 
 **Parameters:**
 
-| Param   | Type     | Description                            |
-| ------- | -------- | -------------------------------------- |
-| batchId | `string` | Payment Rails batch (e.g. "B-xx999bb") |
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| batchId | `string`   |  Trolley batch (e.g. "B-xx999bb") |
 
 **Returns:** `Boolean`
 
@@ -165,9 +165,9 @@ Start processing this batch
 
 **Parameters:**
 
-| Param   | Type     | Description                               |
-| ------- | -------- | ----------------------------------------- |
-| batchId | `string` | Payment Rails batch id (e.g. "B-xx999bb") |
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| batchId | `string`   |  Trolley batch id (e.g. "B-xx999bb") |
 
 **Returns:** `Batch`
 
@@ -187,9 +187,9 @@ Get a transaction totaled summary for this batch
 
 **Parameters:**
 
-| Param   | Type     | Description                                 |
-| ------- | -------- | ------------------------------------------- |
-| batchId | `string` | Payment Rails payment id (e.g. "B-xx999bb") |
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| batchId | `string`   |  Trolley payment id (e.g. "B-xx999bb") |
 
 **Returns:** `String`
 

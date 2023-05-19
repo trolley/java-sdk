@@ -1,4 +1,4 @@
-[Payment Rails Java SDK](../README.md) > [PaymentGateway](../classes/paymentgateway.md)
+[Trolley Java SDK](../README.md) > [PaymentGateway](../classes/paymentgateway.md)
 
 # Class: PaymentGateway
 
@@ -30,10 +30,10 @@ Create a new payment in a batch
 
 **Parameters:**
 
-| Param   | Type     | Description                                 |
-| ------- | -------- | ------------------------------------------- |
-| batchId | `string` | Payment Rails payment id (e.g. "B-xx999bb") |
-| body    | `any`    | Payment information                         |
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| batchId | `string`   |  Trolley payment id (e.g. "B-xx999bb") |
+| body | `any`   |  Payment information |
 
 **Returns:** `Payment`
 
@@ -53,9 +53,9 @@ Find a specific payment
 
 **Parameters:**
 
-| Param     | Type     | Description                                |
-| --------- | -------- | ------------------------------------------ |
-| paymentId | `string` | Payment Rails payment id (e.g. "P-aabccc") |
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| paymentId | `string`   |  Trolley payment id (e.g. "P-aabccc") |
 
 **Returns:** `Payment`
 
@@ -75,10 +75,10 @@ Delete a given payment -- Note you can only delete non processed payments
 
 **Parameters:**
 
-| Param     | Type     | Description                                 |
-| --------- | -------- | ------------------------------------------- |
-| paymentId | `string` | Payment Rails payment id (e.g. "P-aabccc")  |
-| batchId   | `string` | Payment Rails payment id (e.g. "B-xx999bb") |
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| paymentId | `string`   |  Trolley payment id (e.g. "P-aabccc") |
+| batchId | `string`   |  Trolley payment id (e.g. "B-xx999bb") |
 
 **Returns:** `boolean`
 
@@ -96,12 +96,12 @@ Search for payments in a given batch
 
 **Parameters:**
 
-| Param    | Type     | Default value | Description                                 |
-| -------- | -------- | ------------- | ------------------------------------------- |
-| batchId  | `string` | -             | Payment Rails payment id (e.g. "B-xx999bb") |
-| page     | `number` | 1             | Page number (1 based)                       |
-| pageSize | `number` | 10            | Page size (0...1000)                        |
-| term     | `string` | &quot;&quot;  | Any search terms to look for                |
+| Param | Type | Default value | Description |
+| ------ | ------ | ------ | ------ |
+| batchId | `string`  | - |   Trolley payment id (e.g. "B-xx999bb") |
+| page | `number`  | 1 |   Page number (1 based) |
+| pageSize | `number`  | 10 |   Page size (0...1000) |
+| term | `string`  | &quot;&quot; |   Any search terms to look for |
 
 **Returns:** `Payment`[]
 
@@ -121,11 +121,11 @@ Update a given payment
 
 **Parameters:**
 
-| Param     | Type     | Description                                 |
-| --------- | -------- | ------------------------------------------- |
-| paymentId | `string` | Payment Rails payment id (e.g. "P-aabccc")  |
-| batchId   | `string` | Payment Rails payment id (e.g. "B-xx999bb") |
-| body      | `any`    | Payment update information                  |
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| paymentId | `string`   |  Trolley payment id (e.g. "P-aabccc") |
+| batchId | `string`   |  Trolley payment id (e.g. "B-xx999bb") |
+| body | `any`   |  Payment update information |
 
 **Returns:** `boolean`
 

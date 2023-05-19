@@ -1,4 +1,4 @@
-[Payment Rails Java SDK](../README.md) > [RecipientAccountGateway](../classes/recipientaccountgateway.md)
+[Trolley Java SDK](../README.md) > [RecipientAccountGateway](../classes/recipientaccountgateway.md)
 
 # Class: RecipientAccountGateway
 
@@ -24,16 +24,16 @@
 
 _Defined in [RecipientAccountGateway.java:33](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/RecipientAccountGateway.java#L33)_
 
-Fetch all of the accounts for a given Payment Rails recipient
+Fetch all of the accounts for a given Trolley recipient
 
     $response = PaymentRails\RecipientAccount::all($recipient_id);
     List<RecipientAccount> recipientAccounts = client.recipientAccount.findAll("R-123r4cs");
 
 **Parameters:**
 
-| Param       | Type     | Description                                   |
-| ----------- | -------- | --------------------------------------------- |
-| recipientId | `string` | The Payment Rails recipient ID (e.g. R-xyzzy) |
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| recipientId | `string`   |  The Trolley recipient ID (e.g. R-xyzzy) |
 
 **Returns:** `List<RecipientAccount>(recipientaccount.md)[]>
 
@@ -53,10 +53,10 @@ Create a new recipient account
 
 **Parameters:**
 
-| Param       | Type     | Description                                   |
-| ----------- | -------- | --------------------------------------------- |
-| recipientId | `string` | The Payment Rails recipient ID (e.g. R-xyzzy) |
-| body        | `string` | Account information                           |
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| recipientId | `string`   |  The Trolley recipient ID (e.g. R-xyzzy) |
+| body | `string`   |  Account information |
 
 **Returns:** `RecipientAccount`(recipientaccount.md)>
 
@@ -70,16 +70,16 @@ Create a new recipient account
 
 _Defined in [RecipientAccountGateway.java:52](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/RecipientAccountGateway.java#L52)_
 
-Fetch a specific account for a given Payment Rails recipient
+Fetch a specific account for a given Trolley recipient
 
 RecipientAccount recipientAccount = client.recipientAccount.find("R-ad322121", "A-2134fd");
 
 **Parameters:**
 
-| Param       | Type     | Description                                   |
-| ----------- | -------- | --------------------------------------------- |
-| recipientId | `string` | The Payment Rails recipient ID (e.g. R-xyzzy) |
-| accountId   | `string` | The Payment Rails account ID (e.g. A-xyzzy)   |
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| recipientId | `string`   |  The Trolley recipient ID (e.g. R-xyzzy) |
+| accountId | `string`   |  The Trolley account ID (e.g. A-xyzzy) |
 
 **Returns:** `RecipientAccount`(recipientaccount.md)>
 
@@ -99,10 +99,10 @@ Delete the given recipient account. This will only return success, otherwise it 
 
 **Parameters:**
 
-| Param       | Type     | Description                                   |
-| ----------- | -------- | --------------------------------------------- |
-| recipientId | `string` | The Payment Rails recipient ID (e.g. R-xyzzy) |
-| accountId   | `string` | The Payment Rails account ID (e.g. A-xyzzy)   |
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| recipientId | `string`   |  The Trolley recipient ID (e.g. R-xyzzy) |
+| accountId | `string`   |  The Trolley account ID (e.g. A-xyzzy) |
 
 **Returns:** `boolean`
 
@@ -122,11 +122,11 @@ Update a recipient account. Note: Updating an account will create a new account 
 
 **Parameters:**
 
-| Param       | Type     | Description                                   |
-| ----------- | -------- | --------------------------------------------- |
-| recipientId | `string` | The Payment Rails recipient ID (e.g. R-xyzzy) |
-| accountId   | `string` | The Payment Rails account ID (e.g. A-xyzzy)   |
-| body        | `any`    | Account information                           |
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| recipientId | `string`   |  The Trolley recipient ID (e.g. R-xyzzy) |
+| accountId | `string`   |  The Trolley account ID (e.g. A-xyzzy) |
+| body | `any`   |  Account information |
 
 **Returns:** `RecipientAccount`(recipientaccount.md)>
 
