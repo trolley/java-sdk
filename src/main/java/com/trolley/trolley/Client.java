@@ -30,6 +30,7 @@ import java.net.URL;
 public class Client
 {
     private Configuration config;
+    private String trolleySourceString = "java-sdk_"+Version.MAJOR+"."+Version.MINOR+"."+Version.PATCH;
     
     public Client(final Configuration config) {
         this.config = config;
@@ -50,6 +51,7 @@ public class Client
             con.setRequestMethod(method);
             con.setRequestProperty("X-PR-Timestamp", timeStamp + "");
             con.setRequestProperty("Authorization", authorizarion);
+            con.setRequestProperty("Trolley-Source", trolleySourceString);
             con.setRequestProperty("Content-Type", "application/json");
             if (method == "POST" && body != "") {
                 con.setDoOutput(true);
@@ -132,6 +134,7 @@ public class Client
             httpPatch.setEntity((HttpEntity)params);
             httpPatch.addHeader("X-PR-Timestamp", timeStamp + "");
             httpPatch.addHeader("Authorization", authorizarion);
+            httpPatch.addHeader("Trolley-Source", trolleySourceString);
             final HttpResponse response = httpclient.execute((HttpUriRequest)httpPatch);
             final StringBuffer result = new StringBuffer();
             String line = "";

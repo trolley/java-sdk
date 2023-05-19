@@ -2,18 +2,18 @@ package com.trolley.trolley;
 
 public class Configuration
 {
-    String apiBase;
+    String apiBase = "https://api.trolley.com";
     String privateKey;
     String publicKey;
     
     public Configuration() {
-        this.apiBase = "https://api.paymentrails.com";
+        this.apiBase = "https://api.trolley.com";
         this.privateKey = "";
         this.publicKey = "";
     }
     
     public Configuration(final String publicKey, final String privateKey) {
-        this.apiBase = "https://api.paymentrails.com";
+        this.apiBase = "https://api.trolley.com";
         this.privateKey = "";
         this.publicKey = "";
         this.publicKey = publicKey;
@@ -21,7 +21,7 @@ public class Configuration
     }
     
     public Configuration(final String publicKey, final String privateKey, final String apiBase) {
-        this.apiBase = "https://api.paymentrails.com";
+        this.apiBase = "https://api.trolley.com";
         this.privateKey = "";
         this.publicKey = "";
         this.publicKey = publicKey;
@@ -69,7 +69,7 @@ public class Configuration
         switch (enviroment) {
             case "production":
             case "PRODUCTION": {
-                return "https://api.paymentrails.com";
+                return "https://api.trolley.com";
             }
             case "development":
             case "DEVELOPMENT": {
@@ -81,10 +81,10 @@ public class Configuration
             }
             case "sandbox":
             case "SANDBOX": {
-                return "https://api.paymentrails.com";
+                return "https://api.trolley.com";
             }
             default: {
-                return "https://api.paymentrails.com";
+                return "https://api.trolley.com";
             }
         }
     }
