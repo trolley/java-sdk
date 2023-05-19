@@ -20,9 +20,9 @@ Add this dependency to your project's POM:
 
 ```xml
 <dependency>
-    <groupId>ca.paymentrails</groupId>
-    <artifactId>paymentrails</artifactId>
-    <version>1.0.2</version>
+    <groupId>com.trolley</groupId>
+    <artifactId>java-sdk</artifactId>
+    <version>1.0.1</version>
 </dependency>
 ```
 
@@ -31,8 +31,8 @@ The library is hosted at [https://github.com/paymentRails/java-sdk](https://gith
 ## Getting Started
 
 ```java
-import ca.paymentrails.paymentrails.*;
-import ca.paymentrails.Exceptions.*;
+import com.trolley.java-sdk.*;
+import com.trolley.Exceptions.*;
 
 public class PaymentRailsExample {
     public static void main(String[] args) {
@@ -51,7 +51,7 @@ public class PaymentRailsExample {
 
 ### Usage
 
-Methods should all have Java Doc comments to help you understand their usage. As mentioned the [full API documentation](https://docs.trolley.com)
+Methods should all have Java Doc comments to help you understand their usage. As mentioned the [full API documentation](http://docs.trolley.com)
 is the best source of information about the API.
 
 For more information please read the [Java API docs](https://github.com/PaymentRails/java-sdk/tree/master/docs) is available. The best starting point is:

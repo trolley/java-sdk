@@ -3,21 +3,21 @@
 # Class: BatchGateway
 
 Gateway class for batches
-*__class__*: BatchGateway
+_**class**_: BatchGateway
 
 ## Index
 
 ### Methods
 
-* [create](BatchGateway.md#create)
-* [find](BatchGateway.md#find)
-* [generateQuote](BatchGateway.md#generatequote)
-* [paymentList](BatchGateway.md#paymentlist)
-* [delete](BatchGateway.md#delete)
-* [search](BatchGateway.md#search)
-* [processBatch](BatchGateway.md#processBatch)
-* [summary](BatchGateway.md#summary)
-* [update](BatchGateway.md#update)
+- [create](BatchGateway.md#create)
+- [find](BatchGateway.md#find)
+- [generateQuote](BatchGateway.md#generatequote)
+- [paymentList](BatchGateway.md#paymentlist)
+- [delete](BatchGateway.md#delete)
+- [search](BatchGateway.md#search)
+- [processBatch](BatchGateway.md#processBatch)
+- [summary](BatchGateway.md#summary)
+- [update](BatchGateway.md#update)
 
 ---
 
@@ -27,19 +27,19 @@ Gateway class for batches
 
 ### create
 
-► **create**(batch: *`Batch`*): `Batch`
+► **create**(batch: _`Batch`_): `Batch`
 
-*Defined in [BatchGateway.java:95](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/BatchGateway.java#L95)*
+_Defined in [BatchGateway.java:95](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/BatchGateway.java#L95)_
 
-Creates a batch with optional payments. This is the interface that is provide by the [Create Batch](https://docs.trolley.com/api/#create-a-batch) API
+Creates a batch with optional payments. This is the interface that is provide by the [Create Batch](http://docs.trolley.com/api/#create-a-batch) API
 
     Batch batch = client.batch.create("{\"sourceCurrency\": \"USD\", \"description\":\"Docs Create\"}");
 
 **Parameters:**
 
-| Param | Type | Description |
-| ------ | ------ | ------ |
-| batch | `Batch`   |  - |
+| Param | Type    | Description |
+| ----- | ------- | ----------- |
+| batch | `Batch` | -           |
 
 **Returns:** `Batch`
 
@@ -49,9 +49,9 @@ Creates a batch with optional payments. This is the interface that is provide by
 
 ### find
 
-► **find**(batchId: *`string`*): `Batch`
+► **find**(batchId: _`string`_): `Batch`
 
-*Defined in [BatchGateway.java:67](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/BatchGateway.java#L67)*
+_Defined in [BatchGateway.java:67](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/BatchGateway.java#L67)_
 
 Retrieves a batch based on the batch id
 
@@ -71,9 +71,9 @@ Retrieves a batch based on the batch id
 
 ### generateQuote
 
-► **generateQuote**(batchId: *`string`*): `Batch`
+► **generateQuote**(batchId: _`string`_): `Batch`
 
-*Defined in [BatchGateway.java:182](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/BatchGateway.java#L182)*
+_Defined in [BatchGateway.java:182](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/BatchGateway.java#L182)_
 
 Generate a FX quote for this batch
 
@@ -91,9 +91,9 @@ Generate a FX quote for this batch
 
 ### paymentList
 
-► **paymentList**(batchId: *`string`*, page?: *`number`*, pageSize?: *`number`*): `Payment`[]
+► **paymentList**(batchId: _`string`_, page?: _`number`_, pageSize?: _`number`_): `Payment`[]
 
-*Defined in [BatchGateway.java:166](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/BatchGateway.java#L166)*
+_Defined in [BatchGateway.java:166](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/BatchGateway.java#L166)_
 
 Return a paginated list of payments for this batch
 
@@ -113,9 +113,9 @@ Return a paginated list of payments for this batch
 
 ### delete
 
-► **delete**(batchId: *`string`*): `Boolean`
+► **delete**(batchId: _`string`_): `Boolean`
 
-*Defined in [BatchGateway.java:132](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/BatchGateway.java#L132)*
+_Defined in [BatchGateway.java:132](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/BatchGateway.java#L132)_
 
 Delete the given batch
 
@@ -135,19 +135,19 @@ Delete the given batch
 
 ### search
 
-► **search**(page?: *`number`*, pageSize?: *`number`*, term?: *`string`*): `Batch`[]
+► **search**(page?: _`number`_, pageSize?: _`number`_, term?: _`string`_): `Batch`[]
 
-*Defined in [BatchGateway.java:146](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/BatchGateway.java#L146)*
+_Defined in [BatchGateway.java:146](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/BatchGateway.java#L146)_
 
 Search for a batch matching the given term
 
 **Parameters:**
 
-| Param | Type | Default value | Description |
-| ------ | ------ | ------ | ------ |
-| page | `number`  | 1 |   - |
-| pageSize | `number`  | 10 |   - |
-| term | `string`  | &quot;&quot; |   string search term |
+| Param    | Type     | Default value | Description        |
+| -------- | -------- | ------------- | ------------------ |
+| page     | `number` | 1             | -                  |
+| pageSize | `number` | 10            | -                  |
+| term     | `string` | &quot;&quot;  | string search term |
 
 **Returns:** `Batch`[]
 
@@ -157,9 +157,9 @@ Search for a batch matching the given term
 
 ### processBatch
 
-► **processBatch**(batchId: *`string`*): `Batch`
+► **processBatch**(batchId: _`string`_): `Batch`
 
-*Defined in [BatchGateway.java:194](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/BatchGateway.java#L194)*
+_Defined in [BatchGateway.java:194](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/BatchGateway.java#L194)_
 
 Start processing this batch
 
@@ -177,9 +177,9 @@ Start processing this batch
 
 ### summary
 
-► **summary**(batchId: *`string`*): `String`
+► **summary**(batchId: _`string`_): `String`
 
-*Defined in [BatchGateway.java:206](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/BatchGateway.java#L206)*
+_Defined in [BatchGateway.java:206](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/BatchGateway.java#L206)_
 
 Get a transaction totaled summary for this batch
 
