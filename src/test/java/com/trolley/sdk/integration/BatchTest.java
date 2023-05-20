@@ -3,10 +3,10 @@ package com.trolley.sdk.integration;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import com.trolley.trolley.Batch;
 import com.trolley.trolley.BatchSummary;
@@ -24,35 +24,13 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 public class BatchTest {
 
     private static Configuration config;
+    private static TestHelper testHelper;
 
     @BeforeClass 
     public static void setupConfig() {
-        final String ACCESS_KEY = "ACCESS_KEY";
-        final String SECRET_KEY = "SECRET_KEY";
-        final String ENVIRONMENT = "production";
-
-        // RecipientTest recipientTest = new RecipientTest();
-        config = new Configuration(ACCESS_KEY, SECRET_KEY, ENVIRONMENT);
+        config = TestHelper.getConfig();
+        testHelper = new TestHelper();
      }
-
-
-    private Recipient createRecipient() throws Exception {
-        Gateway client = new Gateway(config);
-
-        UUID uuid = UUID.randomUUID();
-
-        String email = "\"create.recipient" + uuid.toString() + "@example.com\"";
-        String body = "{\"type\": \"individual\",\"firstName\": \"John\",\"lastName\": \"Smith\",\"email\":" + email
-                + ",\"address\":{\"street1\": \"123 Main St\",\"city\": \"San Francisco\",\"region\": \"CA\",\"postalCode\": \"94131\",\"country\": \"DE\",\"phone\" : \"18005551212\"}}";
-
-        Recipient recipient = client.recipient.create(body);
-
-        body = "{\"type\": \"bank-transfer\", \"primary\": true, \"country\": \"DE\", \"currency\": \"EUR\", \"iban\": \"DE89 3704 0044 0532 0130 00\", \"accountHolderName\": \"John Smith\"}";
-
-        client.recipientAccount.create(recipient.getId(), body);
-
-        return recipient;
-    }
 
     @Test
     public void testCreate() throws Exception {
@@ -61,6 +39,10 @@ public class BatchTest {
         String body = "{\"sourceCurrency\": \"GBP\", \"description\":\"Integration Test Create\"}";
         Batch batch = client.batch.create(body);
         assertEquals(batch.getCurrency(), "GBP");
+
+        //Cleanup
+        boolean deleteResult = client.batch.delete(batch.getId());
+        assertTrue(deleteResult);
     }
 
     @Test
@@ -75,8 +57,9 @@ public class BatchTest {
         assertEquals(createdBatch.getCurrency(), "GBP");
         assertEquals(createdBatch.getDescription(), "Integration Test Create");
 
-        client.batch.delete(createdBatch.getId());
-
+        //Cleanup
+        boolean deleteResult = client.batch.delete(createdBatch.getId());
+        assertTrue(deleteResult);
     }
 
     @Test
@@ -94,38 +77,16 @@ public class BatchTest {
         Batch batch1 = client.batch.find(batch.getId());
         assertEquals(batch1.getDescription(), "Integration Update");
 
+        //Cleanup
         response = client.batch.delete(batch1.getId());
         assertNotNull(response);
     }
-
-    /* @Test
-    public void testCreateWithPayments() throws Exception {
-        Gateway client = new Gateway(config);
-
-        Recipient recipientAlpha = createRecipient();
-
-        String body = "{\"payments\": [{\"recipient\": {\"id\": " + "\"" + recipientAlpha.getId() + "\""
-                + "},\"amount\": \"10.00\", \"currency\": \"EUR\"}]}";
-        Batch batch = client.batch.create(body);
-        assertEquals(batch.getCurrency(), "GBP");
-
-        Batch updatedBatch = new Batch();
-        updatedBatch.setDescription("Integration Update Object");
-        boolean response = client.batch.update(batch.getId(), updatedBatch);
-
-        assertNotNull(response);
-        Batch batch1 = client.batch.find(batch.getId());
-        assertEquals(batch1.getDescription(), "Integration Update Object");
-
-        response = client.batch.delete(batch1.getId());
-        assertNotNull(response);
-    } */
 
     @Test
     public void testCreateWithPayments() throws Exception {
         Gateway client = new Gateway(config);
 
-        Recipient recipientAlpha = createRecipient();
+        Recipient recipientAlpha = testHelper.createRecipient();
         Payment payment = new Payment();
 
         payment.setAmount("15");
@@ -152,6 +113,12 @@ public class BatchTest {
         assertEquals("15.00", batchPayments.get(0).getAmount());
         assertEquals("USD", batchPayments.get(0).getCurrency());
 
+        //Cleanup
+        boolean recDelResult = testHelper.deleteRecipient(recipientAlpha);
+        assertTrue(recDelResult);
+        
+        boolean batchDelResult = client.batch.delete(batch.getId());
+        assertTrue(batchDelResult);
     }
 
     @Test
@@ -162,7 +129,7 @@ public class BatchTest {
         Batch batch = client.batch.create(body);
         assertEquals(batch.getCurrency(), "GBP");
 
-        Recipient recipient = createRecipient();
+        Recipient recipient = testHelper.createRecipient();
         body = "{\"sourceAmount\":\"10.00\", \"recipient\": {\"id\": " + "\"" + recipient.getId() + "\"" + "}}";
         Payment payment = client.payment.create(body, batch.getId());
         assertNotNull(payment);
@@ -173,13 +140,20 @@ public class BatchTest {
 
         response = client.payment.delete(payment.getId(), batch.getId());
         assertNotNull(response);
+
+        //Cleanup
+        boolean recDelResult = testHelper.deleteRecipient(recipient);
+        assertTrue(recDelResult);
+        
+        boolean batchDelResult = client.batch.delete(batch.getId());
+        assertTrue(batchDelResult);
     }
 
     @Test
     public void testProcessing() throws Exception {
         Gateway client = new Gateway(config);
 
-        Recipient recipientAlpha = createRecipient();
+        Recipient recipientAlpha = testHelper.createRecipient();
 
         String body = "{\"payments\": [{\"recipient\": {\"id\": " + "\"" + recipientAlpha.getId() + "\""
                 + "},\"amount\": \"10.00\", \"currency\": \"EUR\"}]}";
@@ -194,12 +168,18 @@ public class BatchTest {
         try{
             String batch1 = client.batch.generateQuote(batch.getId());
             assertNotNull(batch1);
+            
+            String batch2 = client.batch.processBatch(batch.getId());
+            assertNotNull(batch2);
         }catch(Exception e){
             System.err.println(e);
         }
         
-        String batch2 = client.batch.processBatch(batch.getId());
-        assertNotNull(batch2);
+        //Cleanup
+        boolean recDelResult = testHelper.deleteRecipient(recipientAlpha);
+        assertTrue(recDelResult);
 
+        boolean batchDelResult = client.batch.delete(batch.getId());
+        assertTrue(batchDelResult);
     }
 }
