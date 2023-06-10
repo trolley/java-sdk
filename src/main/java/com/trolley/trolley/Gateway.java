@@ -9,6 +9,9 @@ public class Gateway
     public RecipientAccountGateway recipientAccount;
     public BalancesGateway balances;
     public PaymentGateway payment;
+    public InvoiceGateway invoice;
+    public InvoiceLineGateway invoiceLine;
+    public InvoicePaymentGateway invoicePayment;
     
     public Gateway(final Configuration config) {
         this.config = config;
@@ -18,5 +21,8 @@ public class Gateway
         this.recipientAccount = new RecipientAccountGateway(config);
         this.balances = new BalancesGateway(config);
         this.payment = new PaymentGateway(config);
+        this.invoice = new InvoiceGateway(config);
+        this.invoiceLine = new InvoiceLineGateway(config);
+        this.invoicePayment = new InvoicePaymentGateway(config);
     }
 }
