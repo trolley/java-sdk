@@ -2,6 +2,8 @@ package com.trolley.trolley;
 
 import java.util.List;
 
+import com.trolley.trolley.types.Meta;
+
 public class Payments
 {
     private List<Payment> payments;

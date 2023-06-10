@@ -1,6 +1,5 @@
 package com.trolley.trolley;
 
-import java.security.Key;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import com.trolley.Exceptions.DownForMaintenanceException;
@@ -19,6 +18,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.impl.client.HttpClients;
 import java.io.IOException;
+import java.io.InputStream;
 import java.rmi.UnexpectedException;
 import java.io.Reader;
 import java.io.BufferedReader;
@@ -72,11 +72,15 @@ public class Client
                 }
             }
             final int responseCode = con.getResponseCode();
-            if (responseCode != 200) {
-                this.throwStatusCodeException(responseCode, con.getResponseMessage());
-            }
             try {
-                final BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                InputStream is;
+
+                if(responseCode >= 200 && responseCode < 400){
+                    is = con.getInputStream();
+                }else{
+                    is = con.getErrorStream();
+                }
+                final BufferedReader in = new BufferedReader(new InputStreamReader(is));
                 try {
                     final StringBuffer response = new StringBuffer();
                     String inputLine;
@@ -85,20 +89,22 @@ public class Client
                     }
                     StringResponse = response.toString();
                     in.close();
-                }
-                catch (Throwable t2) {
+                }catch (Throwable t2) {
                     try {
                         in.close();
-                    }
-                    catch (Throwable exception2) {
+                    }catch (Throwable exception2) {
                         t2.addSuppressed(exception2);
                     }
                     throw t2;
                 }
+            }catch (IOException e) {
+                throw new UnexpectedException(StringResponse, e);
             }
-            catch (IOException e) {
-                throw new UnexpectedException(StringResponse);
+
+            if (responseCode != 200) {
+                this.throwStatusCodeException(responseCode, StringResponse);
             }
+
         }
         catch (IOException e2) {
             throw new UnexpectedException(StringResponse);

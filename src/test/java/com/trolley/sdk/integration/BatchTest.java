@@ -172,7 +172,7 @@ public class BatchTest {
             String batch2 = client.batch.processBatch(batch.getId());
             assertNotNull(batch2);
         }catch(Exception e){
-            System.err.println(e);
+            e.printStackTrace();
         }
         
         //Cleanup
