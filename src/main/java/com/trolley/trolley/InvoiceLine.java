@@ -2,10 +2,13 @@ package com.trolley.trolley;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.trolley.trolley.types.Amount;
 
@@ -29,13 +32,35 @@ public class InvoiceLine
     private boolean forceUsTaxActivity;
 
     public static enum InvoiceCategories{
-        services,
-        rent,
-        royalties,
-        royalties_film,
-        prizes,
-        education,
-        refunds
+        SERVICES("services"),
+        RENT("rent"),
+        ROYALTIES("royalties"),
+        ROYALTIES_FILM("royalties_film"),
+        PRIZES("prizes"),
+        EDUCATION("education"),
+        REFUNDS("refunds");
+        
+        private String key;
+
+        InvoiceCategories(String key) {
+            this.key = key;
+        }
+
+        @JsonCreator
+        public static InvoiceCategories fromString(String key) {
+            return key == null
+                    ? null
+                    : InvoiceCategories.valueOf(key.toUpperCase(Locale.US));
+        }
+
+        @JsonValue
+        public String getKey() {
+            return key;
+        }
+
+        public String toString(){
+            return key.toLowerCase(Locale.US);
+        }
     };
 
     public InvoiceLine() {}

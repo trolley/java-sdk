@@ -88,7 +88,7 @@ public class InvoiceTests {
         };
 
         // Search for Invoices by recipientId with pagination
-        Invoices invoices = client.invoice.search(Invoice.SearchBy.recipientId, recipientIds, null,1,2);
+        Invoices invoices = client.invoice.search(Invoice.SearchBy.RECIPIENT_ID, recipientIds, null,1,2);
         List<Invoice> invoiceList = invoices.getInvoices();
         assertEquals(invoiceList.get(0).getRecipientId(),invoice.getRecipientId());
         assertEquals(invoices.getMeta().getPages(),1);
@@ -125,7 +125,7 @@ public class InvoiceTests {
         Invoice invoiceWithLines = client.invoiceLine.create(invoice.getId(), 
             new InvoiceLine(
                 new Amount("100", "USD"),
-                InvoiceLine.InvoiceCategories.services,
+                InvoiceLine.InvoiceCategories.SERVICES,
                 "Invoice Line from Java SDK", 
                 "ILine-ExtId-"+System.currentTimeMillis(), 
                 true, 
@@ -143,7 +143,7 @@ public class InvoiceTests {
         for (int i=1 ; i<=3; i++){
             invoiceLines.add(new InvoiceLine(
                 new Amount("10"+i, "USD"),
-                InvoiceLine.InvoiceCategories.services,
+                InvoiceLine.InvoiceCategories.SERVICES,
                 "Invoice Line from Java SDK", 
                 "ILine-ExtId-"+System.currentTimeMillis()+"-"+i, 
                 true, 

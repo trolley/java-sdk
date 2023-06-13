@@ -3,12 +3,15 @@ package com.trolley.trolley;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.trolley.trolley.types.Amount;
 import com.trolley.trolley.types.Invoices;
 import com.trolley.trolley.types.Meta;
@@ -33,12 +36,34 @@ public class Invoice
     private String recipientId;
 
     public static enum SearchBy {
-        invoiceId,
-        recipientId,
-        invoiceNumber,
-        invoiceDate,
-        externalId,
-        tags
+        INVOICE_ID("invoiceId"),
+        RECIPIENT_ID("recipientId"),
+        INVOICE_NUMBER("invoiceNumber"),
+        INVOICE_DATE("invoiceDate"),
+        EXTERNAL_ID("externalId"),
+        TAGS("tags");
+
+        private String key;
+
+        SearchBy(String key) {
+            this.key = key;
+        }
+
+        @JsonCreator
+        public static SearchBy fromString(String key) {
+            return key == null
+                    ? null
+                    : SearchBy.valueOf(key.toUpperCase(Locale.US));
+        }
+
+        @JsonValue
+        public String getKey() {
+            return key;
+        }
+
+        public String toString(){
+            return key.toLowerCase(Locale.US);
+        }
     }    
 
     public Invoice() { }
