@@ -26,7 +26,9 @@ Add this dependency to your project's POM:
 </dependency>
 ```
 
-The library is hosted at [https://github.com/paymentRails/java-sdk](https://github.com/paymentRails/java-sdk)
+The library's source is hosted at [https://github.com/paymentRails/java-sdk](https://github.com/paymentRails/java-sdk)
+
+The library can be found at: [https://central.sonatype.com/artifact/com.trolley/java-sdk/1.0](https://central.sonatype.com/artifact/com.trolley/java-sdk/1.0)
 
 ## Getting Started
 
