@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -55,9 +58,10 @@ public class InvoicePayment
      * 
      * @param invoicePaymentResponse JSON String received in the response
      * @return InvoicePayment object containing all the lines, including the newly created one
-     * @throws IOException
+     * @throws JsonProcessingException
+     * @throws JsonMappingException
      */
-    public static InvoicePayment invoicePaymentFactory(final String invoicePaymentResponse) throws IOException {
+    public static InvoicePayment invoicePaymentFactory(final String invoicePaymentResponse) throws JsonMappingException, JsonProcessingException {
         final ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         final JsonNode node = mapper.readTree(invoicePaymentResponse);
@@ -73,7 +77,7 @@ public class InvoicePayment
         return invoicePayment;
     }
 
-    public static InvoicePayments invoicePaymentsFactory(final String invoicePaymentResponse) throws IOException {
+    public static InvoicePayments invoicePaymentsFactory(final String invoicePaymentResponse) throws StreamReadException, DatabindException, IOException{
         final ObjectMapper mapper = new ObjectMapper();
         final JsonNode node = mapper.readTree(invoicePaymentResponse);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

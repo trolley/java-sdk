@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -259,9 +260,10 @@ public class InvoiceLine
      * 
      * @param invoiceLineResponse JSON String received in the response
      * @return Invoice object containing all the lines, including the newly created one
-     * @throws IOException
+     * @throws JsonProcessingException
+     * @throws JsonMappingException
      */
-    public static Invoice invoiceLinesFactory(final String invoiceLineResponse) throws IOException {
+    public static Invoice invoiceLinesFactory(final String invoiceLineResponse) throws JsonMappingException, JsonProcessingException {
         return Invoice.invoiceFactory(invoiceLineResponse);
     }
 
