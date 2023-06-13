@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -77,7 +76,7 @@ public class InvoicePayment
         return invoicePayment;
     }
 
-    public static InvoicePayments invoicePaymentsFactory(final String invoicePaymentResponse) throws StreamReadException, DatabindException, IOException{
+    public static InvoicePayments invoicePaymentsFactory(final String invoicePaymentResponse) throws StreamReadException, IOException{
         final ObjectMapper mapper = new ObjectMapper();
         final JsonNode node = mapper.readTree(invoicePaymentResponse);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

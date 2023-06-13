@@ -7,7 +7,6 @@ import java.util.Locale;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -305,7 +304,7 @@ public class Invoice
      * @throws StreamReadException
      * @throws IOException
      */
-    public static Invoices invoiceListFactory(final String invoicesStr) throws StreamReadException, DatabindException, IOException {
+    public static Invoices invoiceListFactory(final String invoicesStr) throws StreamReadException, IOException {
         final ObjectMapper mapper = new ObjectMapper();
         final JsonNode node = mapper.readTree(invoicesStr);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
