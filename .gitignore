@@ -10,3 +10,4 @@ nbproject
 .vscode/*
 src/main/java/com/trolley/trolley/index.java
 /.metadata/
+.env

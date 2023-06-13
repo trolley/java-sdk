@@ -19,9 +19,19 @@
 
     <developers>
         <developer>
+            <id>aman.aalam</id>
+            <name>Aman Aalam</name>
+            <email>aman.alam@trolley.com</email>
+            <organization>Trolley</organization>
+            <organizationUrl>https://www.trolley.com/</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
             <id>joshuapr</id>
             <name>Joshua Cunningham</name>
-            <email>joshua@paymentrails.com</email>
+            <email>joshua@trolley.com</email>
             <organization>Trolley</organization>
             <organizationUrl>https://www.trolley.com/</organizationUrl>
             <roles>
@@ -116,7 +126,11 @@
         </plugins>
     </build>
     <dependencies>
-
+        <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>dotenv-java</artifactId>
+            <version>2.3.2</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
