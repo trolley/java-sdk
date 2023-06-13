@@ -1,4 +1,4 @@
-[Payment Rails Python SDK](../README.md) > [Exceptions](../modules/exceptions.md) > [BaseException](../classes/exceptions.baseexception.md)
+[Trolley Java SDK](../README.md) > [Exceptions](../modules/exceptions.md) > [BaseException](../classes/exceptions.baseexception.md)
 
 # Class: BaseException
 

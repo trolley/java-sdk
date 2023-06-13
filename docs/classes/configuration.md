@@ -1,4 +1,4 @@
-[Payment Rails Java SDK](../README.md) > [Configuration](../classes/Configuration.md)
+[Trolley Java SDK](../README.md) > [Configuration](../classes/Configuration.md)
 
 # Class: Configuration
 
@@ -6,21 +6,21 @@
 
 ### Properties
 
-* [apiBase](Configuration.md#apibase)
-* [apiKey](Configuration.md#apikey)
-* [apiSecret](Configuration.md#apisecret)
+- [apiBase](Configuration.md#apibase)
+- [apiKey](Configuration.md#apikey)
+- [apiSecret](Configuration.md#apisecret)
 
 ---
 
 ## Properties
 
-<a id="enviroment"></a>
+<a id="environment"></a>
 
-### enviroment
+### environment
 
-**●  enviroment**:  *`string`*
+**● enviroment**: _`string`_
 
-*Defined in [Configuration.java:35](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Configuration.java#L35)*
+_Defined in [Configuration.java:35](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Configuration.java#L35)_
 
 ---
 
@@ -28,9 +28,9 @@
 
 ### publicKey
 
-**●  publicKey**:  *`string`*
+**● publicKey**: _`string`_
 
-*Defined in [Configuration.java:33](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Configuration.java#L33)*
+_Defined in [Configuration.java:33](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Configuration.java#L33)_
 
 ---
 
@@ -38,9 +38,9 @@
 
 ### privateKey
 
-**●  privateKey**:  *`string`*
+**● privateKey**: _`string`_
 
-*Defined in [Configuration.java:34](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Configuration.java#L34)*
+_Defined in [Configuration.java:34](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Configuration.java#L34)_
 
 ---
 
@@ -48,17 +48,17 @@
 
 ### «Static» environment
 
-► **environment**(environment: *"production"⎮"sandbox"⎮"integration"*): `void`
+► **environment**(environment: _"production"⎮"sandbox"⎮"integration"_): `void`
 
-*Defined in [Configuration.java:90](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Configuration.java#L90)*
+_Defined in [Configuration.java:90](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Configuration.java#L90)_
 
-Set the Payment Rails API environment that your using
+Set the Trolley API environment that you're using
 
 **Parameters:**
 
-| Param | Type | Description |
-| ------ | ------ | ------ |
-| environment | "production"⎮"sandbox"⎮"integration"   |  one of "production" or "sandbox" |
+| Param       | Type                                 | Description                      |
+| ----------- | ------------------------------------ | -------------------------------- |
+| environment | "production"⎮"sandbox"⎮"integration" | one of "production" or "sandbox" |
 
 **Returns:** `void`
 

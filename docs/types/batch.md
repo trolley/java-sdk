@@ -1,8 +1,8 @@
-[Payment Rails Java SDK](../README.md) > [BatchInput](../types/batch.md)
+[Trolley Java SDK](../README.md) > [BatchInput](../types/batch.md)
 
 # Types: Batch
 
-*__type__*: Batch
+_**type**_: Batch
 
 ## Properties
 
@@ -10,9 +10,9 @@
 
 ### description
 
-**●  description**:  *`undefined`⎮`string`*
+**● description**: _`undefined`⎮`string`_
 
-*Defined in [Batch.java:15](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Batch.java#L15)*
+_Defined in [Batch.java:15](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Batch.java#L15)_
 
 ---
 
@@ -20,8 +20,8 @@
 
 ### sourceCurrency
 
-**●  sourceCurrency**:  *`undefined`⎮`string`*
+**● sourceCurrency**: _`undefined`⎮`string`_
 
-*Defined in [Batch.java:14](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Batch.java#L14)*
+_Defined in [Batch.java:14](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Batch.java#L14)_
 
 ---

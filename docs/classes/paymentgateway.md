@@ -1,4 +1,4 @@
-[Payment Rails Java SDK](../README.md) > [PaymentGateway](../classes/paymentgateway.md)
+[Trolley Java SDK](../README.md) > [PaymentGateway](../classes/paymentgateway.md)
 
 # Class: PaymentGateway
 
@@ -6,11 +6,11 @@
 
 ### Methods
 
-* [create](paymentgateway.md#create)
-* [find](paymentgateway.md#find)
-* [remove](paymentgateway.md#remove)
-* [search](paymentgateway.md#search)
-* [update](paymentgateway.md#update)
+- [create](paymentgateway.md#create)
+- [find](paymentgateway.md#find)
+- [remove](paymentgateway.md#remove)
+- [search](paymentgateway.md#search)
+- [update](paymentgateway.md#update)
 
 ---
 
@@ -20,9 +20,9 @@
 
 ### create
 
-► **create**(batchId: *`string`*, body: *`any`*): `Payment`
+► **create**(batchId: _`string`_, body: _`any`_): `Payment`
 
-*Defined in [PaymentGateway.java:55](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Gateway.java#L55)*
+_Defined in [PaymentGateway.java:55](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Gateway.java#L55)_
 
 Create a new payment in a batch
 
@@ -32,7 +32,7 @@ Create a new payment in a batch
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| batchId | `string`   |  Payment Rails payment id (e.g. "B-xx999bb") |
+| batchId | `string`   |  Trolley payment id (e.g. "B-xx999bb") |
 | body | `any`   |  Payment information |
 
 **Returns:** `Payment`
@@ -43,9 +43,9 @@ Create a new payment in a batch
 
 ### find
 
-► **find**(paymentId: *`string`*): `Payment`
+► **find**(paymentId: _`string`_): `Payment`
 
-*Defined in [PaymentGateway.java:34](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Gateway.java#L34)*
+_Defined in [PaymentGateway.java:34](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Gateway.java#L34)_
 
 Find a specific payment
 
@@ -55,7 +55,7 @@ Find a specific payment
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| paymentId | `string`   |  Payment Rails payment id (e.g. "P-aabccc") |
+| paymentId | `string`   |  Trolley payment id (e.g. "P-aabccc") |
 
 **Returns:** `Payment`
 
@@ -65,9 +65,9 @@ Find a specific payment
 
 ### delete
 
-► **delete**(paymentId: *`string`*, batchId: *`string`*): `boolean`
+► **delete**(paymentId: _`string`_, batchId: _`string`_): `boolean`
 
-*Defined in [PaymentGateway.java:90](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Gateway.java#L90)*
+_Defined in [PaymentGateway.java:90](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Gateway.java#L90)_
 
 Delete a given payment -- Note you can only delete non processed payments
 
@@ -77,8 +77,8 @@ Delete a given payment -- Note you can only delete non processed payments
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| paymentId | `string`   |  Payment Rails payment id (e.g. "P-aabccc") |
-| batchId | `string`   |  Payment Rails payment id (e.g. "B-xx999bb") |
+| paymentId | `string`   |  Trolley payment id (e.g. "P-aabccc") |
+| batchId | `string`   |  Trolley payment id (e.g. "B-xx999bb") |
 
 **Returns:** `boolean`
 
@@ -88,9 +88,9 @@ Delete a given payment -- Note you can only delete non processed payments
 
 ### search
 
-► **search**(batchId: *`string`*, page?: *`number`*, pageSize?: *`number`*, term?: *`string`*): `Payment`[]
+► **search**(batchId: _`string`_, page?: _`number`_, pageSize?: _`number`_, term?: _`string`_): `Payment`[]
 
-*Defined in [PaymentGateway.java:105](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Gateway.java#L105)*
+_Defined in [PaymentGateway.java:105](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Gateway.java#L105)_
 
 Search for payments in a given batch
 
@@ -98,7 +98,7 @@ Search for payments in a given batch
 
 | Param | Type | Default value | Description |
 | ------ | ------ | ------ | ------ |
-| batchId | `string`  | - |   Payment Rails payment id (e.g. "B-xx999bb") |
+| batchId | `string`  | - |   Trolley payment id (e.g. "B-xx999bb") |
 | page | `number`  | 1 |   Page number (1 based) |
 | pageSize | `number`  | 10 |   Page size (0...1000) |
 | term | `string`  | &quot;&quot; |   Any search terms to look for |
@@ -111,9 +111,9 @@ Search for payments in a given batch
 
 ### update
 
-► **update**(paymentId: *`string`*, batchId: *`string`*, body: *`any`*): `boolean`
+► **update**(paymentId: _`string`_, batchId: _`string`_, body: _`any`_): `boolean`
 
-*Defined in [PaymentGateway.java:74](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Gateway.java#L74)*
+_Defined in [PaymentGateway.java:74](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Gateway.java#L74)_
 
 Update a given payment
 
@@ -123,8 +123,8 @@ Update a given payment
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| paymentId | `string`   |  Payment Rails payment id (e.g. "P-aabccc") |
-| batchId | `string`   |  Payment Rails payment id (e.g. "B-xx999bb") |
+| paymentId | `string`   |  Trolley payment id (e.g. "P-aabccc") |
+| batchId | `string`   |  Trolley payment id (e.g. "B-xx999bb") |
 | body | `any`   |  Payment update information |
 
 **Returns:** `boolean`

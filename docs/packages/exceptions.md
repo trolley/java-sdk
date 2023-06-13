@@ -1,4 +1,4 @@
-[Payment Rails Java SDK](../README.md) > [Exceptions](../packages/exceptions.md)
+[Trolley Java SDK](../README.md) > [Exceptions](../packages/exceptions.md)
 
 # Package: Exceptions
 

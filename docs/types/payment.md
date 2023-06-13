@@ -1,8 +1,8 @@
-[Payment Rails Java SDK](../README.md) > [PaymentInput](../types/payment.md)
+[Trolley Java SDK](../README.md) > [PaymentInput](../types/payment.md)
 
 # Types: Payment
 
-*__type__*: Payment
+_**type**_: Payment
 
 ## Properties
 
@@ -10,9 +10,9 @@
 
 ### «Optional» memo
 
-**●  memo**:  *`undefined`⎮`string`*
+**● memo**: _`undefined`⎮`string`_
 
-*Defined in [Payment.java:22](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Payment.java#L22)*
+_Defined in [Payment.java:22](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Payment.java#L22)_
 
 ---
 
@@ -20,15 +20,15 @@
 
 ### recipient
 
-**●  recipient**:  *`object`*
+**● recipient**: _`object`_
 
-*Defined in [Payment.java:23](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Payment.java#L23)*
+_Defined in [Payment.java:23](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Payment.java#L23)_
 
 #### Type declaration
 
-«Optional»  email: `undefined`⎮`string`
-«Optional»  id: `undefined`⎮`string`
-«Optional»  referenceId: `undefined`⎮`string`
+«Optional» email: `undefined`⎮`string`
+«Optional» id: `undefined`⎮`string`
+«Optional» referenceId: `undefined`⎮`string`
 
 ---
 
@@ -36,9 +36,9 @@
 
 ### «Optional» sourceAmount
 
-**●  sourceAmount**:  *`undefined`⎮`string`*
+**● sourceAmount**: _`undefined`⎮`string`_
 
-*Defined in [Payment.java:19](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Payment.java#L19)*
+_Defined in [Payment.java:19](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Payment.java#L19)_
 
 ---
 
@@ -46,9 +46,9 @@
 
 ### «Optional» targetAmount
 
-**●  targetAmount**:  *`undefined`⎮`string`*
+**● targetAmount**: _`undefined`⎮`string`_
 
-*Defined in [Payment.java:20](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Payment.java#L20)*
+_Defined in [Payment.java:20](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Payment.java#L20)_
 
 ---
 
@@ -56,8 +56,8 @@
 
 ### «Optional» targetCurrency
 
-**●  targetCurrency**:  *`undefined`⎮`string`*
+**● targetCurrency**: _`undefined`⎮`string`_
 
-*Defined in [Payment.java:21](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/Payment.java#L21)*
+_Defined in [Payment.java:21](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/Payment.java#L21)_
 
 ---

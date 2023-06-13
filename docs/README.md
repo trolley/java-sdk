@@ -1,5 +1,5 @@
 
-# Payment Rails Java SDK
+# Trolley Java SDK
 
 ## Index
 
