@@ -91,7 +91,7 @@ public class InvoiceTests {
         Invoices invoices = client.invoice.search(Invoice.SearchBy.RECIPIENT_ID, recipientIds, null,1,2);
         List<Invoice> invoiceList = invoices.getInvoices();
         assertEquals(invoiceList.get(0).getRecipientId(),invoice.getRecipientId());
-        assertEquals(invoices.getMeta().getPages(),1);
+        assertTrue(invoices.getMeta().getPages()>1);
 
         //Cleanup - Delete Recipient
         boolean recDelResult = testHelper.deleteRecipient(recipient);

@@ -88,8 +88,8 @@ public class InvoicePayment
         final Meta meta = (Meta)mapper.readValue(node.get("meta").traverse(), (Class)Meta.class);
         
         //Creating List<Invoice> object to return
-        for (int i = 0; i < parsedInvoicePayments.size(); ++i) {
-            final InvoicePaymentPart pojo = (InvoicePaymentPart)mapper.convertValue((Object)parsedInvoicePayments.get(i), (Class)InvoicePaymentPart.class);
+        for (Object invoicePayment : parsedInvoicePayments) {
+            final InvoicePaymentPart pojo = (InvoicePaymentPart)mapper.convertValue((Object)invoicePayment, (Class)InvoicePaymentPart.class);
             paymentPartsObjs.add(pojo);
         }
 

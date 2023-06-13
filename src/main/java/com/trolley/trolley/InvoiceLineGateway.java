@@ -38,7 +38,7 @@ public class InvoiceLineGateway
                                             .setSerializationInclusion(Include.NON_EMPTY)
                                             .writeValueAsString(invoiceLines)
             +"}";
-        System.out.println("__REQUEST__ "+body);
+            
         final String response = this.client.post(endPoint, body);
         return InvoiceLine.invoiceLinesFactory(response);
     }

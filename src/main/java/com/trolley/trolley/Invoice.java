@@ -316,8 +316,8 @@ public class Invoice
         final Meta meta = (Meta)mapper.readValue(node.get("meta").traverse(), (Class)Meta.class);
         
         //Creating List<Invoice> object to return
-        for (int i = 0; i < parsedInvoices.size(); ++i) {
-            final Invoice pojo = (Invoice)mapper.convertValue((Object)parsedInvoices.get(i), (Class)Invoice.class);
+        for (Object singleInvoice : parsedInvoices) {
+            final Invoice pojo = (Invoice)mapper.convertValue((Object)singleInvoice, (Class)Invoice.class);
             invoiceObjs.add(pojo);
         }
 
