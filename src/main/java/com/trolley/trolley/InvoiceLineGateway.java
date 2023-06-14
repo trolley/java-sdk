@@ -46,7 +46,7 @@ public class InvoiceLineGateway
     /**
      * Create multiple Invoice Lines and adds them to the Invoice whose ID is supplied. <br/>
      * @param invoiceId Id of the invoice where this line will be added
-     * @param invoiceLines List<InvoiceLine> object represnting the lines which will be created
+     * @param invoiceLines {@code List<InvoiceLine>} object represnting the lines which will be created
      * @return Invoice object of the updated invoice containing these lines
      * @throws Exception
      */
@@ -67,8 +67,8 @@ public class InvoiceLineGateway
    /**
      * Update a single Invoice Line in an Invoice whose ID is supplied. <br/>
      * <p>
-     * NOTE: Make sure you set the <code>invoiceLineId</code> variable of the <code>invoiceLine</code> 
-     * object supplied as parameter here. Not the <code>id</code>.
+     * NOTE: Make sure you set the {@code invoiceLineId} variable of the {@code invoiceLine} 
+     * object supplied as parameter here. Not the {@code id}.
      * 
      * @param invoiceId Id of the invoice where this line will be added
      * @param invoiceLine InvoiceLine object which will be update
@@ -103,10 +103,10 @@ public class InvoiceLineGateway
     /**
      * Update multiple Invoice Lines in an Invoice whose ID is supplied. <br/>
      * <p>
-     * NOTE: Make sure you set the <code>invoiceLineId</code> variable in all the objects supplied 
-     * in the <code>invoiceLines</code> parameter.
+     * NOTE: Make sure you set the {@code invoiceLineId} variable in all the objects supplied 
+     * in the {@code invoiceLines} parameter.
      * @param invoiceId Id of the invoice where this line will be added
-     * @param invoiceLines List<InvoiceLine> object representing the lines which will be edited
+     * @param invoiceLines {@code List<InvoiceLine>} object representing the lines which will be edited
      * @return Invoice object of the updated invoice containing these lines
      * @throws Exception
      */

@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.trolley.Exceptions.InvalidFieldException;
 import com.trolley.trolley.types.InvoicePaymentPart;
 import com.trolley.trolley.types.InvoicePayments;
 
@@ -22,7 +21,7 @@ public class InvoicePaymentGateway
      * Create a payment against an invoice.
      * <p>
      * NOTE: If you provide a batch id, this method will try to add the payment to it. If you provide a 
-     * <code>null</code> or blank (<code>""</code>) batch id, a new batch will be created.
+     * {@code null} or blank ({@code ""}) batch id, a new batch will be created.
      *
      * 
      * @param batchId (Optional) Id of the batch you want to add these payments too.
@@ -58,7 +57,7 @@ public class InvoicePaymentGateway
      * Create a payment against multiple invoices.
      * <p>
      * NOTE: If you provide a batch id, this method will try to add the payment to it. If you provide a 
-     * <code>null</code> or blank (<code>""</code>) batch id, a new batch will be created. 
+     * {@code null} or blank ({@code ""}) batch id, a new batch will be created. 
      * 
      * @param batchId (Optional) Id of the batch you want to add these payments too.
      * @param invoicePaymentParts A List of InvoicePaymentPart objects representing the Invoice payments that need to be created.
@@ -111,7 +110,7 @@ public class InvoicePaymentGateway
     /**
      * Search for invoice payments matching the list of paymentIds or invoiceIds provided.
      * <p>
-     * Either <code>paymentIds</code> or <code>invoiceIds</code> is required.
+     * Either {@code paymentIds} or {@code invoiceIds} is required.
      * @param paymentIds
      * @param invoiceIds
      * @return InvoicePayments object containing a list of found InvoicePaymentParts and Meta object for 
@@ -176,7 +175,7 @@ public class InvoicePaymentGateway
     /**
      * Remove the association between a payment and multiple invoice line IDs.
      * @param paymentId payment id to delete
-     * @param invoiceLineIds a List<String> of invoiceLineIds
+     * @param invoiceLineIds a {@code List<String>} of invoiceLineIds
      * @return
      * @throws Exception
      */

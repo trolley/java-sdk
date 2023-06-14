@@ -80,7 +80,7 @@ public class InvoiceGateway
 
     /**
      * Delete multiple invoices whose ID is provided as a List
-     * @param invoiceId
+     * @param invoiceIds
      * @return boolean true if the delete operation was successful
      * @throws Exception
      */
@@ -117,17 +117,17 @@ public class InvoiceGateway
     /**
      * Search invoices by multiple options such as by invoiceId, recipientId etc.
      * Note: This method only returns the fist page, defaulting to 10 records per page.
-     * For pagination, look at `search(SearchBy searchBy, List<String> paramsList, String param, int page, int pageSize)` below.
+     * For pagination, look at {@code search(SearchBy searchBy, List<String> paramsList, String param, int page, int pageSize)} below.
      * 
-     * Depending on what you want to search by, you'll either provide a List<String> parameter, or a
+     * Depending on what you want to search by, you'll either provide a {@code List<String>} parameter, or a
      * String parameter. Details about when to provide which parameter are given in the parameter
      * list. 
      * These options correspond to our documentation.
      * @param searchBy Enum of type Invoice.SearchBy denoting which field you want to search by
-     * @param paramsList List<String> Required if 'searchBy' is either of these: 'invoiceId'
+     * @param paramsList {@code List<String>} Required if 'searchBy' is either of these: 'invoiceId'
      * 'recipientId', 'invoiceNumber', 'tags'. Set to 'null' otherwise.
      * @param param String Required if 'searchBy' is either 'invoiceDate' or 'externalId'. Set to null otherwise.
-     * @return List<Invoice>
+     * @return {@code List<Invoice>}
      * @throws Exception
      */
     
@@ -170,15 +170,15 @@ public class InvoiceGateway
     /**
      * Search invoices by multiple options such as by invoiceId, recipientId etc.
      * Note: This method supports pagination.
-     * Depending on what you want to search by, you'll either provide a List<String> parameter, or a
+     * Depending on what you want to search by, you'll either provide a {@code List<String>} parameter, or a
      * String parameter. Details about when to provide which parameter are given in the parameter
      * list. 
      * These options correspond to our documentation.
      * @param searchBy Enum of type Invoice.SearchBy denoting which field you want to search by
-     * @param paramsList List<String> Required if 'searchBy' is either of these: 'invoiceId'
+     * @param paramsList {@code List<String>} Required if 'searchBy' is either of these: 'invoiceId'
      * 'recipientId', 'invoiceNumber', 'tags'. Set to 'null' otherwise.
      * @param param String Required if 'searchBy' is either 'invoiceDate' or 'externalId'. Set to null otherwise.
-     * @return Invoices object that contains List<Invoice> that you can traverse through, and a Meta object with pagination information
+     * @return Invoices object that contains {@code List<Invoice>} that you can traverse through, and a Meta object with pagination information
      * @throws Exception
      */
     

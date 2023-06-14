@@ -71,15 +71,12 @@ public class Invoice
     public Invoice() { }
 
     /**
-     * 
      * @param recipientId
      * @param invoiceNumber
      * @param description
      * @param externalId
      * @param invoiceDate
      * @param dueDate
-     * @param createdAt
-     * @param updatedAt
      * @param tags
      * @param lines
      */
@@ -298,9 +295,8 @@ public class Invoice
 
     /**
      * Factory method to create a List of Invoices
-     * @param data
+     * @param invoicesStr
      * @return
-     * @throws DatabindException
      * @throws StreamReadException
      * @throws IOException
      */
