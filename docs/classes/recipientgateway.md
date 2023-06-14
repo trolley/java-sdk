@@ -6,11 +6,11 @@
 
 ### Methods
 
-* [create](RecipientGateway.md#create)
-* [find](RecipientGateway.md#find)
-* [remove](RecipientGateway.md#remove)
-* [search](RecipientGateway.md#search)
-* [update](RecipientGateway.md#update)
+- [create](RecipientGateway.md#create)
+- [find](RecipientGateway.md#find)
+- [remove](RecipientGateway.md#remove)
+- [search](RecipientGateway.md#search)
+- [update](RecipientGateway.md#update)
 
 ---
 
@@ -20,9 +20,9 @@
 
 ### create
 
-► **create**(body: *[Recipient](../types/recipient.md)*): `Recipient`
+► **create**(body: _[Recipient](../types/recipient.md)_): `Recipient`
 
-*Defined in [RecipientGateway.java:82](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/RecipientGateway.java#L82)*
+_Defined in [RecipientGateway.java:82](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/RecipientGateway.java#L82)_
 
 Create a given recipient
 
@@ -32,9 +32,9 @@ Create a given recipient
 
 **Parameters:**
 
-| Param | Type | Description |
-| ------ | ------ | ------ |
-| body | [Recipient](../types/recipient.md)   |  The recipient information to create |
+| Param | Type                               | Description                         |
+| ----- | ---------------------------------- | ----------------------------------- |
+| body  | [Recipient](../types/recipient.md) | The recipient information to create |
 
 **Returns:** `Recipient`
 
@@ -44,9 +44,9 @@ Create a given recipient
 
 ### find
 
-► **find**(recipientId: *`string`*): `Recipient`
+► **find**(recipientId: _`string`_): `Recipient`
 
-*Defined in [RecipientGateway.java:58](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/RecipientGateway.java#L58)*
+_Defined in [RecipientGateway.java:58](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/RecipientGateway.java#L58)_
 
 Find a specific recipient by their Trolley recipient ID
 
@@ -66,9 +66,9 @@ Recipient recipient = client.recipient.find(R-efr313md8cj);
 
 ### delete
 
-► **delete**(recipientId: *`string`*): `boolean`
+► **delete**(recipientId: _`string`_): `boolean`
 
-*Defined in [RecipientGateway.java:115](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/RecipientGateway.java#L115)*
+_Defined in [RecipientGateway.java:115](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/RecipientGateway.java#L115)_
 
 Delete the given recipient.
 
@@ -88,17 +88,17 @@ Delete the given recipient.
 
 ### search
 
-► **search**(page: *`number`*, pageSize: *`number`*, term: *`string`*): `Recipient`[]
+► **search**(page: _`number`_, pageSize: _`number`_, term: _`string`_): `Recipient`[]
 
-*Defined in [RecipientGateway.java:123](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/RecipientGateway.java#L123)*
+_Defined in [RecipientGateway.java:123](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/RecipientGateway.java#L123)_
 
 **Parameters:**
 
-| Param | Type | Description |
-| ------ | ------ | ------ |
-| page | `number`   |  - |
-| pageSize | `number`   |  - |
-| term | `string`   |  - |
+| Param    | Type     | Description |
+| -------- | -------- | ----------- |
+| page     | `number` | -           |
+| pageSize | `number` | -           |
+| term     | `string` | -           |
 
 **Returns:** `Recipient`[]
 
@@ -108,9 +108,9 @@ Delete the given recipient.
 
 ### update
 
-► **update**(body: *[Recipient](../types/recipient.md)*): `boolean`
+► **update**(body: _[Recipient](../types/recipient.md)_): `boolean`
 
-*Defined in [RecipientGateway.java:100](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/ca/paymentrails/paymentrails/RecipientGateway.java#L100)*
+_Defined in [RecipientGateway.java:100](https://github.com/PaymentRails/java-sdk/tree/master/src/main/java/com/trolley/trolley/RecipientGateway.java#L100)_
 
 Update the given recipient
 
@@ -118,9 +118,9 @@ Update the given recipient
 
 **Parameters:**
 
-| Param | Type | Description |
-| ------ | ------ | ------ |
-| body | [Recipient](../types/recipient.md)   |  the changes to make to the recipient |
+| Param | Type                               | Description                          |
+| ----- | ---------------------------------- | ------------------------------------ |
+| body  | [Recipient](../types/recipient.md) | the changes to make to the recipient |
 
 **Returns:** `boolean`
 
