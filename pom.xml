@@ -7,7 +7,7 @@
     <description>Java SDK for Trolley API</description>
     <packaging>jar</packaging>
     <name>Trolley Java SDK</name>
-    <url>https://github.com/PaymentRails/java-sdk</url>
+    <url>https://github.com/Trolley/java-sdk</url>
 
     <licenses>
         <license>
@@ -41,9 +41,9 @@
         </developer>
     </developers>
      <scm>
-        <connection>scm:git:git://github.com/PaymentRails/java-sdk.git</connection>
-        <developerConnection>scm:git:git://github.com/PaymentRails/java-sdk.git</developerConnection>
-        <url>https://github.com/PaymentRails/java-sdk</url>
+        <connection>scm:git:git://github.com/Trolley/java-sdk.git</connection>
+        <developerConnection>scm:git:git://github.com/Trolley/java-sdk.git</developerConnection>
+        <url>https://github.com/Trolle/java-sdk</url>
         <tag>HEAD</tag>
     </scm>
     <properties>
