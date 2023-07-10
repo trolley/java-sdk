@@ -2,6 +2,7 @@ nb-configuration
 target
 nbproject
 .classpath
+.idea/*
 .project
 .settings
 .settings/*
