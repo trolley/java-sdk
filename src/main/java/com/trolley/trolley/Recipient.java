@@ -34,6 +34,7 @@ public class Recipient
     String payoutMethod;
     public Object payout;
     String emailAddress;
+    List<String> contactEmails;
     public Object inactiveReasons;
     Compliance compliance;
     List<RecipientAccount> accounts;
@@ -164,6 +165,14 @@ public class Recipient
     
     public void setEmail(final String email) {
         this.email = email;
+    }
+
+    public List<String> getContactEmails() {
+        return this.contactEmails;
+    }
+
+    public void setContactEmails(final List<String> contactEmails) {
+        this.contactEmails = contactEmails;
     }
     
     public String getName() {
