@@ -43,7 +43,7 @@
      <scm>
         <connection>scm:git:git://github.com/Trolley/java-sdk.git</connection>
         <developerConnection>scm:git:git://github.com/Trolley/java-sdk.git</developerConnection>
-        <url>https://github.com/Trolle/java-sdk</url>
+        <url>https://github.com/Trolley/java-sdk</url>
         <tag>HEAD</tag>
     </scm>
     <properties>
@@ -67,7 +67,7 @@
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.7</version>
+                <version>1.6.13</version>
                 <extensions>true</extensions>
                 <configuration>
                     <serverId>ossrh</serverId>
