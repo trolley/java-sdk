@@ -48,31 +48,24 @@ public class InvoiceTests {
             }
         };
 
-        // Create a new invoice
-        Invoice invoice = client.invoice.create(new Invoice(
-            recipient.getId(),
-            "invoice-123", 
-            "test-invoice-create-java-sdk", 
-            "ext-id-"+System.currentTimeMillis(), 
-            null,
-            null, 
-            null, 
-            invoiceLines));
+        // Create a new invoice - request body
+        Invoice invoice = new Invoice();
+        invoice.setRecipientId(recipient.getId());
+        invoice.setInvoiceNumber("invoice-123");
+        invoice.setDescription("test-invoice-create-java-sdk");
+        invoice.setExternalId("ext-id-"+System.currentTimeMillis());
+        invoice.setLines(invoiceLines);
+
+        // Create a new invoice - receiving response
+        invoice = client.invoice.create(invoice);
         assertEquals(invoice.getRecipientId(), recipient.getId());
 
         //Update an Invoice
+        Invoice updateInvoiceRequest = new Invoice();
+        updateInvoiceRequest.setDescription("test-invoice-update-java-sdk");
         final Invoice updatedInvoice = client.invoice.update(
             invoice.getId(),
-            new Invoice(
-                null,
-                "invoice-123", 
-                "test-invoice-update-java-sdk", 
-                null, 
-                null,
-                null, 
-                null, 
-                null
-            ));
+            updateInvoiceRequest);
         assertEquals(updatedInvoice.getDescription(),"test-invoice-update-java-sdk");
         assertEquals(updatedInvoice.getId(),invoice.getId());
 
@@ -110,32 +103,29 @@ public class InvoiceTests {
         final Recipient recipient = testHelper.createRecipient();
 
         //Setup - create Invoice
-        Invoice invoice = client.invoice.create(new Invoice(
-            recipient.getId(),
-            "invoice-123", 
-            "test-invoice-create-java-sdk", 
-            "ext-id-"+System.currentTimeMillis(), 
-            null,
-            null, 
-            null, 
-            null));
+        Invoice createInvoiceRequest = new Invoice();
+        createInvoiceRequest.setRecipientId(recipient.getId());
+        createInvoiceRequest.setInvoiceNumber("invoice-123");
+        createInvoiceRequest.setDescription("test-invoice-create-java-sdk");
+        createInvoiceRequest.setExternalId("ext-id-"+System.currentTimeMillis());
+
+        Invoice invoice = client.invoice.create(createInvoiceRequest);
         assertEquals(invoice.getRecipientId(), recipient.getId());
 
         //Add a new Invoice Line to the Invoice just created
-        Invoice invoiceWithLines = client.invoiceLine.create(invoice.getId(), 
-            new InvoiceLine(
-                new Amount("100", "USD"),
-                InvoiceLine.InvoiceCategories.SERVICES,
-                "Invoice Line from Java SDK", 
-                "ILine-ExtId-"+System.currentTimeMillis(), 
-                true, 
-                true,
-                null, 
-                "2", 
-                new Amount("10", "USD"), 
-                new Amount("5", "USD"),
-                null, 
-                null));
+        InvoiceLine invoiceLineRequest = new InvoiceLine();
+        invoiceLineRequest.setUnitAmount(new Amount("100", "USD"));
+        invoiceLineRequest.setCategory(InvoiceLine.InvoiceCategories.SERVICES);
+        invoiceLineRequest.setDescription("Invoice Line from Java SDK");
+        invoiceLineRequest.setExternalId("ILine-ExtId-"+System.currentTimeMillis());
+        invoiceLineRequest.setTaxReportable(true);
+        invoiceLineRequest.setForceUsTaxActivity(true);
+        invoiceLineRequest.setQuantity("2");
+        invoiceLineRequest.setDiscountAmount(new Amount("10", "USD"));
+        invoiceLineRequest.setTaxAmount(new Amount("5", "USD"));
+
+        Invoice invoiceWithLines = client.invoiceLine.create(invoice.getId(), invoiceLineRequest);
+            
         assertEquals(invoiceWithLines.getLines().get(0).getUnitAmount().getValue(), "100.00");
 
         //Add multiple new Invoice Lines to the Invoice created

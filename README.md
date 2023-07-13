@@ -1,8 +1,6 @@
-# Trolley Java SDK (Previously Payment Rails[^1])
+# Trolley Java SDK
 
 A native Java SDK for Trolley
-
-[^1]: [Payment Rails is now Trolley](https://www.trolley.com/payment-rails-is-now-trolley-series-a). We're in the process of updating our SDKs to support the new domain. In this transition phase, you might still see "PaymentRails" at some places.
 
 ## Installation
 
@@ -22,13 +20,13 @@ Add this dependency to your project's POM:
 <dependency>
     <groupId>com.trolley</groupId>
     <artifactId>java-sdk</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.1</version>
 </dependency>
 ```
 
-The library's source is hosted at [https://github.com/paymentRails/java-sdk](https://github.com/paymentRails/java-sdk)
+The library's source is hosted at [https://github.com/paymentRails/java-sdk](https://github.com/trolley/java-sdk)
 
-The library can be found at: [https://central.sonatype.com/artifact/com.trolley/java-sdk/1.0](https://central.sonatype.com/artifact/com.trolley/java-sdk/1.0)
+The library can be found at: [https://central.sonatype.com/artifact/com.trolley/java-sdk/](https://central.sonatype.com/artifact/com.trolley/java-sdk/)
 
 ## Getting Started
 
@@ -36,7 +34,7 @@ The library can be found at: [https://central.sonatype.com/artifact/com.trolley/
 import com.trolley.java-sdk.*;
 import com.trolley.Exceptions.*;
 
-public class PaymentRailsExample {
+public class TrolleyExample {
     public static void main(String[] args) {
 
        Gateway client = new Gateway(new Configuration("YOUR_PUBLIC_KEY","YOUR_PRIVATE_KEY","production"));

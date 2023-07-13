@@ -14,6 +14,7 @@ import com.trolley.trolley.Recipient;
 import com.trolley.trolley.RecipientAccount;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @PrepareForTest(Recipient.class)
@@ -34,6 +35,7 @@ public class RecipientTest {
         assertEquals(recipient.getFirstName(), "John");
         assertEquals(recipient.getLastName(), "Smith");
         assertNotNull(recipient.getId());
+        assertEquals(recipient.getContactEmails(), Arrays.asList("john1@example.com", "john2@example.com"));
 
         //Cleanup
         boolean deleteResult = testHelper.deleteRecipient(recipient);

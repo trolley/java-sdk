@@ -33,6 +33,7 @@ public class TestHelper {
 
         String email = "\"create.recipient.java-sdk." + uuid.toString() + "@example.com\"";
         String body = "{\"type\": \"individual\",\"firstName\": \"John\",\"lastName\": \"Smith\",\"email\":" + email
+                + ",\"contactEmails\": [\"john1@example.com\", \"john2@example.com\"]"
                 + ",\"address\":{\"street1\": \"123 Main St\",\"city\": \"San Francisco\",\"region\": \"CA\",\"postalCode\": \"94131\",\"country\": \"DE\",\"phone\" : \"18005551212\"}}";
 
         Recipient recipient = client.recipient.create(body);
