@@ -20,11 +20,11 @@ Add this dependency to your project's POM:
 <dependency>
     <groupId>com.trolley</groupId>
     <artifactId>java-sdk</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
 </dependency>
 ```
 
-The library's source is hosted at [https://github.com/paymentRails/java-sdk](https://github.com/trolley/java-sdk)
+The library's source is hosted at [https://github.com/Trolley/java-sdk](https://github.com/trolley/java-sdk)
 
 The library can be found at: [https://central.sonatype.com/artifact/com.trolley/java-sdk/](https://central.sonatype.com/artifact/com.trolley/java-sdk/)
 
