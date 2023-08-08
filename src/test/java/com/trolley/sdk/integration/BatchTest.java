@@ -3,6 +3,7 @@ package com.trolley.sdk.integration;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -112,6 +113,9 @@ public class BatchTest {
 
         assertEquals("15.00", batchPayments.get(0).getAmount());
         assertEquals("USD", batchPayments.get(0).getCurrency());
+        assertEquals(batchPayments.get(0).getBatch().getId(), batch.getId());
+
+        assertNull(batchPayments.get(0).getCheckNumber());
 
         //Cleanup
         boolean recDelResult = testHelper.deleteRecipient(recipientAlpha);
