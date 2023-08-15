@@ -33,7 +33,8 @@ public class Payment
     private Compliance compliance;
     private String payoutMethod;
     private String methodDisplay;
-    Object batch;
+    private Batch batch;
+    private String checkNumber;
     String withholdingAmount;
     String withholdingCurrency;
     String equivalentWithholdingAmount;
@@ -287,6 +288,22 @@ public class Payment
         this.methodDisplay = methodDisplay;
     }
     
+    public Batch getBatch() {
+        return batch;
+    }
+
+    public void setBatch(Batch batch) {
+        this.batch = batch;
+    }
+
+    public String getCheckNumber() {
+        return checkNumber;
+    }
+
+    public void setCheckNumber(String checkNumber) {
+        this.checkNumber = checkNumber;
+    }
+
     public static Payment find(final String payment_id, final String batch_id) throws Exception {
         return Configuration.gateway().payment.find(payment_id, batch_id);
     }

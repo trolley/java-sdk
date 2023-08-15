@@ -55,6 +55,9 @@ public class RecipientTest {
         boolean response = client.recipient.update(recipient.getId(), body);
         assertNotNull(response);
 
+        // Test Compliance Status
+        assertTrue(recipient.getComplianceStatus() == Recipient.ComplianceStatus.PENDING);
+
         Recipient anotherRecipient = client.recipient.find(recipient.getId());
         assertEquals(anotherRecipient.getFirstName(), "Bob");
 

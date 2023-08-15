@@ -1,7 +1,13 @@
 package com.trolley.trolley;
 
 import java.util.List;
+import java.util.Locale;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
+import com.trolley.trolley.Invoice.SearchBy;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Recipient
@@ -19,7 +25,7 @@ public class Recipient
     String taxType;
     String status;
     String language;
-    String complianceStatus;
+    ComplianceStatus complianceStatus;
     String dob;
     String passport;
     String updatedAt;
@@ -42,6 +48,35 @@ public class Recipient
     String taxForm;
     String taxFormStatus;
     String taxWithholdingPercentage;
+
+    public static enum ComplianceStatus {
+        REVIEW("review"),
+        BLOCKED("blocked"),
+        PENDING("pending"),
+        VERIFIED("verified");
+
+        private String key;
+
+        ComplianceStatus(String key) {
+            this.key = key;
+        }
+
+        @JsonCreator
+        public static ComplianceStatus fromString(String key) {
+            return key == null
+                    ? null
+                    : ComplianceStatus.valueOf(key.toUpperCase(Locale.US));
+        }
+
+        @JsonValue
+        public String getKey() {
+            return key;
+        }
+
+        public String toString(){
+            return key.toLowerCase(Locale.US);
+        }
+    }
     
     public Recipient() {
         this.taxWithholdingPercentage = "0.0";
@@ -223,11 +258,11 @@ public class Recipient
         this.language = language;
     }
     
-    public String getComplianceStatus() {
+    public ComplianceStatus getComplianceStatus() {
         return this.complianceStatus;
     }
     
-    public void setComplianceStatus(final String complianceStatus) {
+    public void setComplianceStatus(final ComplianceStatus complianceStatus) {
         this.complianceStatus = complianceStatus;
     }
     
