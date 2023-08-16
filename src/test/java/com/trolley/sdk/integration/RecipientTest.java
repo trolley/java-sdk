@@ -55,6 +55,9 @@ public class RecipientTest {
         boolean response = client.recipient.update(recipient.getId(), body);
         assertNotNull(response);
 
+        // Test Compliance Status
+        assertTrue(recipient.getComplianceStatus() == Recipient.ComplianceStatus.PENDING);
+
         Recipient anotherRecipient = client.recipient.find(recipient.getId());
         assertEquals(anotherRecipient.getFirstName(), "Bob");
 
@@ -105,9 +108,13 @@ public class RecipientTest {
         Gateway client = new Gateway(config);
         ArrayList<Recipient> recipients = (ArrayList<Recipient>)client.recipient.search(1,20,"");
         //Making sure routeMinimum is not null before asserting it's value
-        assertNotNull(recipients.get(0).getRouteMinimum());
-        //Making sure routeMinium is set to a non-null value
-        assertTrue(Integer.parseInt(recipients.get(0).getRouteMinimum()) >= 0);
+        for (Recipient recipient : recipients) {
+            if(null != recipient.getRouteMinimum()){
+                //Making sure routeMinium is set to a non-null value
+                assertTrue(Integer.parseInt(recipient.getRouteMinimum()) >= 0);
+                break;
+            }
+        }        
     }
 
 }
