@@ -141,11 +141,12 @@ public class InvoiceGateway
             case INVOICE_ID:
             case RECIPIENT_ID:
             case INVOICE_NUMBER:
+            case EXTERNAL_ID:
             case TAGS:
                 if(null == paramsList){
                     throw new InvalidFieldException("variable paramsList can not be null for the provided searchBy parameter. Refer to method's Javadoc for more details.");
                 }
-                body = "{\""+searchBy.name()+"\":"
+                body = "{\""+searchBy.getKey()+"\":"
                     +new ObjectMapper()
                         .setSerializationInclusion(Include.NON_EMPTY)
                         .writeValueAsString(paramsList)
@@ -153,11 +154,10 @@ public class InvoiceGateway
                 break;
 
             case INVOICE_DATE:
-            case EXTERNAL_ID:
                 if(null == param){
                     throw new InvalidFieldException("variable param can not be null for the provided searchBy parameter. Refer to method's Javadoc for more details.");
                 }
-                body = "{\""+searchBy.name()+"\":\""+param+"\"}";
+                body = "{\""+searchBy.getKey()+"\":\""+param+"\"}";
                 break;
         }
         final String endPoint = "/v1/invoices/search/";
