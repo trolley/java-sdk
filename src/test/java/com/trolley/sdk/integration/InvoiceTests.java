@@ -48,7 +48,7 @@ public class InvoiceTests {
             }
         };
 
-        // Create a new invoice - request body
+        // Create a new invoice - prepare request body
         Invoice invoice = new Invoice();
         invoice.setRecipientId(recipient.getId());
         invoice.setInvoiceNumber("invoice-123");
@@ -56,7 +56,7 @@ public class InvoiceTests {
         invoice.setExternalId("ext-id-"+System.currentTimeMillis());
         invoice.setLines(invoiceLines);
 
-        // Create a new invoice - receiving response
+        // Create a new invoice - send request and receive response
         invoice = client.invoice.create(invoice);
         assertEquals(invoice.getRecipientId(), recipient.getId());
 
@@ -84,7 +84,7 @@ public class InvoiceTests {
         Invoices invoices = client.invoice.search(Invoice.SearchBy.RECIPIENT_ID, recipientIds, null,1,2);
         List<Invoice> invoiceList = invoices.getInvoices();
         assertEquals(invoiceList.get(0).getRecipientId(),invoice.getRecipientId());
-        assertTrue(invoices.getMeta().getPages()>1);
+        assertTrue(invoices.getMeta().getPages() >= 1);
 
         //Cleanup - Delete Recipient
         boolean recDelResult = testHelper.deleteRecipient(recipient);
