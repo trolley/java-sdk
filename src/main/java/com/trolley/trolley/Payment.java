@@ -35,10 +35,25 @@ public class Payment
     private String methodDisplay;
     private Batch batch;
     private String checkNumber;
-    String withholdingAmount;
-    String withholdingCurrency;
-    String equivalentWithholdingAmount;
-    String equivalentWithholdingCurrency;
+    private String withholdingAmount;
+    private String withholdingCurrency;
+    private String equivalentWithholdingAmount;
+    private String equivalentWithholdingCurrency;
+    private boolean coverFees;
+    private List<String> errors;
+    private String estimatedDeliveryAt;
+    private boolean forceUsTaxActivity;
+    private String initiatedAt;
+    private String merchantId;
+    private String returnedAt;
+    private String returnedNote;
+    private List<String> returnedReason;
+    private String routeMinimum;
+    private String routeType;
+    private String settledAt;
+    private String taxBasisAmount;
+    private String taxBasisCurrency;
+    private boolean taxReportable;
     
     public void setEquivalentWithholdingCurrency(final String equivalentWithholdingCurrency) {
         this.equivalentWithholdingCurrency = equivalentWithholdingCurrency;
@@ -302,6 +317,126 @@ public class Payment
 
     public void setCheckNumber(String checkNumber) {
         this.checkNumber = checkNumber;
+    }
+
+    public boolean isCoverFees() {
+        return coverFees;
+    }
+
+    public void setCoverFees(boolean coverFees) {
+        this.coverFees = coverFees;
+    }
+
+    public List<String> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(List<String> errors) {
+        this.errors = errors;
+    }
+
+    public String getEstimatedDeliveryAt() {
+        return estimatedDeliveryAt;
+    }
+
+    public void setEstimatedDeliveryAt(String estimatedDeliveryAt) {
+        this.estimatedDeliveryAt = estimatedDeliveryAt;
+    }
+
+    public boolean isForceUsTaxActivity() {
+        return forceUsTaxActivity;
+    }
+
+    public void setForceUsTaxActivity(boolean forceUsTaxActivity) {
+        this.forceUsTaxActivity = forceUsTaxActivity;
+    }
+
+    public String getInitiatedAt() {
+        return initiatedAt;
+    }
+
+    public void setInitiatedAt(String initiatedAt) {
+        this.initiatedAt = initiatedAt;
+    }
+
+    public String getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(String merchantId) {
+        this.merchantId = merchantId;
+    }
+
+    public String getReturnedAt() {
+        return returnedAt;
+    }
+
+    public void setReturnedAt(String returnedAt) {
+        this.returnedAt = returnedAt;
+    }
+
+    public String getReturnedNote() {
+        return returnedNote;
+    }
+
+    public void setReturnedNote(String returnedNote) {
+        this.returnedNote = returnedNote;
+    }
+
+    public List<String> getReturnedReason() {
+        return returnedReason;
+    }
+
+    public void setReturnedReason(List<String> returnedReason) {
+        this.returnedReason = returnedReason;
+    }
+
+    public String getRouteMinimum() {
+        return routeMinimum;
+    }
+
+    public void setRouteMinimum(String routeMinimum) {
+        this.routeMinimum = routeMinimum;
+    }
+
+    public String getRouteType() {
+        return routeType;
+    }
+
+    public void setRouteType(String routeType) {
+        this.routeType = routeType;
+    }
+
+    public String getSettledAt() {
+        return settledAt;
+    }
+
+    public void setSettledAt(String settledAt) {
+        this.settledAt = settledAt;
+    }
+
+    public String getTaxBasisAmount() {
+        return taxBasisAmount;
+    }
+
+    public void setTaxBasisAmount(String taxBasisAmount) {
+        this.taxBasisAmount = taxBasisAmount;
+    }
+
+    public String getTaxBasisCurrency() {
+        return taxBasisCurrency;
+    }
+
+    public void setTaxBasisCurrency(String taxBasisCurrency) {
+        this.taxBasisCurrency = taxBasisCurrency;
+    }
+
+    public boolean isTaxReportable() {
+        return taxReportable;
+    }
+
+    public void setTaxReportable(boolean taxReportable) {
+        this.taxReportable = taxReportable;
     }
 
     public static Payment find(final String payment_id, final String batch_id) throws Exception {
