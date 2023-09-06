@@ -307,7 +307,7 @@ public class Payment
         return batch;
     }
 
-    public void setBatch(Batch batch) {
+    public void setBatch(final Batch batch) {
         this.batch = batch;
     }
 
@@ -315,7 +315,7 @@ public class Payment
         return checkNumber;
     }
 
-    public void setCheckNumber(String checkNumber) {
+    public void setCheckNumber(final String checkNumber) {
         this.checkNumber = checkNumber;
     }
 
@@ -323,7 +323,7 @@ public class Payment
         return coverFees;
     }
 
-    public void setCoverFees(boolean coverFees) {
+    public void setCoverFees(final boolean coverFees) {
         this.coverFees = coverFees;
     }
 
@@ -331,7 +331,7 @@ public class Payment
         return errors;
     }
 
-    public void setErrors(List<String> errors) {
+    public void setErrors(final List<String> errors) {
         this.errors = errors;
     }
 
@@ -339,7 +339,7 @@ public class Payment
         return estimatedDeliveryAt;
     }
 
-    public void setEstimatedDeliveryAt(String estimatedDeliveryAt) {
+    public void setEstimatedDeliveryAt(final String estimatedDeliveryAt) {
         this.estimatedDeliveryAt = estimatedDeliveryAt;
     }
 
@@ -347,7 +347,7 @@ public class Payment
         return forceUsTaxActivity;
     }
 
-    public void setForceUsTaxActivity(boolean forceUsTaxActivity) {
+    public void setForceUsTaxActivity(final boolean forceUsTaxActivity) {
         this.forceUsTaxActivity = forceUsTaxActivity;
     }
 
@@ -355,7 +355,7 @@ public class Payment
         return initiatedAt;
     }
 
-    public void setInitiatedAt(String initiatedAt) {
+    public void setInitiatedAt(final String initiatedAt) {
         this.initiatedAt = initiatedAt;
     }
 
@@ -363,7 +363,7 @@ public class Payment
         return merchantId;
     }
 
-    public void setMerchantId(String merchantId) {
+    public void setMerchantId(final String merchantId) {
         this.merchantId = merchantId;
     }
 
@@ -371,7 +371,7 @@ public class Payment
         return returnedAt;
     }
 
-    public void setReturnedAt(String returnedAt) {
+    public void setReturnedAt(final String returnedAt) {
         this.returnedAt = returnedAt;
     }
 
@@ -379,7 +379,7 @@ public class Payment
         return returnedNote;
     }
 
-    public void setReturnedNote(String returnedNote) {
+    public void setReturnedNote(final String returnedNote) {
         this.returnedNote = returnedNote;
     }
 
@@ -387,7 +387,7 @@ public class Payment
         return returnedReason;
     }
 
-    public void setReturnedReason(List<String> returnedReason) {
+    public void setReturnedReason(final List<String> returnedReason) {
         this.returnedReason = returnedReason;
     }
 
@@ -395,7 +395,7 @@ public class Payment
         return routeMinimum;
     }
 
-    public void setRouteMinimum(String routeMinimum) {
+    public void setRouteMinimum(final String routeMinimum) {
         this.routeMinimum = routeMinimum;
     }
 
@@ -403,7 +403,7 @@ public class Payment
         return routeType;
     }
 
-    public void setRouteType(String routeType) {
+    public void setRouteType(final String routeType) {
         this.routeType = routeType;
     }
 
@@ -411,7 +411,7 @@ public class Payment
         return settledAt;
     }
 
-    public void setSettledAt(String settledAt) {
+    public void setSettledAt(final String settledAt) {
         this.settledAt = settledAt;
     }
 
@@ -419,7 +419,7 @@ public class Payment
         return taxBasisAmount;
     }
 
-    public void setTaxBasisAmount(String taxBasisAmount) {
+    public void setTaxBasisAmount(final String taxBasisAmount) {
         this.taxBasisAmount = taxBasisAmount;
     }
 
@@ -427,7 +427,7 @@ public class Payment
         return taxBasisCurrency;
     }
 
-    public void setTaxBasisCurrency(String taxBasisCurrency) {
+    public void setTaxBasisCurrency(final String taxBasisCurrency) {
         this.taxBasisCurrency = taxBasisCurrency;
     }
 
@@ -435,7 +435,7 @@ public class Payment
         return taxReportable;
     }
 
-    public void setTaxReportable(boolean taxReportable) {
+    public void setTaxReportable(final boolean taxReportable) {
         this.taxReportable = taxReportable;
     }
 
