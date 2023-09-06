@@ -130,7 +130,7 @@ public class Client
     public String patch(final String endPoint, final String body) throws Exception {
         String StringResponse = "";
         try {
-            final HttpClient httpclient = (HttpClient)HttpClients.createDefault();
+            final HttpClient httpclient = (HttpClient)HttpClients.createSystem();
             final HttpPatch httpPatch = new HttpPatch(this.config.getApiBase() + endPoint);
             final StringEntity params = new StringEntity(body);
             final int timeStamp = (int)(System.currentTimeMillis() / 1000L);

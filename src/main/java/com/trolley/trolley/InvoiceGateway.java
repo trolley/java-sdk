@@ -125,8 +125,8 @@ public class InvoiceGateway
      * These options correspond to our documentation.
      * @param searchBy Enum of type Invoice.SearchBy denoting which field you want to search by
      * @param paramsList {@code List<String>} Required if 'searchBy' is either of these: 'invoiceId'
-     * 'recipientId', 'invoiceNumber', 'tags'. Set to 'null' otherwise.
-     * @param param String Required if 'searchBy' is either 'invoiceDate' or 'externalId'. Set to null otherwise.
+     * 'recipientId', 'invoiceNumber', 'tags', or 'externalId'. Set to 'null' otherwise.
+     * @param param String Required if 'searchBy' is 'invoiceDate'. Set to null otherwise.
      * @return {@code List<Invoice>}
      * @throws Exception
      */
@@ -141,11 +141,12 @@ public class InvoiceGateway
             case INVOICE_ID:
             case RECIPIENT_ID:
             case INVOICE_NUMBER:
+            case EXTERNAL_ID:
             case TAGS:
                 if(null == paramsList){
                     throw new InvalidFieldException("variable paramsList can not be null for the provided searchBy parameter. Refer to method's Javadoc for more details.");
                 }
-                body = "{\""+searchBy.name()+"\":"
+                body = "{\""+searchBy.getKey()+"\":"
                     +new ObjectMapper()
                         .setSerializationInclusion(Include.NON_EMPTY)
                         .writeValueAsString(paramsList)
@@ -153,11 +154,10 @@ public class InvoiceGateway
                 break;
 
             case INVOICE_DATE:
-            case EXTERNAL_ID:
                 if(null == param){
                     throw new InvalidFieldException("variable param can not be null for the provided searchBy parameter. Refer to method's Javadoc for more details.");
                 }
-                body = "{\""+searchBy.name()+"\":\""+param+"\"}";
+                body = "{\""+searchBy.getKey()+"\":\""+param+"\"}";
                 break;
         }
         final String endPoint = "/v1/invoices/search/";
@@ -176,8 +176,8 @@ public class InvoiceGateway
      * These options correspond to our documentation.
      * @param searchBy Enum of type Invoice.SearchBy denoting which field you want to search by
      * @param paramsList {@code List<String>} Required if 'searchBy' is either of these: 'invoiceId'
-     * 'recipientId', 'invoiceNumber', 'tags'. Set to 'null' otherwise.
-     * @param param String Required if 'searchBy' is either 'invoiceDate' or 'externalId'. Set to null otherwise.
+     * 'recipientId', 'invoiceNumber', 'tags', or 'externalId'. Set to 'null' otherwise.
+     * @param param String Required if 'searchBy' is 'invoiceDate'. Set to null otherwise.
      * @return Invoices object that contains {@code List<Invoice>} that you can traverse through, and a Meta object with pagination information
      * @throws Exception
      */
@@ -198,7 +198,7 @@ public class InvoiceGateway
              if(null == paramsList){
                  throw new InvalidFieldException("variable paramsList can not be null for the provided searchBy parameter. Refer to method's Javadoc for more details.");
              }
-             body = "{\""+searchBy.name()+"\":"
+             body = "{\""+searchBy.getKey()+"\":"
                  +new ObjectMapper()
                     .setSerializationInclusion(Include.NON_EMPTY)
                     .writeValueAsString(paramsList)
@@ -212,7 +212,7 @@ public class InvoiceGateway
              if(null == param){
                  throw new InvalidFieldException("variable param can not be null for the provided searchBy parameter. Refer to method's Javadoc for more details.");
              }
-             body = "{\""+searchBy.name()+"\":\""+param+"\"}";
+             body = "{\""+searchBy.getKey()+"\":\""+param+"\"}";
              break;
      }
      final String endPoint = "/v1/invoices/search/";
