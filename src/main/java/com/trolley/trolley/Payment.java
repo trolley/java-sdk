@@ -26,7 +26,7 @@ public class Payment
     private String fxRate;
     private String memo;
     private String externalId;
-    private Object processedAt;
+    private String processedAt;
     private String createdAt;
     private String updatedAt;
     private String merchantFees;
@@ -247,11 +247,11 @@ public class Payment
         this.externalId = externalId;
     }
     
-    public Object getProcessedAt() {
+    public String getProcessedAt() {
         return this.processedAt;
     }
     
-    public void setProcessedAt(final Object processedAt) {
+    public void setProcessedAt(final String processedAt) {
         this.processedAt = processedAt;
     }
     
