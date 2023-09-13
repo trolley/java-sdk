@@ -26,7 +26,7 @@ public class Payment
     private String fxRate;
     private String memo;
     private String externalId;
-    private Object processedAt;
+    private String processedAt;
     private String createdAt;
     private String updatedAt;
     private String merchantFees;
@@ -35,10 +35,25 @@ public class Payment
     private String methodDisplay;
     private Batch batch;
     private String checkNumber;
-    String withholdingAmount;
-    String withholdingCurrency;
-    String equivalentWithholdingAmount;
-    String equivalentWithholdingCurrency;
+    private String withholdingAmount;
+    private String withholdingCurrency;
+    private String equivalentWithholdingAmount;
+    private String equivalentWithholdingCurrency;
+    private boolean coverFees;
+    private List<String> errors;
+    private String estimatedDeliveryAt;
+    private boolean forceUsTaxActivity;
+    private String initiatedAt;
+    private String merchantId;
+    private String returnedAt;
+    private String returnedNote;
+    private List<String> returnedReason;
+    private String routeMinimum;
+    private String routeType;
+    private String settledAt;
+    private String taxBasisAmount;
+    private String taxBasisCurrency;
+    private boolean taxReportable;
     
     public void setEquivalentWithholdingCurrency(final String equivalentWithholdingCurrency) {
         this.equivalentWithholdingCurrency = equivalentWithholdingCurrency;
@@ -232,11 +247,11 @@ public class Payment
         this.externalId = externalId;
     }
     
-    public Object getProcessedAt() {
+    public String getProcessedAt() {
         return this.processedAt;
     }
     
-    public void setProcessedAt(final Object processedAt) {
+    public void setProcessedAt(final String processedAt) {
         this.processedAt = processedAt;
     }
     
@@ -292,7 +307,7 @@ public class Payment
         return batch;
     }
 
-    public void setBatch(Batch batch) {
+    public void setBatch(final Batch batch) {
         this.batch = batch;
     }
 
@@ -300,8 +315,128 @@ public class Payment
         return checkNumber;
     }
 
-    public void setCheckNumber(String checkNumber) {
+    public void setCheckNumber(final String checkNumber) {
         this.checkNumber = checkNumber;
+    }
+
+    public boolean isCoverFees() {
+        return coverFees;
+    }
+
+    public void setCoverFees(final boolean coverFees) {
+        this.coverFees = coverFees;
+    }
+
+    public List<String> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(final List<String> errors) {
+        this.errors = errors;
+    }
+
+    public String getEstimatedDeliveryAt() {
+        return estimatedDeliveryAt;
+    }
+
+    public void setEstimatedDeliveryAt(final String estimatedDeliveryAt) {
+        this.estimatedDeliveryAt = estimatedDeliveryAt;
+    }
+
+    public boolean isForceUsTaxActivity() {
+        return forceUsTaxActivity;
+    }
+
+    public void setForceUsTaxActivity(final boolean forceUsTaxActivity) {
+        this.forceUsTaxActivity = forceUsTaxActivity;
+    }
+
+    public String getInitiatedAt() {
+        return initiatedAt;
+    }
+
+    public void setInitiatedAt(final String initiatedAt) {
+        this.initiatedAt = initiatedAt;
+    }
+
+    public String getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(final String merchantId) {
+        this.merchantId = merchantId;
+    }
+
+    public String getReturnedAt() {
+        return returnedAt;
+    }
+
+    public void setReturnedAt(final String returnedAt) {
+        this.returnedAt = returnedAt;
+    }
+
+    public String getReturnedNote() {
+        return returnedNote;
+    }
+
+    public void setReturnedNote(final String returnedNote) {
+        this.returnedNote = returnedNote;
+    }
+
+    public List<String> getReturnedReason() {
+        return returnedReason;
+    }
+
+    public void setReturnedReason(final List<String> returnedReason) {
+        this.returnedReason = returnedReason;
+    }
+
+    public String getRouteMinimum() {
+        return routeMinimum;
+    }
+
+    public void setRouteMinimum(final String routeMinimum) {
+        this.routeMinimum = routeMinimum;
+    }
+
+    public String getRouteType() {
+        return routeType;
+    }
+
+    public void setRouteType(final String routeType) {
+        this.routeType = routeType;
+    }
+
+    public String getSettledAt() {
+        return settledAt;
+    }
+
+    public void setSettledAt(final String settledAt) {
+        this.settledAt = settledAt;
+    }
+
+    public String getTaxBasisAmount() {
+        return taxBasisAmount;
+    }
+
+    public void setTaxBasisAmount(final String taxBasisAmount) {
+        this.taxBasisAmount = taxBasisAmount;
+    }
+
+    public String getTaxBasisCurrency() {
+        return taxBasisCurrency;
+    }
+
+    public void setTaxBasisCurrency(final String taxBasisCurrency) {
+        this.taxBasisCurrency = taxBasisCurrency;
+    }
+
+    public boolean isTaxReportable() {
+        return taxReportable;
+    }
+
+    public void setTaxReportable(final boolean taxReportable) {
+        this.taxReportable = taxReportable;
     }
 
     public static Payment find(final String payment_id, final String batch_id) throws Exception {
