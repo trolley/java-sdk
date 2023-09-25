@@ -1,29 +1,25 @@
 package com.trolley;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 public class Configuration
 {
-    String apiBase = "https://api.trolley.com";
-    String privateKey;
-    String publicKey;
+    private String apiBase = "https://api.trolley.com";
+    private String privateKey;
+    private String publicKey;
     
     public Configuration() {
-        this.apiBase = "https://api.trolley.com";
         this.privateKey = "";
         this.publicKey = "";
     }
     
     public Configuration(final String publicKey, final String privateKey) {
-        this.apiBase = "https://api.trolley.com";
-        this.privateKey = "";
-        this.publicKey = "";
         this.publicKey = publicKey;
         this.privateKey = privateKey;
+        this.apiBase = this.setEnviroment("production");
     }
     
     public Configuration(final String publicKey, final String privateKey, final String apiBase) {
-        this.apiBase = "https://api.trolley.com";
-        this.privateKey = "";
-        this.publicKey = "";
         this.publicKey = publicKey;
         this.privateKey = privateKey;
         this.apiBase = this.setEnviroment(apiBase);
@@ -33,8 +29,8 @@ public class Configuration
         return this.apiBase;
     }
     
-    public void setApiBase(final String apiBase) {
-        this.apiBase = apiBase;
+    public void setEnvironment(final String env) {
+        this.apiBase = this.setEnviroment(env);
     }
     
     public String getPublicKey() {
@@ -73,15 +69,19 @@ public class Configuration
             }
             case "development":
             case "DEVELOPMENT": {
-                return "http://api.railz.io";
-            }
-            case "integration":
-            case "INTEGRATION": {
-                return "http://api.local.dev:3000";
-            }
-            case "sandbox":
-            case "SANDBOX": {
-                return "https://api.trolley.com";
+                Dotenv dotenv = Dotenv.load();
+                String devBaseUrl = "";
+                devBaseUrl = dotenv.get("BASE_URL");
+
+                if(null != devBaseUrl){
+                    if(devBaseUrl.length() == 0){
+                        throw new IllegalArgumentException("No value for BASE_URL was found in .env file while configuration environment specified was 'development'. ");
+                    }
+                }else{
+                    throw new IllegalArgumentException("Parameter BASE_URL was not found in .env file while configuration environment specified was 'development'.");
+                }
+
+                return devBaseUrl;
             }
             default: {
                 return "https://api.trolley.com";

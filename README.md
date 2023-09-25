@@ -1,18 +1,10 @@
 # Trolley Java SDK
 
-A native Java SDK for Trolley
+Native [Java](https://www.oracle.com/java/index.html) SDK for Trolley
 
 ## Installation
 
-#
-
-#### For [Java](https://www.oracle.com/java/index.html)
-
-#
-
-#### To install the reference:
-
-### Maven
+#### Maven
 
 Add this dependency to your project's POM:
 
@@ -20,7 +12,7 @@ Add this dependency to your project's POM:
 <dependency>
     <groupId>com.trolley</groupId>
     <artifactId>java-sdk</artifactId>
-    <version>1.1.3</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
@@ -37,7 +29,7 @@ import com.trolley.Exceptions.*;
 public class TrolleyExample {
     public static void main(String[] args) {
 
-       Gateway client = new Gateway(new Configuration("YOUR_PUBLIC_KEY","YOUR_PRIVATE_KEY","production"));
+       Gateway client = new Gateway(new Configuration("ACCESS_KEY","SECRET_KEY"));
 
         try {
             Recipient recipient = client.recipient.find("R-1a2B3c4D5e6F7g8H9i0J1k");
@@ -49,22 +41,31 @@ public class TrolleyExample {
 }
 ```
 
-### Usage
 
-Methods should all have Java Doc comments to help you understand their usage. As mentioned the [full API documentation](http://docs.trolley.com)
-is the best source of information about the API.
 
-For more information please read the [Java API docs](https://github.com/PaymentRails/java-sdk/tree/master/docs) is available. The best starting point is:
+## Providing custom API base url
 
-| Data Type         | SDK Documentation                                                                                                              |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| Batch             | [API Docs for Batch](https://github.com/PaymentRails/java-sdk/tree/master/docs/classes/batchgateway.md)                        |
-| Payment           | [API Docs for Payment](https://github.com/PaymentRails/java-sdk/tree/master/docs/classes/paymentgateway.md)                    |
-| Recipient         | [API Docs for Recipient](https://github.com/PaymentRails/java-sdk/tree/master/docs/classes/recipientgateway.md)                |
-| Recipient Account | [API Docs for Recipient Account](https://github.com/PaymentRails/java-sdk/tree/master/docs/classes/recipientaccountgateway.md) |
+If you are running from source and want to provide custom base url for the SDK to use (e.g. using a mock server temporarily), you will have to do the following:
 
-### merchantKey
+1. Create a file named `.env` in the SDK source's root
+2. Add a parameter in the env file:
+```java
+BASE_URL=https://localhost:3000
+```
+3. While creating the `Configuration` object, pass a third parameter `"development"`  so the constructor can look for the `BASE_URL` in the `.env` file:
 
-- **Type**: Authorization
-- **Authorization parts**: Access code, Secret code
-- **Location**: HTTP header
+```java
+Configuration config = new Configuration("ACCESS_KEY","SECRET_KEY", "development")
+Gateway client = new Gateway(config);
+```
+
+A sample `.env` file is provided in the project rood named `.env.example`.
+
+
+## Documentation
+
+Methods should all have Java Doc comments to help you understand their usage.
+
+For more code samples, refer to our documentation on [https://docs.trolley.com](https://docs.trolley.com)
+
+Limited [Javadocs](https://github.com/PaymentRails/java-sdk/tree/master/docs) are available too.

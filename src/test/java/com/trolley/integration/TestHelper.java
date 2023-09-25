@@ -16,8 +16,7 @@ public class TestHelper {
 
         return new Configuration(
             dotenv.get("ACCESS_KEY"), 
-            dotenv.get("SECRET_KEY"), 
-            "production");
+            dotenv.get("SECRET_KEY"));
 
     }
 
