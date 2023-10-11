@@ -13,8 +13,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.trolley.Configuration;
 import com.trolley.Gateway;
+import com.trolley.Exceptions.MalformedException;
 import com.trolley.types.Batch;
 import com.trolley.types.Payment;
 import com.trolley.types.Recipient;
@@ -175,7 +177,10 @@ public class BatchTest {
             
             String batch2 = client.batch.processBatch(batch.getId());
             assertNotNull(batch2);
-        }catch(Exception e){
+        }catch(MalformedException e){
+            for (JsonNode node : e.getErrorResponse().get("errors")) {
+                System.out.println("Error Message: "+node.get("message"));
+            }
             e.printStackTrace();
         }
         
