@@ -13,18 +13,20 @@ import com.trolley.Exceptions.MalformedException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPatch;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicHeader;
+
 import java.io.IOException;
-import java.io.InputStream;
 import java.rmi.UnexpectedException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.DataOutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class Client
 {
@@ -34,133 +36,93 @@ public class Client
     public Client(final Configuration config) {
         this.config = config;
     }
-    
+
     public static Client create(final Configuration config) {
         return new Client(config);
     }
-    
-    private String sendRequest(final String method, final String endPoint, final String body) throws Exception {
-        String StringResponse = "";
-        try {
-            final String url = this.config.getApiBase() + endPoint;
-            final URL obj = new URL(url);
-            final HttpURLConnection con = (HttpURLConnection)obj.openConnection();
-            final int timeStamp = (int)(System.currentTimeMillis() / 1000L);
-            final String authorizarion = this.generateAuthorization(timeStamp, method, endPoint, body);
-            con.setRequestMethod(method);
-            con.setRequestProperty("X-PR-Timestamp", timeStamp + "");
-            con.setRequestProperty("Authorization", authorizarion);
-            con.setRequestProperty("Trolley-Source", trolleySourceString);
-            con.setRequestProperty("Content-Type", "application/json");
-            if (method == "POST" && body != "") {
-                con.setDoOutput(true);
-                final DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-                try {
-                    wr.writeBytes(body);
-                    wr.flush();
-                    wr.close();
-                }
-                catch (Throwable t) {
-                    try {
-                        wr.close();
-                    }
-                    catch (Throwable exception) {
-                        t.addSuppressed(exception);
-                    }
-                    throw t;
-                }
-            }
-            final int responseCode = con.getResponseCode();
-            try {
-                InputStream is;
 
-                if(responseCode >= 200 && responseCode < 400){
-                    is = con.getInputStream();
-                }else{
-                    is = con.getErrorStream();
-                }
-                final BufferedReader in = new BufferedReader(new InputStreamReader(is));
-                try {
-                    final StringBuffer response = new StringBuffer();
-                    String inputLine;
-                    while ((inputLine = in.readLine()) != null) {
-                        response.append(inputLine);
-                    }
-                    StringResponse = response.toString();
-                    in.close();
-                }catch (Throwable t2) {
-                    try {
-                        in.close();
-                    }catch (Throwable exception2) {
-                        t2.addSuppressed(exception2);
-                    }
-                    throw t2;
-                }
-            }catch (IOException e) {
-                throw new UnexpectedException(StringResponse, e);
-            }
+    /**
+     * Get the HttpClient.
+     * If you don't specify an HttpClient object, this method will create a new one.
+     * If you did specify an HttpClient object in Configuration, that object will be used instead.
+     * @return HttpClient
+     */
+    private HttpClient getHttpClient(){
+        if(null != this.config.getHttpClient()){
+            return this.config.getHttpClient();
+        }else{
+            return (HttpClient)HttpClients.createSystem();
+        }
+    }
+    
+    public String get(final String endpoint) throws Exception {
+        final HttpClient httpclient = getHttpClient();
+        final HttpGet httpGet = new HttpGet(this.config.getApiBase() + endpoint);
 
-            if (responseCode != 200) {
-                this.throwStatusCodeException(responseCode, StringResponse);
-            }
+        httpGet.setHeaders(getHeaders("GET", endpoint, ""));
 
-        }
-        catch (IOException e2) {
-            throw new UnexpectedException(StringResponse);
-        }
-        return StringResponse;
+        // execute request
+        final HttpResponse response = httpclient.execute((HttpUriRequest)httpGet);
+        
+        // process response
+        return processResponse(response);
     }
     
-    private String sendRequest(final String method, final String endPoint) throws Exception {
-        return this.sendRequest(method, endPoint, "");
+    public String post(final String endpoint, final String body) throws Exception {
+        final HttpClient httpclient = getHttpClient();
+        final HttpPost httpPatch = new HttpPost(this.config.getApiBase() + endpoint);
+        final StringEntity params = new StringEntity(body);
+        httpPatch.setEntity((HttpEntity)params);
+
+        httpPatch.setHeaders(getHeaders("POST", endpoint, body));
+
+        // execute request
+        final HttpResponse response = httpclient.execute((HttpUriRequest)httpPatch);
+        
+        // process response
+        return processResponse(response);
     }
     
-    public String get(final String endPoint) throws Exception {
-        return this.sendRequest("GET", endPoint);
+    public String post(final String endpoint) throws Exception {
+        final HttpClient httpclient = getHttpClient();
+        final HttpPost httpPatch = new HttpPost(this.config.getApiBase() + endpoint);
+        final StringEntity params = new StringEntity("");
+        httpPatch.setEntity((HttpEntity)params);
+
+        httpPatch.setHeaders(getHeaders("POST", endpoint, ""));
+
+        // execute request
+        final HttpResponse response = httpclient.execute((HttpUriRequest)httpPatch);
+        
+        // process response
+        return processResponse(response);
     }
     
-    public String post(final String endPoint, final String body) throws Exception {
-        return this.sendRequest("POST", endPoint, body);
+    public String patch(final String endpoint, final String body) throws Exception {
+        final HttpClient httpclient = getHttpClient();
+        final HttpPatch httpPatch = new HttpPatch(this.config.getApiBase() + endpoint);
+        final StringEntity params = new StringEntity(body);
+        httpPatch.setEntity((HttpEntity)params);
+
+        httpPatch.setHeaders(getHeaders("PATCH", endpoint, body));
+
+        // execute request
+        final HttpResponse response = httpclient.execute((HttpUriRequest)httpPatch);
+        
+        // process response
+        return processResponse(response);
     }
     
-    public String post(final String endPoint) throws Exception {
-        return this.sendRequest("POST", endPoint);
-    }
-    
-    public String patch(final String endPoint, final String body) throws Exception {
-        String StringResponse = "";
-        try {
-            final HttpClient httpclient = (HttpClient)HttpClients.createSystem();
-            final HttpPatch httpPatch = new HttpPatch(this.config.getApiBase() + endPoint);
-            final StringEntity params = new StringEntity(body);
-            final int timeStamp = (int)(System.currentTimeMillis() / 1000L);
-            final String authorizarion = this.generateAuthorization(timeStamp, "PATCH", endPoint, body);
-            params.setContentType("application/json");
-            httpPatch.setEntity((HttpEntity)params);
-            httpPatch.addHeader("X-PR-Timestamp", timeStamp + "");
-            httpPatch.addHeader("Authorization", authorizarion);
-            httpPatch.addHeader("Trolley-Source", trolleySourceString);
-            final HttpResponse response = httpclient.execute((HttpUriRequest)httpPatch);
-            final StringBuffer result = new StringBuffer();
-            String line = "";
-            final BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-            while ((line = rd.readLine()) != null) {
-                result.append(line);
-            }
-            StringResponse = result.toString();
-            final int responseCode = response.getStatusLine().getStatusCode();
-            if (responseCode != 200) {
-                this.throwStatusCodeException(responseCode, StringResponse);
-            }
-        }
-        catch (IOException e) {
-            throw new UnexpectedException(StringResponse);
-        }
-        return StringResponse;
-    }
-    
-    public String delete(final String endPoint) throws Exception {
-        return this.sendRequest("DELETE", endPoint);
+    public String delete(final String endpoint) throws Exception {
+        final HttpClient httpclient = getHttpClient();
+        final HttpDelete httpDelete = new HttpDelete(this.config.getApiBase() + endpoint);
+        httpDelete.setHeaders(getHeaders("DELETE", endpoint, ""));
+
+        // execute request
+        final HttpResponse response = httpclient.execute((HttpUriRequest)httpDelete);
+        
+        // process response
+        return processResponse(response);
     }
     
     private void throwStatusCodeException(final int statusCode, final String message) throws Exception {
@@ -222,5 +184,51 @@ public class Client
         }
         digest = hash.toString();
         return digest;
+    }
+
+    /**
+     * Process and return the response received after the calls made with HttpClient.
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    String processResponse(HttpResponse response) throws Exception{
+        String responseStr = "";
+        try{
+            final StringBuffer result = new StringBuffer();
+            String line = "";
+            final BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            while ((line = rd.readLine()) != null) {
+                result.append(line);
+            }
+            responseStr = result.toString();
+            final int responseCode = response.getStatusLine().getStatusCode();
+            if (responseCode != 200) {
+                this.throwStatusCodeException(responseCode, responseStr);
+            }
+        }catch (IOException e) {
+            throw new UnexpectedException(responseStr);
+        }
+
+        return responseStr;
+    }
+
+    /**
+     * Returns an array of type {@code Header} for different requests to use.
+     * @param method
+     * @param endpoint
+     * @param body
+     * @return
+     */
+    private Header[] getHeaders(String method, String endpoint, String body){
+        final int timestamp = ((int)(System.currentTimeMillis() / 1000L));
+        final String authorizarion = this.generateAuthorization(timestamp, method, endpoint, body);
+
+        return new Header[]{
+                new BasicHeader("Content-Type", "application/json"),
+                new BasicHeader("X-PR-Timestamp", ""+timestamp),
+                new BasicHeader("Authorization", authorizarion),
+                new BasicHeader("Trolley-Source", trolleySourceString)
+            };
     }
 }

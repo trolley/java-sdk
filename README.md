@@ -28,8 +28,12 @@ import com.trolley.Exceptions.*;
 
 public class TrolleyExample {
     public static void main(String[] args) {
+        Configuration config = new Configuration("<YOUR_ACCESS_KEY>","<YOUR_SECRET_KEY>");
+        
+        // Provide your custom HttpClient
+        // Configuration config = new Configuration("<YOUR_ACCESS_KEY>","<YOUR_SECRET_KEY>", customHttpClient);
 
-       Gateway client = new Gateway(new Configuration("ACCESS_KEY","SECRET_KEY"));
+        Gateway client = new Gateway(config);
 
         try {
             Recipient recipient = client.recipient.find("R-1a2B3c4D5e6F7g8H9i0J1k");
