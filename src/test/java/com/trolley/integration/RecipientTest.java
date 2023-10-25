@@ -12,6 +12,8 @@ import com.trolley.Configuration;
 import com.trolley.Gateway;
 import com.trolley.types.Recipient;
 import com.trolley.types.RecipientAccount;
+import com.trolley.types.supporting.Recipients;
+import com.trolley.types.supporting.RecipientsIterator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -106,15 +108,32 @@ public class RecipientTest {
     @Test
     public void testRecipientRouteMinimum() throws Exception {
         Gateway client = new Gateway(config);
-        ArrayList<Recipient> recipients = (ArrayList<Recipient>)client.recipient.search(1,20,"");
+
+        Recipients recipients = client.recipient.search_by_page(1, 10, "");
+
         //Making sure routeMinimum is not null before asserting it's value
-        for (Recipient recipient : recipients) {
+        for (Recipient recipient : recipients.getRecipients()) {
             if(null != recipient.getRouteMinimum()){
                 //Making sure routeMinium is set to a non-null value
                 assertTrue(Integer.parseInt(recipient.getRouteMinimum()) >= 0);
                 break;
             }
         }        
+    }
+
+    @Test
+    public void testPagination() throws Exception{
+        Gateway client = new Gateway(config);
+
+        RecipientsIterator recipients = client.recipient.search("");
+
+        int itemCount = 0;
+        while(recipients.hasNext()) {
+            itemCount++;
+            assertNotNull(recipients.next().getId());
+        }
+
+        assertTrue(itemCount>0);
     }
 
 }

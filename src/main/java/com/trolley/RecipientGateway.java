@@ -10,6 +10,9 @@ import java.util.List;
 import com.trolley.Exceptions.InvalidFieldException;
 import com.trolley.types.Payment;
 import com.trolley.types.Recipient;
+import com.trolley.types.supporting.Meta;
+import com.trolley.types.supporting.Recipients;
+import com.trolley.types.supporting.RecipientsIterator;
 
 public class RecipientGateway
 {
@@ -102,8 +105,17 @@ public class RecipientGateway
         this.client.delete(endPoint);
         return true;
     }
+
+    public RecipientsIterator search(final String term) throws Exception {
+        if (term == null) {
+            throw new InvalidFieldException("Message cannot be null");
+        }
+        int pageSize = 10;
+        Recipients r = search_by_page(1, pageSize, term);
+        return new RecipientsIterator(this, r, term);
+    }
     
-    public List<Recipient> search(final int page, final int pageSize, final String term) throws Exception {
+    public Recipients search_by_page(final int page, final int pageSize, final String term) throws Exception {
         if (page < 0) {
             throw new InvalidFieldException("Page cannot be less than 0");
         }
@@ -113,11 +125,18 @@ public class RecipientGateway
         if (term == null) {
             throw new InvalidFieldException("Message cannot be null");
         }
+        try{
         final String endPoint = "/v1/recipients/?&search=" + term + "&page=" + page + "&pageSize=" + pageSize;
         final String response = this.client.get(endPoint);
+
         return this.recipientListFactory(response);
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
-    
+
     private Recipient recipientFactory(final String data) throws IOException {
         final ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -126,17 +145,23 @@ public class RecipientGateway
         return recipient;
     }
     
-    private List<Recipient> recipientListFactory(final String data) throws IOException {
+    private Recipients recipientListFactory(final String data) throws IOException {
         final ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         final JsonNode node = mapper.readTree(data);
-        final Object recipient = mapper.readValue(node.get("recipients").traverse(), (Class)Object.class);
-        final List<Recipient> recips = (List<Recipient>)recipient;
-        final List<Recipient> recipients = new ArrayList<Recipient>();
+        
+        final List<Recipient> recips = (List<Recipient>)mapper.readValue(node.get("recipients").traverse(), (Class)Object.class);
+
+        final Meta meta = (Meta)mapper.readValue(node.get("meta").traverse(), (Class)Meta.class);
+
+        final Recipients recipients = new Recipients(new ArrayList<Recipient>(), meta);
+        
         for (int i = 0; i < recips.size(); ++i) {
             final Recipient pojo = (Recipient)mapper.convertValue((Object)recips.get(i), (Class)Recipient.class);
-            recipients.add(pojo);
+            // recipients.add(pojo);
+            recipients.getRecipients().add(pojo);
         }
+
         return recipients;
     }
 }
