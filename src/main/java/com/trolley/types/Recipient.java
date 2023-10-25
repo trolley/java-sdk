@@ -380,7 +380,7 @@ public class Recipient
         return Configuration.gateway().recipient.delete(recipient_id);
     }
     
-    public static List<Recipient> search(final int page, final int pageSize, final String term) throws Exception {
+    /* public static List<Recipient> search(final int page, final int pageSize, final String term) throws Exception {
         return Configuration.gateway().recipient.search(page, pageSize, term);
     }
     
@@ -394,5 +394,5 @@ public class Recipient
     
     public static List<Recipient> search(final int page, final int pageNumber) throws Exception {
         return search(page, pageNumber, "");
-    }
+    } */
 }
