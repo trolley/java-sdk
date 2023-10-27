@@ -22,6 +22,7 @@ import com.trolley.types.Payment;
 import com.trolley.types.Recipient;
 import com.trolley.types.supporting.BatchSummary;
 import com.trolley.types.supporting.Payments;
+import com.trolley.types.supporting.PaymentsIterator;
 
 @PrepareForTest(Batch.class)
 public class BatchTest {
@@ -98,9 +99,6 @@ public class BatchTest {
 
         List<Payment> paymentList = new ArrayList<Payment>();
         paymentList.add(payment);
-
-        Payments payments = new Payments();
-        payments.setPayments(paymentList);
 
         Batch batchToCreate = new Batch();
         batchToCreate.setPayments(paymentList);
@@ -190,5 +188,22 @@ public class BatchTest {
 
         boolean batchDelResult = client.batch.delete(batch.getId());
         assertTrue(batchDelResult);
+    }
+
+    @Test
+    public void testPagination() throws Exception{
+        Gateway client = new Gateway(config);
+        String batchId = "<batch-id>";
+        PaymentsIterator payments = client.payment.search(batchId, "");
+
+        int pageCount = 0;
+        while(payments.hasNext()){
+            assertNotNull(payments.next().getId());
+            pageCount++;
+        }
+        assertTrue(pageCount>0);
+
+        Payments p = client.payment.search_by_page(batchId, 1, 10, "");
+        assertNotNull(p.getPayments().get(0).getId());
     }
 }

@@ -457,7 +457,7 @@ public class Payment
         return Configuration.gateway().payment.delete(payment_id, batch_id);
     }
     
-    public static List<Payment> query(final String batch_id, final int page, final int pageSize, final String message) throws Exception {
+    /* public static List<Payment> query(final String batch_id, final int page, final int pageSize, final String message) throws Exception {
         return Configuration.gateway().payment.query(batch_id, page, pageSize, message);
     }
     
@@ -470,6 +470,6 @@ public class Payment
     }
     
     public static List<Payment> query(final String batch_id, final int page, final int pageSize) throws Exception {
-        return query(batch_id, page, pageSize, "");
-    }
+        return query(batch_id, page, pageSize, ""); 
+    }*/
 }
