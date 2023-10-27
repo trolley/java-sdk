@@ -21,6 +21,8 @@ import com.trolley.types.Batch;
 import com.trolley.types.Payment;
 import com.trolley.types.Recipient;
 import com.trolley.types.supporting.BatchSummary;
+import com.trolley.types.supporting.Batches;
+import com.trolley.types.supporting.BatchesIterator;
 import com.trolley.types.supporting.Payments;
 import com.trolley.types.supporting.PaymentsIterator;
 
@@ -191,19 +193,41 @@ public class BatchTest {
     }
 
     @Test
-    public void testPagination() throws Exception{
+    public void testPaymentsPagination() throws Exception{
         Gateway client = new Gateway(config);
+
+        //Testing Payments pagination - with Iterator
         String batchId = "<batch-id>";
         PaymentsIterator payments = client.payment.search(batchId, "");
 
-        int pageCount = 0;
+        int itemCount = 0;
         while(payments.hasNext()){
             assertNotNull(payments.next().getId());
-            pageCount++;
+            itemCount++;
         }
-        assertTrue(pageCount>0);
+        assertTrue(itemCount>0);
 
+        //Testing Payments pagination - with manual pagination
         Payments p = client.payment.search_by_page(batchId, 1, 10, "");
         assertNotNull(p.getPayments().get(0).getId());
+    }
+
+    @Test
+    public void testBatchesPagination() throws Exception{
+        Gateway client = new Gateway(config);
+
+        //Testing Batches pagination - with Iterator
+        BatchesIterator batches = client.batch.search("");
+
+        int itemCount = 0;
+        while(batches.hasNext()){
+            assertNotNull(batches.next().getId());
+            itemCount++;
+        }
+        assertTrue(itemCount>0);
+
+        //Testing Batches pagination - with manual pagination
+        Batches b = client.batch.search_by_page(1, 10, "");
+        assertNotNull(b.getBatches().get(0).getId());
     }
 }

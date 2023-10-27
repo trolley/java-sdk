@@ -10,6 +10,9 @@ import com.trolley.Exceptions.InvalidFieldException;
 import com.trolley.types.Batch;
 import com.trolley.types.Payment;
 import com.trolley.types.supporting.BatchSummary;
+import com.trolley.types.supporting.Batches;
+import com.trolley.types.supporting.BatchesIterator;
+import com.trolley.types.supporting.Meta;
 
 public class BatchGateway
 {
@@ -99,31 +102,28 @@ public class BatchGateway
         return response;
     }
     
-    public List<Batch> query(final int page, final int pageSize, final String message) throws Exception {
+    public BatchesIterator search(final String searchTerm) throws Exception {
+        if (searchTerm == null) {
+            throw new InvalidFieldException("searchTerm cannot be null. If you don't wish to provide a searchTerm, pass a blank String.");
+        }
+        int pageSize = 10;
+        Batches b = search_by_page(1, pageSize, searchTerm);
+        return new BatchesIterator(this, b, searchTerm);
+    }
+
+    public Batches search_by_page(final int page, final int pageSize, final String searchTerm) throws Exception {
         if (page < 0) {
-            throw new InvalidFieldException("Page cannot be less than 0");
+            throw new InvalidFieldException("page cannot be less than 0");
         }
         if (pageSize < 0) {
-            throw new InvalidFieldException("Page size cannot be less than 0");
+            throw new InvalidFieldException("pageSize cannot be less than 0");
         }
-        if (message == null) {
-            throw new InvalidFieldException("Message cannot be null");
+        if (searchTerm == null) {
+            throw new InvalidFieldException("searchTerm cannot be null");
         }
-        final String endPoint = "/v1/batches/?&search=" + message + "&page=" + page + "&pageSize=" + pageSize;
+        final String endPoint = "/v1/batches/?&search=" + searchTerm + "&page=" + page + "&pageSize=" + pageSize;
         final String response = this.client.get(endPoint);
         return this.batchListFactory(response);
-    }
-    
-    public List<Batch> query(final String message) throws Exception {
-        return this.query(1, 10, message);
-    }
-    
-    public List<Batch> query() throws Exception {
-        return this.query(1, 10, "");
-    }
-    
-    public List<Batch> query(final int page, final int pageNumber) throws Exception {
-        return this.query(page, pageNumber, "");
     }
     
     public BatchSummary summary(final String batch_id) throws Exception {
@@ -156,17 +156,20 @@ public class BatchGateway
         return batch;
     }
     
-    private List<Batch> batchListFactory(final String data) throws IOException {
+    private Batches batchListFactory(final String data) throws IOException {
         final ObjectMapper mapper = new ObjectMapper();
         final JsonNode node = mapper.readTree(data);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        final Object batch = mapper.readValue(node.get("batches").traverse(), (Class)Object.class);
-        final List<Batch> batchs = (List<Batch>)batch;
+        
+        final List<Batch> batchesFromResponse = (List<Batch>)mapper.readValue(node.get("batches").traverse(), (Class)Object.class);
+        final Meta meta = (Meta)mapper.readValue(node.get("meta").traverse(), (Class)Meta.class);
+
         final List<Batch> batches = new ArrayList<Batch>();
-        for (int i = 0; i < batchs.size(); ++i) {
-            final Batch pojo = (Batch)mapper.convertValue((Object)batchs.get(i), (Class)Batch.class);
+        for (int i = 0; i < batchesFromResponse.size(); ++i) {
+            final Batch pojo = (Batch)mapper.convertValue((Object)batchesFromResponse.get(i), (Class)Batch.class);
             batches.add(pojo);
         }
-        return batches;
+
+        return new Batches(batches, meta);
     }
 }

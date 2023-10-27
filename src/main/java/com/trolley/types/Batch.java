@@ -137,7 +137,7 @@ public class Batch
         return Configuration.gateway().batch.processBatch(batch_id);
     }
     
-    public static List<Batch> query(final int page, final int pageSize, final String message) throws Exception {
+    /* public static List<Batch> query(final int page, final int pageSize, final String message) throws Exception {
         return Configuration.gateway().batch.query(page, pageSize, message);
     }
     
@@ -151,7 +151,7 @@ public class Batch
     
     public static List<Batch> query(final int page, final int pageNumber) throws Exception {
         return query(page, pageNumber, "");
-    }
+    } */
     
     public static BatchSummary summary(final String batch_id) throws Exception {
         return Configuration.gateway().batch.summary(batch_id);
