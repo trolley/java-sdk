@@ -71,27 +71,45 @@ public class PaymentGateway
         return true;
     }
 
+    /**
+     * Search for payments within a batch.
+     * This method returns an iterator which auto-paginate with 10 items per page.
+     * If you want to paginate manually, please use the {@code search_by_page()} method
+     * @param batchId The batch in which the payments need to be searched.
+     * @param searchTerm the search keyword to be searched for
+     * @return PaymentsIterator which auto paginates through all available payments 10 items per page
+     * @throws Exception
+     */
     public PaymentsIterator search(final String batchId, final String searchTerm) throws Exception {
         if (searchTerm == null) {
-            throw new InvalidFieldException("Search Term cannot be null");
+            throw new InvalidFieldException("searchTerm cannot be null. If you don't wish to provide a searchTerm, pass a blank String.");
         }
         int pageSize = 10;
         Payments p = search_by_page(batchId, 1, pageSize, searchTerm);
         return new PaymentsIterator(this, p, batchId, searchTerm);
     }
     
+    /**
+     * Search for Payments within a batch with manual pagination.
+     * @param batchId The batch in which the payments need to be searched.
+     * @param page which page number you want to access
+     * @param pageSize number of items you want per page
+     * @param searchTerm keyword to search for
+     * @return {@code Payments} object, containing a {@code List<Payment>} object and a {@code Meta} object to access pagination information
+     * @throws Exception
+     */
     public Payments search_by_page(final String batchId, final int page, final int pageSize, final String searchTerm) throws Exception {
         if (batchId == null || batchId.isEmpty()) {
-            throw new InvalidFieldException("Batch id cannot be null or empty.");
+            throw new InvalidFieldException("batchId cannot be null or empty.");
         }
         if (page < 0) {
-            throw new InvalidFieldException("Page cannot be less than 0");
+            throw new InvalidFieldException("page cannot be less than 0");
         }
         if (pageSize < 0) {
-            throw new InvalidFieldException("Page size cannot be less than 0");
+            throw new InvalidFieldException("pageSize cannot be less than 0");
         }
         if (searchTerm == null) {
-            throw new InvalidFieldException("Message cannot be null");
+            throw new InvalidFieldException("searchTerm cannot be null. If you don't wish to provide a searchTerm, pass a blank String.");
         }
         final String endPoint = "/v1/batches/" + batchId + "/payments/?&search=" + searchTerm + "&page=" + page + "&pageSize=" + pageSize;
         final String response = this.client.get(endPoint);

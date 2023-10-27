@@ -102,6 +102,14 @@ public class BatchGateway
         return response;
     }
     
+    /**
+     * Search for batches.
+     * This method returns an iterator which auto-paginate with 10 items per page.
+     * If you want to paginate manually, please use the {@code search_by_page()} method
+     * @param searchTerm the search keyword to be searched for
+     * @return BatchIterator which auto paginates through all available payments 10 items per page
+     * @throws Exception
+     */
     public BatchesIterator search(final String searchTerm) throws Exception {
         if (searchTerm == null) {
             throw new InvalidFieldException("searchTerm cannot be null. If you don't wish to provide a searchTerm, pass a blank String.");
@@ -111,6 +119,14 @@ public class BatchGateway
         return new BatchesIterator(this, b, searchTerm);
     }
 
+    /**
+     * Search for Batches manual pagination.
+     * @param page which page number you want to access
+     * @param pageSize number of items you want per page
+     * @param searchTerm keyword to search for
+     * @return {@code Batches} object, containing a {@code List<Batch>} object and a {@code Meta} object to access pagination information
+     * @throws Exception
+     */
     public Batches search_by_page(final int page, final int pageSize, final String searchTerm) throws Exception {
         if (page < 0) {
             throw new InvalidFieldException("page cannot be less than 0");
@@ -119,7 +135,7 @@ public class BatchGateway
             throw new InvalidFieldException("pageSize cannot be less than 0");
         }
         if (searchTerm == null) {
-            throw new InvalidFieldException("searchTerm cannot be null");
+            throw new InvalidFieldException("searchTerm cannot be null. If you don't wish to provide a searchTerm, pass a blank String.");
         }
         final String endPoint = "/v1/batches/?&search=" + searchTerm + "&page=" + page + "&pageSize=" + pageSize;
         final String response = this.client.get(endPoint);

@@ -106,27 +106,43 @@ public class RecipientGateway
         return true;
     }
 
-    public RecipientsIterator search(final String term) throws Exception {
-        if (term == null) {
-            throw new InvalidFieldException("Message cannot be null");
+    /**
+     * Search for Recipients.
+     * This method returns an iterator which auto-paginate with 10 items per page.
+     * If you want to paginate manually, please use the {@code search_by_page()} method
+     * @param searchTerm the search keyword to be searched for
+     * @return RecipientsIterator which auto paginates through all available payments 10 items per page
+     * @throws Exception
+     */
+    public RecipientsIterator search(final String searchTerm) throws Exception {
+        if (searchTerm == null) {
+            throw new InvalidFieldException("searchTerm cannot be null. If you don't wish to provide a searchTerm, pass a blank String.");
         }
         int pageSize = 10;
-        Recipients r = search_by_page(1, pageSize, term);
-        return new RecipientsIterator(this, r, term);
+        Recipients r = search_by_page(1, pageSize, searchTerm);
+        return new RecipientsIterator(this, r, searchTerm);
     }
     
-    public Recipients search_by_page(final int page, final int pageSize, final String term) throws Exception {
+    /**
+     * Search for Recipients with manual pagination.
+     * @param page which page number you want to access
+     * @param pageSize number of items you want per page
+     * @param searchTerm keyword to search for
+     * @return {@code Recipients} object, containing a {@code List<Recipient>} object and a {@code Meta} object to access pagination information
+     * @throws Exception
+     */
+    public Recipients search_by_page(final int page, final int pageSize, final String searchTerm) throws Exception {
         if (page < 0) {
-            throw new InvalidFieldException("Page cannot be less than 0");
+            throw new InvalidFieldException("page cannot be less than 0.");
         }
         if (pageSize < 0) {
-            throw new InvalidFieldException("Page size cannot be less than 0");
+            throw new InvalidFieldException("pageSize cannot be less than 0.");
         }
-        if (term == null) {
-            throw new InvalidFieldException("Message cannot be null");
+        if (searchTerm == null) {
+            throw new InvalidFieldException("searchTerm cannot be null. If you don't wish to provide a searchTerm, pass a blank String.");
         }
         try{
-        final String endPoint = "/v1/recipients/?&search=" + term + "&page=" + page + "&pageSize=" + pageSize;
+        final String endPoint = "/v1/recipients/?&search=" + searchTerm + "&page=" + page + "&pageSize=" + pageSize;
         final String response = this.client.get(endPoint);
 
         return this.recipientListFactory(response);
