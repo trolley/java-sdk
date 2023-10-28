@@ -109,7 +109,7 @@ public class RecipientGateway
     /**
      * Search for Recipients.
      * This method returns an iterator which auto-paginate with 10 items per page.
-     * If you want to paginate manually, please use the {@code search_by_page()} method
+     * If you want to paginate manually, please use the {@code search(page, pageSize, searchTerm)} method
      * @param searchTerm the search keyword to be searched for
      * @return RecipientsIterator which auto paginates through all available payments 10 items per page
      * @throws Exception
@@ -119,7 +119,7 @@ public class RecipientGateway
             throw new InvalidFieldException("searchTerm cannot be null. If you don't wish to provide a searchTerm, pass a blank String.");
         }
         int pageSize = 10;
-        Recipients r = search_by_page(1, pageSize, searchTerm);
+        Recipients r = search(1, pageSize, searchTerm);
         return new RecipientsIterator(this, r, searchTerm);
     }
     
@@ -131,7 +131,7 @@ public class RecipientGateway
      * @return {@code Recipients} object, containing a {@code List<Recipient>} object and a {@code Meta} object to access pagination information
      * @throws Exception
      */
-    public Recipients search_by_page(final int page, final int pageSize, final String searchTerm) throws Exception {
+    public Recipients search(final int page, final int pageSize, final String searchTerm) throws Exception {
         if (page < 0) {
             throw new InvalidFieldException("page cannot be less than 0.");
         }

@@ -109,7 +109,7 @@ public class RecipientTest {
     public void testRecipientRouteMinimum() throws Exception {
         Gateway client = new Gateway(config);
 
-        Recipients recipients = client.recipient.search_by_page(1, 10, "");
+        Recipients recipients = client.recipient.search(1, 10, "");
 
         //Making sure routeMinimum is not null before asserting it's value
         for (Recipient recipient : recipients.getRecipients()) {

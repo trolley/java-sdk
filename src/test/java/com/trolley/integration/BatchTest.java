@@ -208,7 +208,7 @@ public class BatchTest {
         assertTrue(itemCount>0);
 
         //Testing Payments pagination - with manual pagination
-        Payments p = client.payment.search_by_page(batchId, 1, 10, "");
+        Payments p = client.payment.search(batchId, 1, 10, "");
         assertNotNull(p.getPayments().get(0).getId());
     }
 
@@ -227,7 +227,7 @@ public class BatchTest {
         assertTrue(itemCount>0);
 
         //Testing Batches pagination - with manual pagination
-        Batches b = client.batch.search_by_page(1, 10, "");
+        Batches b = client.batch.search(1, 10, "");
         assertNotNull(b.getBatches().get(0).getId());
     }
 }

@@ -74,7 +74,7 @@ public class PaymentGateway
     /**
      * Search for payments within a batch.
      * This method returns an iterator which auto-paginate with 10 items per page.
-     * If you want to paginate manually, please use the {@code search_by_page()} method
+     * If you want to paginate manually, please use the {@code search(batchId, page, pageSize, searchTerm)} method.
      * @param batchId The batch in which the payments need to be searched.
      * @param searchTerm the search keyword to be searched for
      * @return PaymentsIterator which auto paginates through all available payments 10 items per page
@@ -85,7 +85,7 @@ public class PaymentGateway
             throw new InvalidFieldException("searchTerm cannot be null. If you don't wish to provide a searchTerm, pass a blank String.");
         }
         int pageSize = 10;
-        Payments p = search_by_page(batchId, 1, pageSize, searchTerm);
+        Payments p = search(batchId, 1, pageSize, searchTerm);
         return new PaymentsIterator(this, p, batchId, searchTerm);
     }
     
@@ -98,7 +98,7 @@ public class PaymentGateway
      * @return {@code Payments} object, containing a {@code List<Payment>} object and a {@code Meta} object to access pagination information
      * @throws Exception
      */
-    public Payments search_by_page(final String batchId, final int page, final int pageSize, final String searchTerm) throws Exception {
+    public Payments search(final String batchId, final int page, final int pageSize, final String searchTerm) throws Exception {
         if (batchId == null || batchId.isEmpty()) {
             throw new InvalidFieldException("batchId cannot be null or empty.");
         }

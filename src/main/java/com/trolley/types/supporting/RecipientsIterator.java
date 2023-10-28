@@ -59,7 +59,7 @@ public class RecipientsIterator implements Iterator<Recipient>{
      */
     private boolean fetchNextPage(){
         try {
-            Recipients r = gateway.search_by_page((meta.getPage() + 1), 10, searchTerm);
+            Recipients r = gateway.search((meta.getPage() + 1), 10, searchTerm);
             recipients = r.getRecipients();
             meta = r.getMeta();
             index = 0;

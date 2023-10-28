@@ -66,7 +66,7 @@ public class PaymentsIterator implements Iterator<Payment>{
      */
     private boolean fetchNextPage(){
         try {
-            Payments p = gateway.search_by_page(batchId, (meta.getPage() + 1), 10, searchTerm);
+            Payments p = gateway.search(batchId, (meta.getPage() + 1), 10, searchTerm);
             payments = p.getPayments();
             meta = p.getMeta();
             index = 0;

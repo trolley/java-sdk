@@ -59,7 +59,7 @@ public class BatchesIterator implements Iterator<Batch>{
      */
     private boolean fetchNextPage(){
         try {
-            Batches b = gateway.search_by_page((meta.getPage() + 1), 10, searchTerm);
+            Batches b = gateway.search((meta.getPage() + 1), 10, searchTerm);
             batches = b.getBatches();
             meta = b.getMeta();
             index = 0;
