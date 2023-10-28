@@ -2,6 +2,7 @@
 package com.trolley.integration;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import com.trolley.types.Recipient;
 import com.trolley.types.supporting.Amount;
 import com.trolley.types.supporting.InvoicePaymentPart;
 import com.trolley.types.supporting.InvoicePayments;
+import com.trolley.types.supporting.InvoicesIterator;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -93,6 +95,27 @@ public class InvoiceTests {
         //Delete an Invoice
         boolean invoiceDelResult = client.invoice.delete(invoice.getId());
         assertTrue(invoiceDelResult);
+    }
+
+    @Test
+    public void testInvoiceAutoPagination() throws Exception{
+        Gateway client = new Gateway(config);
+        
+        // Search for Invoices by recipientId with iterator
+        ArrayList<String> extIds = new ArrayList<String>(){
+            {
+                add("23");
+            }
+        };
+        InvoicesIterator invoices = client.invoice.search(Invoice.SearchBy.EXTERNAL_ID, extIds, null);
+
+        int itemsCount = 0;
+        while(invoices.hasNext()){
+            itemsCount++;
+            Invoice i = invoices.next();
+            assertNotNull(i.getId());
+        }
+        assertTrue(itemsCount>0);
     }
 
     @Test
