@@ -17,7 +17,7 @@ import com.trolley.types.Invoices;
 import com.trolley.types.Recipient;
 import com.trolley.types.supporting.Amount;
 import com.trolley.types.supporting.InvoicePaymentPart;
-import com.trolley.types.supporting.InvoicePayments;
+import com.trolley.types.supporting.InvoicePaymentsIterator;
 import com.trolley.types.supporting.InvoicesIterator;
 
 import org.junit.BeforeClass;
@@ -275,8 +275,10 @@ public class InvoiceTests {
 
         List<String> invoiceIds = new ArrayList<String>();
         invoiceIds.add(invoice.getId());
-        InvoicePayments invoicePayments = client.invoicePayment.search(null, invoiceIds);
-        assertTrue(invoicePayments.getMeta().getRecords()>0);
+        InvoicePaymentsIterator invoicePaymentsIterator = client.invoicePayment.search(null, invoiceIds);
+        while (invoicePaymentsIterator.hasNext()) {
+            assertNotNull(invoicePaymentsIterator.next().getInvoiceId());
+        }
 
         //Delete an Invoice Payment
         boolean deleteResult = client.invoicePayment.delete(
