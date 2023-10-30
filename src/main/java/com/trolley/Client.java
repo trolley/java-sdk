@@ -5,6 +5,7 @@ import javax.crypto.spec.SecretKeySpec;
 import com.trolley.Exceptions.DownForMaintenanceException;
 import com.trolley.Exceptions.InvalidServerConnectionException;
 import com.trolley.Exceptions.TooManyRequestsException;
+import com.trolley.types.supporting.HttpDeleteWithBody;
 import com.trolley.Exceptions.InvalidStatusCodeException;
 import com.trolley.Exceptions.NotFoundException;
 import com.trolley.Exceptions.AuthorizationException;
@@ -120,6 +121,29 @@ public class Client
 
         // execute request
         final HttpResponse response = httpclient.execute((HttpUriRequest)httpDelete);
+        
+        // process response
+        return processResponse(response);
+    }
+
+    /**
+     * Supports DELETE request with a body.
+     * @param endpoint
+     * @param body
+     * @return
+     * @throws Exception
+     */
+    public String delete(final String endpoint, final String body) throws Exception {
+        final HttpClient httpclient = getHttpClient();
+        final HttpDeleteWithBody httpDeleteWithBody = new HttpDeleteWithBody(this.config.getApiBase() + endpoint);
+        final StringEntity params = new StringEntity(body);
+        httpDeleteWithBody.setEntity((HttpEntity)params);
+
+
+        httpDeleteWithBody.setHeaders(getHeaders("DELETE", endpoint, body));
+
+        // execute request
+        final HttpResponse response = httpclient.execute((HttpUriRequest)httpDeleteWithBody);
         
         // process response
         return processResponse(response);
