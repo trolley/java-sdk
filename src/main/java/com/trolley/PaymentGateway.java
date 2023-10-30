@@ -111,7 +111,7 @@ public class PaymentGateway
         if (searchTerm == null) {
             throw new InvalidFieldException("searchTerm cannot be null. If you don't wish to provide a searchTerm, pass a blank String.");
         }
-        final String endPoint = "/v1/batches/" + batchId + "/payments/?&search=" + searchTerm + "&page=" + page + "&pageSize=" + pageSize;
+        final String endPoint = "/v1/batches/" + batchId + "/payments?search=" + searchTerm + "&page=" + page + "&pageSize=" + pageSize;
         final String response = this.client.get(endPoint);
         
         return this.paymentListFactory(response);
