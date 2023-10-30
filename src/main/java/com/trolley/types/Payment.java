@@ -5,13 +5,16 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.trolley.Configuration;
 import com.trolley.types.supporting.Compliance;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Payment
 {
     private String id;
     private Recipient recipient;
     private String status;
+
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private Boolean isSupplyPayment;
+    
     private String returnedAmount;
     private String amount;
     private String currency;
@@ -41,10 +44,16 @@ public class Payment
     private String withholdingCurrency;
     private String equivalentWithholdingAmount;
     private String equivalentWithholdingCurrency;
+    
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private boolean coverFees;
+    
     private List<String> errors;
     private String estimatedDeliveryAt;
+
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private boolean forceUsTaxActivity;
+    
     private String initiatedAt;
     private String merchantId;
     private String returnedAt;
@@ -55,6 +64,8 @@ public class Payment
     private String settledAt;
     private String taxBasisAmount;
     private String taxBasisCurrency;
+
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private boolean taxReportable;
     
     public void setEquivalentWithholdingCurrency(final String equivalentWithholdingCurrency) {

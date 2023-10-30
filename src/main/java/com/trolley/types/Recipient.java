@@ -79,10 +79,6 @@ public class Recipient
         }
     }
     
-    public Recipient() {
-        this.taxWithholdingPercentage = "0.0";
-    }
-    
     public String getTaxFormStatus() {
         return this.taxFormStatus;
     }
