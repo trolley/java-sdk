@@ -15,7 +15,6 @@ import com.trolley.types.RecipientAccount;
 import com.trolley.types.supporting.Recipients;
 import com.trolley.types.supporting.RecipientsIterator;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -53,8 +52,9 @@ public class RecipientTest {
         assertEquals(recipient.getLastName(), "Smith");
         assertNotNull(recipient.getId());
 
-        String body = "{\"firstName\": \"Bob\"}";
-        boolean response = client.recipient.update(recipient.getId(), body);
+        Recipient recipientUpdateRequest = new Recipient();;
+        recipientUpdateRequest.setFirstName("Bob");
+        boolean response = client.recipient.update(recipient.getId(), recipientUpdateRequest);
         assertNotNull(response);
 
         // Test Compliance Status

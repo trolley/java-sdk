@@ -4,6 +4,8 @@ package com.trolley;
 import java.io.IOException;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.ArrayList;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
@@ -22,23 +24,26 @@ public class RecipientGateway
         this.client = new Client(config);
     }
     
-    public Recipient find(final String recipient_id) throws Exception {
-        if (recipient_id == null || recipient_id.isEmpty()) {
+    public Recipient find(final String recipientId) throws Exception {
+        if (recipientId == null || recipientId.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
-        final String endPoint = "/v1/recipients/" + recipient_id;
+        final String endPoint = "/v1/recipients/" + recipientId;
         final String response = this.client.get(endPoint);
         return this.recipientFactory(response);
     }
     
-    public String findLogs(final String recipient_id) throws Exception {
-        final String endPoint = "/v1/recipients/" + recipient_id + "/logs";
+    public String findLogs(final String recipientId) throws Exception {
+        final String endPoint = "/v1/recipients/" + recipientId + "/logs";
         final String response = this.client.get(endPoint);
         return response;
     }
     
-    public List<Payment> findPayments(final String recipient_id) throws Exception {
-        final String endPoint = "/v1/recipients/" + recipient_id + "/payments";
+    public List<Payment> findPayments(final String recipientId) throws Exception {
+        if (recipientId == null || recipientId.isEmpty()) {
+            throw new InvalidFieldException("Recipient id cannot be null or empty.");
+        }
+        final String endPoint = "/v1/recipients/" + recipientId + "/payments";
         final String response = this.client.get(endPoint);
         final ObjectMapper mapper = new ObjectMapper();
         final JsonNode node = mapper.readTree(response);
@@ -53,56 +58,67 @@ public class RecipientGateway
         return payments;
     }
     
-    public Recipient create(final String body) throws Exception {
-        if (body == null || body.isEmpty()) {
-            throw new InvalidFieldException("Body cannot be null or empty");
-        }
-        final String endPoint = "/v1/recipients/";
-        final String response = this.client.post(endPoint, body);
-        return this.recipientFactory(response);
-    }
-    
     public Recipient create(final Recipient recipient) throws Exception {
         if (recipient == null) {
-            throw new InvalidFieldException("Body cannot be null or empty");
+            throw new InvalidFieldException("Recipient object cannot be null or empty");
         }
-        final String jsonRecipient = new ObjectMapper().writeValueAsString((Object)recipient);
+        final String jsonRecipient = new ObjectMapper()
+                        .setDefaultPropertyInclusion(JsonInclude.Include.NON_DEFAULT)
+                        .writeValueAsString((Object)recipient);
         final String endPoint = "/v1/recipients/";
         final String response = this.client.post(endPoint, jsonRecipient);
+        System.out.println("REQUEST: "+jsonRecipient);
         return this.recipientFactory(response);
     }
     
-    public boolean update(final String recipient_id, final String body) throws Exception {
-        if (recipient_id == null || recipient_id.isEmpty()) {
-            throw new InvalidFieldException("Recipient id cannot be null or empty.");
-        }
-        if (body == null || body.isEmpty()) {
-            throw new InvalidFieldException("Body cannot be null or empty");
-        }
-        final String endPoint = "/v1/recipients/" + recipient_id;
-        this.client.patch(endPoint, body);
-        return true;
-    }
-    
-    public boolean update(final String recipient_id, final Recipient recipient) throws Exception {
-        if (recipient_id == null || recipient_id.isEmpty()) {
+    public boolean update(final String recipientId, final Recipient recipient) throws Exception {
+        if (recipientId == null || recipientId.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
         if (recipient == null) {
-            throw new InvalidFieldException("Body cannot be null or empty");
+            throw new InvalidFieldException("Recipient object cannot be null or empty");
         }
         final String jsonRecipient = new ObjectMapper().writeValueAsString((Object)recipient);
-        final String endPoint = "/v1/recipients/" + recipient_id;
+        final String endPoint = "/v1/recipients/" + recipientId;
         this.client.patch(endPoint, jsonRecipient);
         return true;
     }
     
-    public boolean delete(final String recipient_id) throws Exception {
-        if (recipient_id == null || recipient_id.isEmpty()) {
+    public boolean delete(final String recipientId) throws Exception {
+        if (recipientId == null || recipientId.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
-        final String endPoint = "/v1/recipients/" + recipient_id;
+        final String endPoint = "/v1/recipients/" + recipientId;
         this.client.delete(endPoint);
+        return true;
+    }
+
+    /**
+     * Delete multiple Recipients.
+     * <p>You should pass a {@code List<Recipient>} object to this method, where each item of the list filled only with the ID of the recipient you want to delete.
+     * <p>This method will serialize only the IDs.
+     * @param recipients a List<Recipient> representing the batches that need to be deleted.
+     * @return True if delete operation was successful
+     * @throws Exception Thrown if the delete operation wasn't successful or if any other exception occurs.
+     */
+    public boolean delete(final List<Recipient> recipients) throws Exception {
+        if (recipients == null || recipients.isEmpty()) {
+            throw new InvalidFieldException("Recipient list cannot be null or empty.");
+        }
+        final String endPoint = "/v1/recipients/";
+
+        String body = "{\"ids\" : [";
+        
+        for (int i = 0; i < recipients.size(); i++) {
+            body+=new ObjectMapper().writeValueAsString(recipients.get(i).getId());
+            if(i<(recipients.size()-1)){
+                body+=",";
+            }
+        }
+
+        body+="]}";
+        this.client.delete(endPoint, body);
+
         return true;
     }
 
@@ -174,7 +190,6 @@ public class RecipientGateway
         
         for (int i = 0; i < recips.size(); ++i) {
             final Recipient pojo = (Recipient)mapper.convertValue((Object)recips.get(i), (Class)Recipient.class);
-            // recipients.add(pojo);
             recipients.getRecipients().add(pojo);
         }
 
