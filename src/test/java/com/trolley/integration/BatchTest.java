@@ -97,13 +97,13 @@ public class BatchTest {
         Gateway client = new Gateway(config);
 
         Recipient recipientAlpha = testHelper.createRecipient();
+
+        List<Payment> paymentList = new ArrayList<Payment>();
         Payment payment = new Payment();
 
         payment.setAmount("15");
         payment.setCurrency("USD");
         payment.setRecipient(recipientAlpha);
-
-        List<Payment> paymentList = new ArrayList<Payment>();
         paymentList.add(payment);
 
         Batch batchToCreate = new Batch();
@@ -135,7 +135,6 @@ public class BatchTest {
     public void testPayments() throws Exception {
         Gateway client = new Gateway(config);
 
-        // String body = "{\"sourceCurrency\": \"GBP\", \"description\":\"Integration Test Create\"}";
         Batch batchRequest = new Batch();
         batchRequest.setCurrency("GBP");
         batchRequest.setDescription("Integration Test Create");

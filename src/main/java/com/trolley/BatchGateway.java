@@ -54,12 +54,12 @@ public class BatchGateway
     }
 
     /**
-     * Delete multiple batches with IDs.
+     * Delete multiple batches.
      * <p>You should pass a {@code List<Batch>} object to this method, with each item of the list filled with the ID of the batch you want to delete.
-     * <p>This method will serialize only the IDs
+     * <p>This method will serialize only the IDs.
      * @param batches a List<Batch> representing the batches that need to be deleted.
-     * @return
-     * @throws Exception
+     * @return True if delete operation was successful
+     * @throws Exception Thrown if the delete operation wasn't successful or if any other exception occurs.
      */
     public boolean delete(final List<Batch> batches) throws Exception {
         if (batches == null || batches.isEmpty()) {
@@ -78,6 +78,7 @@ public class BatchGateway
 
         body+="]}";
         this.client.delete(endPoint, body);
+        
         return true;
     }
     
