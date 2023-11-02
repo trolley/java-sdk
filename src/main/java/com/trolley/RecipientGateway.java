@@ -13,6 +13,7 @@ import com.trolley.Exceptions.InvalidFieldException;
 import com.trolley.types.Payment;
 import com.trolley.types.Recipient;
 import com.trolley.types.supporting.Meta;
+import com.trolley.types.supporting.PaymentsIterator;
 import com.trolley.types.supporting.Recipients;
 import com.trolley.types.supporting.RecipientsIterator;
 
@@ -120,6 +121,11 @@ public class RecipientGateway
         this.client.delete(endPoint, body);
 
         return true;
+    }
+
+    // TODO: Add coverage of getAllOfflinePayments after covering offline payments API
+    public PaymentsIterator getAllOfflinePayments(){
+        return null;
     }
 
     /**
