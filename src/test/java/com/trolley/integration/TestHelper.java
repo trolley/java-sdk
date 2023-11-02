@@ -75,9 +75,14 @@ public class TestHelper {
     public RecipientAccount createRecipientAccount(Recipient recipient) throws Exception {
         Gateway client = new Gateway(getConfig());
 
-        String body = "{\"type\": \"bank-transfer\", \"primary\": true, \"country\": \"DE\", \"currency\": \"EUR\", \"iban\": \"DE89 3704 0044 0532 0130 00\", \"accountHolderName\": \"John Smith\"}";
-
-        RecipientAccount recipientAcount = client.recipientAccount.create(recipient.getId(), body);
+        RecipientAccount recipientAccountRequest = new RecipientAccount();
+        recipientAccountRequest.setType("bank-transfer");
+        recipientAccountRequest.setPrimary(true);
+        recipientAccountRequest.setCountry("DE");
+        recipientAccountRequest.setCurrency("EUR");
+        recipientAccountRequest.setIban("DE89 3704 0044 0532 0130 00");
+        recipientAccountRequest.setAccountHolderName("John Smith");
+        RecipientAccount recipientAcount = client.recipientAccount.create(recipient.getId(), recipientAccountRequest);
 
         return recipientAcount;
     }
@@ -89,10 +94,10 @@ public class TestHelper {
      * @return
      * @throws Exception
      */
-    public RecipientAccount createRecipientAccount(Recipient recipient, String body) throws Exception {
+    public RecipientAccount createRecipientAccount(Recipient recipient, RecipientAccount recipientAccount) throws Exception {
         Gateway client = new Gateway(getConfig());
 
-        RecipientAccount recipientAcount = client.recipientAccount.create(recipient.getId(), body);
+        RecipientAccount recipientAcount = client.recipientAccount.create(recipient.getId(), recipientAccount);
 
         return recipientAcount;
     }

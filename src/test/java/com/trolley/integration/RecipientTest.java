@@ -37,6 +37,7 @@ public class RecipientTest {
         assertEquals(recipient.getLastName(), "Smith");
         assertNotNull(recipient.getId());
         assertEquals(recipient.getContactEmails(), Arrays.asList("john1@example.com", "john2@example.com"));
+        assertEquals(recipient.getGovernmentIds().get(0).getCountry(), "US");
 
         //Cleanup
         boolean deleteResult = testHelper.deleteRecipient(recipient);
@@ -79,13 +80,25 @@ public class RecipientTest {
         assertEquals(recipient.getLastName(), "Smith");
         assertNotNull(recipient.getId());
 
-        String body = "{\"type\": \"bank-transfer\", \"primary\": true, \"country\": \"DE\", \"currency\": \"EUR\", \"iban\": \"DE89 3704 0044 0532 0130 00\", \"accountHolderName\": \"Tom Jones\"}";
-        RecipientAccount recipientAccount = testHelper.createRecipientAccount(recipient, body);
+        RecipientAccount recipientAccountRequest1 = new RecipientAccount();
+        recipientAccountRequest1.setType("bank-transfer");
+        recipientAccountRequest1.setPrimary(true);
+        recipientAccountRequest1.setCountry("DE");
+        recipientAccountRequest1.setCurrency("EUR");
+        recipientAccountRequest1.setIban("DE89 3704 0044 0532 0130 00");
+        recipientAccountRequest1.setAccountHolderName("Tom Jones");
+        RecipientAccount recipientAccount = testHelper.createRecipientAccount(recipient, recipientAccountRequest1);
         assertEquals("Tom Jones", recipientAccount.getAccountHolderName());
 
-        body = "{\"type\": \"bank-transfer\", \"primary\": true, \"country\": \"DE\", \"currency\": \"EUR\", \"iban\": \"DE89 3704 0044 0532 0130 00\", \"accountHolderName\": \"Tom Jones2\"}";
-        RecipientAccount recipientAccount1 = testHelper.createRecipientAccount(recipient, body);
-        assertEquals("Tom Jones2", recipientAccount1.getAccountHolderName());
+        RecipientAccount recipientAccountRequest2 = new RecipientAccount();
+        recipientAccountRequest2.setType("bank-transfer");
+        recipientAccountRequest2.setPrimary(true);
+        recipientAccountRequest2.setCountry("DE");
+        recipientAccountRequest2.setCurrency("EUR");
+        recipientAccountRequest2.setIban("DE89 3704 0044 0532 0130 00");
+        recipientAccountRequest2.setAccountHolderName("Tom Jones 2");
+        RecipientAccount recipientAccount1 = testHelper.createRecipientAccount(recipient, recipientAccountRequest2);
+        assertEquals("Tom Jones 2", recipientAccount1.getAccountHolderName());
 
         RecipientAccount recAccFindResult = client.recipientAccount.find(recipient.getId(), recipientAccount.getId());
         assertEquals(recAccFindResult.getCountry(), recipientAccount.getCountry());
