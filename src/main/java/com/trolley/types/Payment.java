@@ -2,7 +2,6 @@ package com.trolley.types;
 
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.trolley.Configuration;
 import com.trolley.types.supporting.Compliance;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -451,36 +450,4 @@ public class Payment
     public void setTaxReportable(final boolean taxReportable) {
         this.taxReportable = taxReportable;
     }
-
-    public static Payment find(final String payment_id, final String batch_id) throws Exception {
-        return Configuration.gateway().payment.find(payment_id, batch_id);
-    }
-    
-    public static Payment create(final String body, final String batch_id) throws Exception {
-        return Configuration.gateway().payment.create(body, batch_id);
-    }
-    
-    public static boolean update(final String payment_id, final String body, final String batch_id) throws Exception {
-        return Configuration.gateway().payment.update(payment_id, body, batch_id);
-    }
-    
-    public static boolean delete(final String payment_id, final String batch_id) throws Exception {
-        return Configuration.gateway().payment.delete(payment_id, batch_id);
-    }
-    
-    /* public static List<Payment> query(final String batch_id, final int page, final int pageSize, final String message) throws Exception {
-        return Configuration.gateway().payment.query(batch_id, page, pageSize, message);
-    }
-    
-    public static List<Payment> query(final String batch_id, final String message) throws Exception {
-        return query(batch_id, 1, 10, message);
-    }
-    
-    public static List<Payment> query(final String batch_id) throws Exception {
-        return query(batch_id, 1, 10, "");
-    }
-    
-    public static List<Payment> query(final String batch_id, final int page, final int pageSize) throws Exception {
-        return query(batch_id, page, pageSize, ""); 
-    }*/
 }
