@@ -13,7 +13,8 @@ import com.trolley.Exceptions.InvalidFieldException;
 import com.trolley.types.Payment;
 import com.trolley.types.Recipient;
 import com.trolley.types.supporting.Meta;
-import com.trolley.types.supporting.PaymentsIterator;
+import com.trolley.types.supporting.OfflinePayments;
+import com.trolley.types.supporting.OfflinePaymentsIterator;
 import com.trolley.types.supporting.Recipients;
 import com.trolley.types.supporting.RecipientsIterator;
 
@@ -122,9 +123,42 @@ public class RecipientGateway
         return true;
     }
 
-    // TODO: Add coverage of getAllOfflinePayments after covering offline payments API
-    public PaymentsIterator getAllOfflinePayments(){
-        return null;
+    /**
+     * Get all offline payments of a recipient whose recipientId is provided.
+     * This method returns an iterator which iterates through the pages automatically.
+     * If you want to paginate manually, please use {@code getAllOfflinePayments(recipientId, page, pageSize, searchTerm)} instead.
+     * @param recipientId id of the recipient whose offline payments need to be fetched
+     * @param searchTerm any search term you want to include. Please provide an empty string in case you don't want to.
+     * @return
+     * @throws Exception
+     */
+    public OfflinePaymentsIterator getAllOfflinePayments(final String recipientId, final String searchTerm) throws Exception{
+        if (recipientId == null) {
+            throw new InvalidFieldException("recipientId cannot be null.");
+        }
+        if (searchTerm == null) {
+            throw new InvalidFieldException("searchTerm cannot be null. If you don't wish to provide a searchTerm, pass a blank String.");
+        }
+
+        int pageSize = 10;
+        OfflinePayments p = getAllOfflinePayments(recipientId, 1, pageSize, searchTerm);
+        return new OfflinePaymentsIterator(this, p, searchTerm, recipientId);
+    }
+
+     public OfflinePayments getAllOfflinePayments(final String recipientId, final int page, final int pageSize, final String searchTerm) throws Exception{
+        if (recipientId == null) {
+            throw new InvalidFieldException("recipientId cannot be null.");
+        }
+        if (searchTerm == null) {
+            throw new InvalidFieldException("searchTerm cannot be null. If you don't wish to provide a searchTerm, pass a blank String.");
+        }
+
+        final String endPoint = "/v1/recipients/" + recipientId + "/offlinePayments?search=" + searchTerm + "&page=" + page + "&pageSize=" + pageSize;
+        
+        final String response = this.client.get(endPoint);
+        
+        OfflinePaymentGateway opGateway = new OfflinePaymentGateway(null);
+        return opGateway.offlinePaymentListFactory(response);
     }
 
     /**
