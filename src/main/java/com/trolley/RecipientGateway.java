@@ -68,7 +68,6 @@ public class RecipientGateway
                         .writeValueAsString((Object)recipient);
         final String endPoint = "/v1/recipients/";
         final String response = this.client.post(endPoint, jsonRecipient);
-        System.out.println("REQUEST: "+jsonRecipient);
         return this.recipientFactory(response);
     }
     
