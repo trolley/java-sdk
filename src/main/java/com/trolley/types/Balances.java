@@ -1,45 +1,50 @@
 package com.trolley.types;
 
-import com.trolley.Configuration;
-import com.trolley.types.supporting.CAD;
-import com.trolley.types.supporting.EUR;
-import com.trolley.types.supporting.USD;
-
 public class Balances
 {
-    public EUR EUR;
-    public USD USD;
-    public CAD CAD;
+    private boolean primary;
+    private String amount;
+    private String currency;
+    private String type;
+    private String accountNumber;
     
-    public EUR getEUR() {
-        return this.EUR;
+    public Boolean getPrimary() {
+        return this.primary;
     }
     
-    public void setEUR(final EUR EUR) {
-        this.EUR = EUR;
+    public void setPrimary(final Boolean primary) {
+        this.primary = primary;
     }
     
-    public USD getUSD() {
-        return this.USD;
+    public String getAmount() {
+        return this.amount;
     }
     
-    public void setUSD(final USD USD) {
-        this.USD = USD;
+    public void setAmount(final String amount) {
+        this.amount = amount;
     }
     
-    public CAD getCAD() {
-        return this.CAD;
+    public String getCurrency() {
+        return this.currency;
     }
     
-    public void setCAD(final CAD CAD) {
-        this.CAD = CAD;
+    public void setCurrency(final String currency) {
+        this.currency = currency;
     }
     
-    public static String find() throws Exception {
-        return find("");
+    public String getType() {
+        return this.type;
     }
     
-    public static String find(final String term) throws Exception {
-        return Configuration.gateway().balances.find(term);
+    public void setType(final String type) {
+        this.type = type;
+    }
+    
+    public String getAccountNumber() {
+        return this.accountNumber;
+    }
+    
+    public void setAccountNumber(final String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 }
