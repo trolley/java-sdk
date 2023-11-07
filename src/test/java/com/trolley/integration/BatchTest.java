@@ -142,12 +142,19 @@ public class BatchTest {
         assertEquals(batch.getCurrency(), "GBP");
 
         Recipient recipient = testHelper.createRecipient();
-        String body = "{\"sourceAmount\":\"10.00\", \"recipient\": {\"id\": " + "\"" + recipient.getId() + "\"" + "}}";
-        Payment payment = client.payment.create(body, batch.getId());
+
+        Payment paymentRequest = new Payment();
+        Recipient recipientRequest = new Recipient();
+        recipientRequest.setId(recipient.getId());
+        paymentRequest.setSourceAmount("10.00");
+        paymentRequest.setRecipient(recipientRequest);
+        Payment payment = client.payment.create(paymentRequest, batch.getId());
         assertNotNull(payment);
         assertNotNull(payment.getId());
-        body = "{\"sourceAmount\":\"20.00\"}";
-        boolean response = client.payment.update(payment.getId(), body, batch.getId());
+
+        Payment paymentUpdateRequest = new Payment();
+        paymentUpdateRequest.setSourceAmount("20.00");
+        boolean response = client.payment.update(payment.getId(), paymentUpdateRequest, batch.getId());
         assertNotNull(response);
 
         response = client.payment.delete(payment.getId(), batch.getId());
