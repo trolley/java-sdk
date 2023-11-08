@@ -6,9 +6,11 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.trolley.Exceptions.InvalidFieldException;
 import com.trolley.types.InvoicePayment;
 import com.trolley.types.supporting.InvoicePaymentPart;
 import com.trolley.types.supporting.InvoicePayments;
+import com.trolley.types.supporting.InvoicePaymentsIterator;
 
 public class InvoicePaymentGateway
 {
@@ -109,16 +111,40 @@ public class InvoicePaymentGateway
     }
 
     /**
-     * Search for invoice payments matching the list of paymentIds or invoiceIds provided.
+     * Search for invoice payments matching the list of paymentIds and invoiceIds provided.
      * <p>
-     * Either {@code paymentIds} or {@code invoiceIds} is required.
+     * Either {@code paymentIds} or {@code invoiceIds} is required. <p>
+     * This method returns an iterator using which you can auto-paginate through all available pages with 10 items per page.
      * @param paymentIds
      * @param invoiceIds
+     * @return InvoicePaymentsIterator to auto-paginate
+     * @throws Exception
+     */
+    public InvoicePaymentsIterator search(final List<String> paymentIds, final List<String> invoiceIds) throws Exception {
+
+        if(null == invoiceIds && null == paymentIds){
+            throw new InvalidFieldException("Either Invoice IDs or Payment IDs should be present");
+        }
+
+        InvoicePayments ip = search(paymentIds, invoiceIds, 1, 10);
+
+        return new InvoicePaymentsIterator(this, ip, paymentIds, invoiceIds);
+    }
+
+    /**
+     * Search for invoice payments matching the list of paymentIds and invoiceIds provided.
+     * <p>
+     * Either {@code paymentIds} or {@code invoiceIds} is required. <p>
+     * This method also allows you to paginate manually by providing {@code page} and {@code pageSize} arguments.
+     * @param paymentIds
+     * @param invoiceIds
+     * @param page
+     * @param pageSize
      * @return InvoicePayments object containing a list of found InvoicePaymentParts and Meta object for 
      * pagination information
      * @throws Exception
      */
-    public InvoicePayments search(final List<String> paymentIds, final List<String> invoiceIds) throws Exception {
+    public InvoicePayments search(final List<String> paymentIds, final List<String> invoiceIds, final int page, final int pageSize) throws Exception {
         final String endPoint = "/v1/invoices/payment/search/";
 
         String body = "{";
@@ -136,6 +162,8 @@ public class InvoicePaymentGateway
                                         .setSerializationInclusion(Include.NON_EMPTY)
                                         .writeValueAsString(invoiceIds);
         }
+        body+= ", \"page\":" + page;
+        body+= ", \"pageSize\":" + pageSize;
         
         body+= "}";
 

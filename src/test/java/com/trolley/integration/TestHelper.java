@@ -1,11 +1,14 @@
 package com.trolley.integration;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import com.trolley.Configuration;
 import com.trolley.Gateway;
 import com.trolley.types.Recipient;
 import com.trolley.types.RecipientAccount;
+import com.trolley.types.supporting.Address;
+import com.trolley.types.supporting.GovernmentId;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
@@ -30,12 +33,35 @@ public class TestHelper {
 
         UUID uuid = UUID.randomUUID();
 
-        String email = "\"create.recipient.java-sdk." + uuid.toString() + "@example.com\"";
-        String body = "{\"type\": \"individual\",\"firstName\": \"John\",\"lastName\": \"Smith\",\"email\":" + email
-                + ",\"contactEmails\": [\"john1@example.com\", \"john2@example.com\"]"
-                + ",\"address\":{\"street1\": \"123 Main St\",\"city\": \"San Francisco\",\"region\": \"CA\",\"postalCode\": \"94131\",\"country\": \"DE\",\"phone\" : \"18005551212\"}}";
+        String email = "create.recipient.java-sdk." + uuid.toString() + "@example.com";
 
-        Recipient recipient = client.recipient.create(body);
+        Recipient recipientRequest = new Recipient();
+        recipientRequest.setType("individual");
+        recipientRequest.setFirstName("John");
+        recipientRequest.setLastName("Smith");
+        recipientRequest.setEmail(email);
+
+        ArrayList<String> contactEmails = new ArrayList<String>();
+        contactEmails.add("john1@example.com");
+        contactEmails.add("john2@example.com");
+        recipientRequest.setContactEmails(contactEmails);
+        
+        Address address = new Address();
+        address.setStreet1("123 Main St");
+        address.setCity("San Francisco");
+        address.setRegion("CA");
+        address.setPostalCode("94131");
+        address.setCountry("US");
+        address.setPhone("18005551212");
+        recipientRequest.setAddress(address);
+
+        GovernmentId govtId = new GovernmentId("US", "SSN", "ABCD123456");
+        ArrayList<GovernmentId> govtIds = new ArrayList<GovernmentId>();
+        govtIds.add(govtId);
+        
+        recipientRequest.setGovernmentIds(govtIds);
+
+        Recipient recipient = client.recipient.create(recipientRequest);
 
         return recipient;
     }
@@ -49,9 +75,14 @@ public class TestHelper {
     public RecipientAccount createRecipientAccount(Recipient recipient) throws Exception {
         Gateway client = new Gateway(getConfig());
 
-        String body = "{\"type\": \"bank-transfer\", \"primary\": true, \"country\": \"DE\", \"currency\": \"EUR\", \"iban\": \"DE89 3704 0044 0532 0130 00\", \"accountHolderName\": \"John Smith\"}";
-
-        RecipientAccount recipientAcount = client.recipientAccount.create(recipient.getId(), body);
+        RecipientAccount recipientAccountRequest = new RecipientAccount();
+        recipientAccountRequest.setType("bank-transfer");
+        recipientAccountRequest.setPrimary(true);
+        recipientAccountRequest.setCountry("DE");
+        recipientAccountRequest.setCurrency("EUR");
+        recipientAccountRequest.setIban("DE89 3704 0044 0532 0130 00");
+        recipientAccountRequest.setAccountHolderName("John Smith");
+        RecipientAccount recipientAcount = client.recipientAccount.create(recipient.getId(), recipientAccountRequest);
 
         return recipientAcount;
     }
@@ -63,10 +94,10 @@ public class TestHelper {
      * @return
      * @throws Exception
      */
-    public RecipientAccount createRecipientAccount(Recipient recipient, String body) throws Exception {
+    public RecipientAccount createRecipientAccount(Recipient recipient, RecipientAccount recipientAccount) throws Exception {
         Gateway client = new Gateway(getConfig());
 
-        RecipientAccount recipientAcount = client.recipientAccount.create(recipient.getId(), body);
+        RecipientAccount recipientAcount = client.recipientAccount.create(recipient.getId(), recipientAccount);
 
         return recipientAcount;
     }

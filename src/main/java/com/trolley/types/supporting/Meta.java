@@ -2,8 +2,20 @@ package com.trolley.types.supporting;
 
 public class Meta
 {
+    /**
+     * Which page you're on, out of the current result set.
+     */
     private int page;
+
+    /**
+     * How many pages are there in the current result set.
+     * Note: This will depend on {@code pageSize} parameter given to the API.
+     */
     private int pages;
+
+    /**
+     * How many records in total are present in the current result set.
+     */
     private int records;
     
     public Meta() {
