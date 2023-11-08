@@ -9,8 +9,9 @@ public class Payments
     private List<Payment> payments;
     private Meta meta;
     
-    public Payments() {
-        this.payments = null;
+    public Payments(final List<Payment> payments, final Meta meta) {
+        this.payments = payments;
+        this.meta = meta;
     }
     
     public List<Payment> getPayments() {

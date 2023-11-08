@@ -1,5 +1,7 @@
 package com.trolley;
 
+import org.apache.http.client.HttpClient;
+
 import io.github.cdimascio.dotenv.Dotenv;
 
 public class Configuration
@@ -7,6 +9,7 @@ public class Configuration
     private String apiBase = "https://api.trolley.com";
     private String privateKey;
     private String publicKey;
+    private HttpClient httpClient = null;
     
     public Configuration() {
         this.privateKey = "";
@@ -18,10 +21,24 @@ public class Configuration
         this.privateKey = privateKey;
         this.apiBase = this.setEnviroment("production");
     }
+
+    public Configuration(final String publicKey, final String privateKey, final HttpClient httpClient) {
+        this.publicKey = publicKey;
+        this.privateKey = privateKey;
+        this.httpClient = httpClient;
+        this.apiBase = this.setEnviroment("production");
+    }
     
     public Configuration(final String publicKey, final String privateKey, final String apiBase) {
         this.publicKey = publicKey;
         this.privateKey = privateKey;
+        this.apiBase = this.setEnviroment(apiBase);
+    }
+
+    public Configuration(final String publicKey, final String privateKey, final String apiBase, final HttpClient httpClient) {
+        this.publicKey = publicKey;
+        this.privateKey = privateKey;
+        this.httpClient = httpClient;
         this.apiBase = this.setEnviroment(apiBase);
     }
     
@@ -87,5 +104,13 @@ public class Configuration
                 return "https://api.trolley.com";
             }
         }
+    }
+
+    public HttpClient getHttpClient(){
+        return this.httpClient;
+    }
+
+    public void setHttpClient(final HttpClient httpClient){
+        this.httpClient = httpClient;
     }
 }
