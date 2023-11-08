@@ -10,6 +10,7 @@ import com.trolley.Exceptions.InvalidFieldException;
 import com.trolley.types.Invoice;
 import com.trolley.types.Invoices;
 import com.trolley.types.Invoice.SearchBy;
+import com.trolley.types.supporting.InvoicesIterator;
 
 public class InvoiceGateway
 {
@@ -117,8 +118,8 @@ public class InvoiceGateway
 
     /**
      * Search invoices by multiple options such as by invoiceId, recipientId etc.
-     * Note: This method only returns the fist page, defaulting to 10 records per page.
-     * For pagination, look at {@code search(SearchBy searchBy, List<String> paramsList, String param, int page, int pageSize)} below.
+     * Note: This method auto-paginates with 10 items per page by returning an Iterator.
+     * For manual pagination, look at {@code search(SearchBy searchBy, List<String> paramsList, String param, int page, int pageSize)} below.
      * 
      * Depending on what you want to search by, you'll either provide a {@code List<String>} parameter, or a
      * String parameter. Details about when to provide which parameter are given in the parameter
@@ -128,44 +129,18 @@ public class InvoiceGateway
      * @param paramsList {@code List<String>} Required if 'searchBy' is either of these: 'invoiceId'
      * 'recipientId', 'invoiceNumber', 'tags', or 'externalId'. Set to 'null' otherwise.
      * @param param String Required if 'searchBy' is 'invoiceDate'. Set to null otherwise.
-     * @return {@code List<Invoice>}
+     * @return {@code InvoiceIterator}
      * @throws Exception
      */
     
-    public List<Invoice> search(final SearchBy searchBy, 
+    public InvoicesIterator search(final SearchBy searchBy, 
         final List<String> paramsList,
         final String param) throws Exception {
 
-        String body = "";
+        int pageSize = 10;
+        Invoices invoices = search(searchBy, paramsList, param, 1, pageSize);
 
-        switch (searchBy){
-            case INVOICE_ID:
-            case RECIPIENT_ID:
-            case INVOICE_NUMBER:
-            case EXTERNAL_ID:
-            case TAGS:
-                if(null == paramsList){
-                    throw new InvalidFieldException("variable paramsList can not be null for the provided searchBy parameter. Refer to method's Javadoc for more details.");
-                }
-                body = "{\""+searchBy.getKey()+"\":"
-                    +new ObjectMapper()
-                        .setSerializationInclusion(Include.NON_EMPTY)
-                        .writeValueAsString(paramsList)
-                +"}";
-                break;
-
-            case INVOICE_DATE:
-                if(null == param){
-                    throw new InvalidFieldException("variable param can not be null for the provided searchBy parameter. Refer to method's Javadoc for more details.");
-                }
-                body = "{\""+searchBy.getKey()+"\":\""+param+"\"}";
-                break;
-        }
-        final String endPoint = "/v1/invoices/search/";
-
-        final String response = this.client.post(endPoint, body);
-
-        return Invoice.invoiceListFactory(response).getInvoices();        
+        return new InvoicesIterator(searchBy, paramsList, param, this, invoices);
     }
 
     /**
@@ -195,6 +170,7 @@ public class InvoiceGateway
         case INVOICE_ID:
         case RECIPIENT_ID:
         case INVOICE_NUMBER:
+        case EXTERNAL_ID:
         case TAGS:
              if(null == paramsList){
                  throw new InvalidFieldException("variable paramsList can not be null for the provided searchBy parameter. Refer to method's Javadoc for more details.");
@@ -209,7 +185,6 @@ public class InvoiceGateway
              break;
 
         case INVOICE_DATE:
-        case EXTERNAL_ID:
              if(null == param){
                  throw new InvalidFieldException("variable param can not be null for the provided searchBy parameter. Refer to method's Javadoc for more details.");
              }

@@ -4,6 +4,7 @@ package com.trolley;
 import java.util.ArrayList;
 import java.io.IOException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trolley.Exceptions.InvalidFieldException;
@@ -19,79 +20,59 @@ public class RecipientAccountGateway
         this.client = new Client(config);
     }
     
-    public List<RecipientAccount> findAll(final String recipient_id) throws Exception {
-        if (recipient_id == null || recipient_id.isEmpty()) {
+    public List<RecipientAccount> findAll(final String recipientId) throws Exception {
+        if (recipientId == null || recipientId.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
-        final String endPoint = "/v1/recipients/" + recipient_id + "/accounts";
+        final String endPoint = "/v1/recipients/" + recipientId + "/accounts";
         final String response = this.client.get(endPoint);
         return this.recipientAccountListFactory(response);
     }
     
-    public RecipientAccount find(final String recipient_id, final String recipient_account_id) throws Exception {
-        if (recipient_id == null || recipient_id.isEmpty()) {
+    public RecipientAccount find(final String recipientId, final String recipientAccountId) throws Exception {
+        if (recipientId == null || recipientId.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
-        final String endPoint = "/v1/recipients/" + recipient_id + "/accounts/" + recipient_account_id;
+        final String endPoint = "/v1/recipients/" + recipientId + "/accounts/" + recipientAccountId;
         final String response = this.client.get(endPoint);
         return this.recipientAccountFactory(response);
     }
     
-    public RecipientAccount create(final String recipient_id, final String body) throws Exception {
-        if (recipient_id == null || recipient_id.isEmpty()) {
-            throw new InvalidFieldException("Recipient id cannot be null or empty.");
-        }
-        if (body == null || body.isEmpty()) {
-            throw new InvalidFieldException("Body cannot be null or empty");
-        }
-        final String endPoint = "/v1/recipients/" + recipient_id + "/accounts";
-        final String response = this.client.post(endPoint, body);
-        return this.recipientAccountFactory(response);
-    }
-    
-    public RecipientAccount create(final String recipient_id, final RecipientAccount account) throws Exception {
-        if (recipient_id == null || recipient_id.isEmpty()) {
+    public RecipientAccount create(final String recipientId, final RecipientAccount account) throws Exception {
+        if (recipientId == null || recipientId.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
         if (account == null) {
             throw new InvalidFieldException("Body cannot be null or empty");
         }
-        final String jsonAccount = new ObjectMapper().writeValueAsString((Object)account);
-        final String endPoint = "/v1/recipients/" + recipient_id + "/accounts";
+        final String jsonAccount = new ObjectMapper()
+                    .setDefaultPropertyInclusion(JsonInclude.Include.NON_DEFAULT)
+                    .writeValueAsString((Object)account);
+        final String endPoint = "/v1/recipients/" + recipientId + "/accounts";
         final String response = this.client.post(endPoint, jsonAccount);
         return this.recipientAccountFactory(response);
     }
     
-    public RecipientAccount update(final String recipient_id, final String recipient_account_id, final String body) throws Exception {
-        if (recipient_id == null || recipient_id.isEmpty()) {
-            throw new InvalidFieldException("Recipient id cannot be null or empty.");
-        }
-        if (body == null || body.isEmpty()) {
-            throw new InvalidFieldException("Body cannot be null or empty");
-        }
-        final String endPoint = "/v1/recipients/" + recipient_id + "/accounts/" + recipient_account_id;
-        final String response = this.client.patch(endPoint, body);
-        return this.recipientAccountFactory(response);
-    }
-    
-    public RecipientAccount update(final String recipient_id, final String recipient_account_id, final RecipientAccount account) throws Exception {
-        if (recipient_id == null || recipient_id.isEmpty()) {
+    public RecipientAccount update(final String recipientId, final String recipientAccountId, final RecipientAccount account) throws Exception {
+        if (recipientId == null || recipientId.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
         if (account == null) {
             throw new InvalidFieldException("Body cannot be null or empty");
         }
-        final String jsonAccount = new ObjectMapper().writeValueAsString((Object)account);
-        final String endPoint = "/v1/recipients/" + recipient_id + "/accounts/" + recipient_account_id;
+        final String jsonAccount = new ObjectMapper()
+                    .setDefaultPropertyInclusion(JsonInclude.Include.NON_DEFAULT)
+                    .writeValueAsString((Object)account);
+        final String endPoint = "/v1/recipients/" + recipientId + "/accounts/" + recipientAccountId;
         final String response = this.client.patch(endPoint, jsonAccount);
         return this.recipientAccountFactory(response);
     }
     
-    public boolean delete(final String recipient_id, final String recipient_account_id) throws Exception {
-        if (recipient_id == null || recipient_id.isEmpty()) {
+    public boolean delete(final String recipientId, final String recipientAccountId) throws Exception {
+        if (recipientId == null || recipientId.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
-        final String endPoint = "/v1/recipients/" + recipient_id + "/accounts/" + recipient_account_id;
+        final String endPoint = "/v1/recipients/" + recipientId + "/accounts/" + recipientAccountId;
         this.client.delete(endPoint);
         return true;
     }
