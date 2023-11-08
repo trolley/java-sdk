@@ -4,12 +4,19 @@ package com.trolley;
 import java.io.IOException;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.ArrayList;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import com.trolley.Exceptions.InvalidFieldException;
 import com.trolley.types.Payment;
 import com.trolley.types.Recipient;
+import com.trolley.types.supporting.Meta;
+import com.trolley.types.supporting.OfflinePayments;
+import com.trolley.types.supporting.OfflinePaymentsIterator;
+import com.trolley.types.supporting.Recipients;
+import com.trolley.types.supporting.RecipientsIterator;
 
 public class RecipientGateway
 {
@@ -19,23 +26,26 @@ public class RecipientGateway
         this.client = new Client(config);
     }
     
-    public Recipient find(final String recipient_id) throws Exception {
-        if (recipient_id == null || recipient_id.isEmpty()) {
+    public Recipient find(final String recipientId) throws Exception {
+        if (recipientId == null || recipientId.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
-        final String endPoint = "/v1/recipients/" + recipient_id;
+        final String endPoint = "/v1/recipients/" + recipientId;
         final String response = this.client.get(endPoint);
         return this.recipientFactory(response);
     }
     
-    public String findLogs(final String recipient_id) throws Exception {
-        final String endPoint = "/v1/recipients/" + recipient_id + "/logs";
+    public String findLogs(final String recipientId) throws Exception {
+        final String endPoint = "/v1/recipients/" + recipientId + "/logs";
         final String response = this.client.get(endPoint);
         return response;
     }
     
-    public List<Payment> findPayments(final String recipient_id) throws Exception {
-        final String endPoint = "/v1/recipients/" + recipient_id + "/payments";
+    public List<Payment> findPayments(final String recipientId) throws Exception {
+        if (recipientId == null || recipientId.isEmpty()) {
+            throw new InvalidFieldException("Recipient id cannot be null or empty.");
+        }
+        final String endPoint = "/v1/recipients/" + recipientId + "/payments";
         final String response = this.client.get(endPoint);
         final ObjectMapper mapper = new ObjectMapper();
         final JsonNode node = mapper.readTree(response);
@@ -50,74 +60,154 @@ public class RecipientGateway
         return payments;
     }
     
-    public Recipient create(final String body) throws Exception {
-        if (body == null || body.isEmpty()) {
-            throw new InvalidFieldException("Body cannot be null or empty");
-        }
-        final String endPoint = "/v1/recipients/";
-        final String response = this.client.post(endPoint, body);
-        return this.recipientFactory(response);
-    }
-    
     public Recipient create(final Recipient recipient) throws Exception {
         if (recipient == null) {
-            throw new InvalidFieldException("Body cannot be null or empty");
+            throw new InvalidFieldException("Recipient object cannot be null or empty");
         }
-        final String jsonRecipient = new ObjectMapper().writeValueAsString((Object)recipient);
+        final String jsonRecipient = new ObjectMapper()
+                        .setDefaultPropertyInclusion(JsonInclude.Include.NON_DEFAULT)
+                        .writeValueAsString((Object)recipient);
         final String endPoint = "/v1/recipients/";
         final String response = this.client.post(endPoint, jsonRecipient);
         return this.recipientFactory(response);
     }
     
-    public boolean update(final String recipient_id, final String body) throws Exception {
-        if (recipient_id == null || recipient_id.isEmpty()) {
-            throw new InvalidFieldException("Recipient id cannot be null or empty.");
-        }
-        if (body == null || body.isEmpty()) {
-            throw new InvalidFieldException("Body cannot be null or empty");
-        }
-        final String endPoint = "/v1/recipients/" + recipient_id;
-        this.client.patch(endPoint, body);
-        return true;
-    }
-    
-    public boolean update(final String recipient_id, final Recipient recipient) throws Exception {
-        if (recipient_id == null || recipient_id.isEmpty()) {
+    public boolean update(final String recipientId, final Recipient recipient) throws Exception {
+        if (recipientId == null || recipientId.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
         if (recipient == null) {
-            throw new InvalidFieldException("Body cannot be null or empty");
+            throw new InvalidFieldException("Recipient object cannot be null or empty");
         }
         final String jsonRecipient = new ObjectMapper().writeValueAsString((Object)recipient);
-        final String endPoint = "/v1/recipients/" + recipient_id;
+        final String endPoint = "/v1/recipients/" + recipientId;
         this.client.patch(endPoint, jsonRecipient);
         return true;
     }
     
-    public boolean delete(final String recipient_id) throws Exception {
-        if (recipient_id == null || recipient_id.isEmpty()) {
+    public boolean delete(final String recipientId) throws Exception {
+        if (recipientId == null || recipientId.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
-        final String endPoint = "/v1/recipients/" + recipient_id;
+        final String endPoint = "/v1/recipients/" + recipientId;
         this.client.delete(endPoint);
         return true;
     }
-    
-    public List<Recipient> search(final int page, final int pageSize, final String term) throws Exception {
-        if (page < 0) {
-            throw new InvalidFieldException("Page cannot be less than 0");
+
+    /**
+     * Delete multiple Recipients.
+     * <p>You should pass a {@code List<Recipient>} object to this method, where each item of the list filled only with the ID of the recipient you want to delete.
+     * <p>This method will serialize only the IDs.
+     * @param recipients a List<Recipient> representing the batches that need to be deleted.
+     * @return True if delete operation was successful
+     * @throws Exception Thrown if the delete operation wasn't successful or if any other exception occurs.
+     */
+    public boolean delete(final List<Recipient> recipients) throws Exception {
+        if (recipients == null || recipients.isEmpty()) {
+            throw new InvalidFieldException("Recipient list cannot be null or empty.");
         }
-        if (pageSize < 0) {
-            throw new InvalidFieldException("Page size cannot be less than 0");
+        final String endPoint = "/v1/recipients/";
+
+        String body = "{\"ids\" : [";
+        
+        for (int i = 0; i < recipients.size(); i++) {
+            body+=new ObjectMapper().writeValueAsString(recipients.get(i).getId());
+            if(i<(recipients.size()-1)){
+                body+=",";
+            }
         }
-        if (term == null) {
-            throw new InvalidFieldException("Message cannot be null");
+
+        body+="]}";
+        this.client.delete(endPoint, body);
+
+        return true;
+    }
+
+    /**
+     * Get all offline payments of a recipient whose recipientId is provided.
+     * This method returns an iterator which iterates through the pages automatically.
+     * If you want to paginate manually, please use {@code getAllOfflinePayments(recipientId, page, pageSize, searchTerm)} instead.
+     * @param recipientId id of the recipient whose offline payments need to be fetched
+     * @param searchTerm any search term you want to include. Please provide an empty string in case you don't want to.
+     * @return
+     * @throws Exception
+     */
+    public OfflinePaymentsIterator getAllOfflinePayments(final String recipientId, final String searchTerm) throws Exception{
+        if (recipientId == null) {
+            throw new InvalidFieldException("recipientId cannot be null.");
         }
-        final String endPoint = "/v1/recipients/?&search=" + term + "&page=" + page + "&pageSize=" + pageSize;
+        if (searchTerm == null) {
+            throw new InvalidFieldException("searchTerm cannot be null. If you don't wish to provide a searchTerm, pass a blank String.");
+        }
+
+        int pageSize = 10;
+        OfflinePayments p = getAllOfflinePayments(recipientId, 1, pageSize, searchTerm);
+        return new OfflinePaymentsIterator(this, p, searchTerm, recipientId);
+    }
+
+     public OfflinePayments getAllOfflinePayments(final String recipientId, final int page, final int pageSize, final String searchTerm) throws Exception{
+        if (recipientId == null) {
+            throw new InvalidFieldException("recipientId cannot be null.");
+        }
+        if (searchTerm == null) {
+            throw new InvalidFieldException("searchTerm cannot be null. If you don't wish to provide a searchTerm, pass a blank String.");
+        }
+
+        final String endPoint = "/v1/recipients/" + recipientId + "/offlinePayments?search=" + searchTerm + "&page=" + page + "&pageSize=" + pageSize;
+        
         final String response = this.client.get(endPoint);
-        return this.recipientListFactory(response);
+        
+        OfflinePaymentGateway opGateway = new OfflinePaymentGateway(null);
+        return opGateway.offlinePaymentListFactory(response);
+    }
+
+    /**
+     * Search for Recipients.
+     * This method returns an iterator which auto-paginate with 10 items per page.
+     * If you want to paginate manually, please use the {@code search(page, pageSize, searchTerm)} method
+     * @param searchTerm the search keyword to be searched for
+     * @return RecipientsIterator which auto paginates through all available payments 10 items per page
+     * @throws Exception
+     */
+    public RecipientsIterator search(final String searchTerm) throws Exception {
+        if (searchTerm == null) {
+            throw new InvalidFieldException("searchTerm cannot be null. If you don't wish to provide a searchTerm, pass a blank String.");
+        }
+        int pageSize = 10;
+        Recipients r = search(1, pageSize, searchTerm);
+        return new RecipientsIterator(this, r, searchTerm);
     }
     
+    /**
+     * Search for Recipients with manual pagination.
+     * @param page which page number you want to access
+     * @param pageSize number of items you want per page
+     * @param searchTerm keyword to search for
+     * @return {@code Recipients} object, containing a {@code List<Recipient>} object and a {@code Meta} object to access pagination information
+     * @throws Exception
+     */
+    public Recipients search(final int page, final int pageSize, final String searchTerm) throws Exception {
+        if (page < 0) {
+            throw new InvalidFieldException("page cannot be less than 0.");
+        }
+        if (pageSize < 0) {
+            throw new InvalidFieldException("pageSize cannot be less than 0.");
+        }
+        if (searchTerm == null) {
+            throw new InvalidFieldException("searchTerm cannot be null. If you don't wish to provide a searchTerm, pass a blank String.");
+        }
+        try{
+        final String endPoint = "/v1/recipients/?&search=" + searchTerm + "&page=" + page + "&pageSize=" + pageSize;
+        final String response = this.client.get(endPoint);
+
+        return this.recipientListFactory(response);
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     private Recipient recipientFactory(final String data) throws IOException {
         final ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -126,17 +216,22 @@ public class RecipientGateway
         return recipient;
     }
     
-    private List<Recipient> recipientListFactory(final String data) throws IOException {
+    private Recipients recipientListFactory(final String data) throws IOException {
         final ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         final JsonNode node = mapper.readTree(data);
-        final Object recipient = mapper.readValue(node.get("recipients").traverse(), (Class)Object.class);
-        final List<Recipient> recips = (List<Recipient>)recipient;
-        final List<Recipient> recipients = new ArrayList<Recipient>();
+        
+        final List<Recipient> recips = (List<Recipient>)mapper.readValue(node.get("recipients").traverse(), (Class)Object.class);
+
+        final Meta meta = (Meta)mapper.readValue(node.get("meta").traverse(), (Class)Meta.class);
+
+        final Recipients recipients = new Recipients(new ArrayList<Recipient>(), meta);
+        
         for (int i = 0; i < recips.size(); ++i) {
             final Recipient pojo = (Recipient)mapper.convertValue((Object)recips.get(i), (Class)Recipient.class);
-            recipients.add(pojo);
+            recipients.getRecipients().add(pojo);
         }
+
         return recipients;
     }
 }

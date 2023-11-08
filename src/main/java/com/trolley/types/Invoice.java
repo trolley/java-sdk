@@ -41,7 +41,7 @@ public class Invoice
         RECIPIENT_ID("recipientId"),
         INVOICE_NUMBER("invoiceNumber"),
         INVOICE_DATE("invoiceDate"),
-        EXTERNAL_ID("externalId"),
+        EXTERNAL_ID("externalIds"),
         TAGS("tags");
 
         private String key;
