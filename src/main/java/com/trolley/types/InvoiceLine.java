@@ -26,9 +26,14 @@ public class InvoiceLine
     private Amount dueAmount;
     private Amount paidAmount;
     private String externalId;
+
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private boolean taxReportable;
+
     private List<String> tags;
     private InvoiceCategories category;
+
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private boolean forceUsTaxActivity;
 
     public static enum InvoiceCategories{

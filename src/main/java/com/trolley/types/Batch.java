@@ -2,14 +2,13 @@ package com.trolley.types;
 
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.trolley.Configuration;
-import com.trolley.types.supporting.BatchSummary;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Batch
 {
     private String id;
     private String status;
+    private List<String> tags;
     private String amount;
     private Integer totalPayments;
     private String currency;
@@ -18,8 +17,8 @@ public class Batch
     private Object completedAt;
     private String createdAt;
     private String updatedAt;
-    private List<Payment> payments;
     public String quoteExpiredAt;
+    private List<Payment> payments;
     
     public String getId() {
         return this.id;
@@ -37,6 +36,14 @@ public class Batch
         this.status = status;
     }
     
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
     public String getAmount() {
         return this.amount;
     }
@@ -101,59 +108,19 @@ public class Batch
         this.updatedAt = updatedAt;
     }
     
+    public String getQuoteExpiredAt() {
+        return quoteExpiredAt;
+    }
+
+    public void setQuoteExpiredAt(String quoteExpiredAt) {
+        this.quoteExpiredAt = quoteExpiredAt;
+    }
+
     public List<Payment> getPayments() {
         return this.payments;
     }
     
     public void setPayments(final List<Payment> payments) {
         this.payments = payments;
-    }
-    
-    public static Batch find(final String batch_id) throws Exception {
-        return Configuration.gateway().batch.find(batch_id);
-    }
-    
-    public static boolean update(final String batch_id, final String body) throws Exception {
-        return Configuration.gateway().batch.update(batch_id, body);
-    }
-    
-    public static boolean delete(final String batch_id) throws Exception {
-        return Configuration.gateway().batch.delete(batch_id);
-    }
-    
-    public static Batch create(final String body) throws Exception {
-        return Configuration.gateway().batch.create(body);
-    }
-    
-    public static Batch create(final Batch body) throws Exception {
-        return Configuration.gateway().batch.create(body);
-    }
-    
-    public static String generateQuote(final String batch_id) throws Exception {
-        return Configuration.gateway().batch.generateQuote(batch_id);
-    }
-    
-    public static String processBatch(final String batch_id) throws Exception {
-        return Configuration.gateway().batch.processBatch(batch_id);
-    }
-    
-    /* public static List<Batch> query(final int page, final int pageSize, final String message) throws Exception {
-        return Configuration.gateway().batch.query(page, pageSize, message);
-    }
-    
-    public static List<Batch> query(final String message) throws Exception {
-        return query(1, 10, message);
-    }
-    
-    public static List<Batch> query() throws Exception {
-        return query(1, 10, "");
-    }
-    
-    public static List<Batch> query(final int page, final int pageNumber) throws Exception {
-        return query(page, pageNumber, "");
-    } */
-    
-    public static BatchSummary summary(final String batch_id) throws Exception {
-        return Configuration.gateway().batch.summary(batch_id);
     }
 }

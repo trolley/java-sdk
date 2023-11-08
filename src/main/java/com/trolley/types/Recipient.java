@@ -6,49 +6,57 @@ import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.trolley.Configuration;
 import com.trolley.types.supporting.Address;
 import com.trolley.types.supporting.Compliance;
+import com.trolley.types.supporting.GovernmentId;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Recipient
 {
-    String id;
-    String routeType;
-    String routeMinimum;
-    String estimatedFees;
-    String referenceId;
-    String email;
-    String name;
-    String lastName;
-    String firstName;
-    String type;
-    String taxType;
-    String status;
-    String language;
-    ComplianceStatus complianceStatus;
-    String dob;
-    String passport;
-    String updatedAt;
-    String createdAt;
-    String gravatarUrl;
-    String governmentId;
-    String ssn;
-    String primaryCurrency;
-    String placeOfBirth;
-    List<String> tags;
-    String merchantId;
-    String payoutMethod;
-    public Object payout;
-    String emailAddress;
-    List<String> contactEmails;
+    private String id;
+    private String routeType;
+    private String routeMinimum;
+    private String estimatedFees;
+    private String referenceId;
+    private String email;
+    private String name;
+    private String lastName;
+    private String firstName;
+    private String type;
+
+    @Deprecated
+    private String taxType;
+
+    private String status;
+    private String language;
+    private ComplianceStatus complianceStatus;
+    private String dob;
+    private String passport;
+    private String updatedAt;
+    private String createdAt;
+    private String gravatarUrl;
+
+    @Deprecated
+    private String governmentId;
+    
+    private List<GovernmentId> governmentIds;
+    private String ssn;
+    private String primaryCurrency;
+    private String placeOfBirth;
+    private List<String> tags;
+    private String merchantId;
+    private String payoutMethod;
+    private List<String> contactEmails;
+
+    @Deprecated
     public Object inactiveReasons;
-    Compliance compliance;
-    List<RecipientAccount> accounts;
-    Address address;
-    String taxForm;
-    String taxFormStatus;
-    String taxWithholdingPercentage;
+
+    private Compliance compliance;
+    private List<RecipientAccount> accounts;
+    private Address address;
+    private String taxForm;
+    private String taxFormStatus;
+    private String taxWithholdingPercentage;
 
     public static enum ComplianceStatus {
         REVIEW("review"),
@@ -77,10 +85,6 @@ public class Recipient
         public String toString(){
             return key.toLowerCase(Locale.US);
         }
-    }
-    
-    public Recipient() {
-        this.taxWithholdingPercentage = "0.0";
     }
     
     public String getTaxFormStatus() {
@@ -314,6 +318,14 @@ public class Recipient
     public void setGovernmentId(final String governmentId) {
         this.governmentId = governmentId;
     }
+
+    public List<GovernmentId> getGovernmentIds() {
+        return governmentIds;
+    }
+
+    public void setGovernmentIds(List<GovernmentId> governmentIds) {
+        this.governmentIds = governmentIds;
+    }
     
     public String getSsn() {
         return this.ssn;
@@ -354,45 +366,4 @@ public class Recipient
     public void setPayoutMethod(final String payoutMethod) {
         this.payoutMethod = payoutMethod;
     }
-    
-    public static Recipient find(final String recipient_id) throws Exception {
-        return Configuration.gateway().recipient.find(recipient_id);
-    }
-    
-    public static String findLogs(final String recipient_id) throws Exception {
-        final String response = Configuration.gateway().recipient.findLogs(recipient_id);
-        return response;
-    }
-    
-    public static List<Payment> findPayments(final String recipient_id) throws Exception {
-        return Configuration.gateway().recipient.findPayments(recipient_id);
-    }
-    
-    public static Recipient create(final String body) throws Exception {
-        return Configuration.gateway().recipient.create(body);
-    }
-    
-    public static boolean update(final String recipient_id, final String body) throws Exception {
-        return Configuration.gateway().recipient.update(recipient_id, body);
-    }
-    
-    public static boolean delete(final String recipient_id) throws Exception {
-        return Configuration.gateway().recipient.delete(recipient_id);
-    }
-    
-    /* public static List<Recipient> search(final int page, final int pageSize, final String term) throws Exception {
-        return Configuration.gateway().recipient.search(page, pageSize, term);
-    }
-    
-    public static List<Recipient> search(final String message) throws Exception {
-        return search(1, 10, message);
-    }
-    
-    public static List<Recipient> search() throws Exception {
-        return search(1, 10, "");
-    }
-    
-    public static List<Recipient> search(final int page, final int pageNumber) throws Exception {
-        return search(page, pageNumber, "");
-    } */
 }

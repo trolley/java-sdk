@@ -42,8 +42,10 @@ public class BatchTest {
     public void testCreate() throws Exception {
         Gateway client = new Gateway(config);
 
-        String body = "{\"sourceCurrency\": \"GBP\", \"description\":\"Integration Test Create\"}";
-        Batch batch = client.batch.create(body);
+        Batch batchRequest = new Batch();
+        batchRequest.setCurrency("GBP");
+        batchRequest.setDescription("Integration Test Create");
+        Batch batch = client.batch.create(batchRequest);
         assertEquals(batch.getCurrency(), "GBP");
 
         //Cleanup
@@ -72,12 +74,14 @@ public class BatchTest {
     public void testUpdate() throws Exception {
         Gateway client = new Gateway(config);
 
-        String body = "{\"sourceCurrency\": \"GBP\", \"description\":\"Integration Test Create\"}";
-        Batch batch = client.batch.create(body);
+        Batch batchRequest = new Batch();
+        batchRequest.setCurrency("GBP");
+        batchRequest.setDescription("Integration Test Create");
+        Batch batch = client.batch.create(batchRequest);
         assertEquals(batch.getCurrency(), "GBP");
 
-        body = "{\"description\" : \"Integration Update\"}";
-        boolean response = client.batch.update(batch.getId(), body);
+        batchRequest.setDescription("Integration Update");
+        boolean response = client.batch.update(batch.getId(), batchRequest);
         assertNotNull(response);
 
         Batch batch1 = client.batch.find(batch.getId());
@@ -93,13 +97,13 @@ public class BatchTest {
         Gateway client = new Gateway(config);
 
         Recipient recipientAlpha = testHelper.createRecipient();
+
+        List<Payment> paymentList = new ArrayList<Payment>();
         Payment payment = new Payment();
 
         payment.setAmount("15");
         payment.setCurrency("USD");
         payment.setRecipient(recipientAlpha);
-
-        List<Payment> paymentList = new ArrayList<Payment>();
         paymentList.add(payment);
 
         Batch batchToCreate = new Batch();
@@ -131,17 +135,26 @@ public class BatchTest {
     public void testPayments() throws Exception {
         Gateway client = new Gateway(config);
 
-        String body = "{\"sourceCurrency\": \"GBP\", \"description\":\"Integration Test Create\"}";
-        Batch batch = client.batch.create(body);
+        Batch batchRequest = new Batch();
+        batchRequest.setCurrency("GBP");
+        batchRequest.setDescription("Integration Test Create");
+        Batch batch = client.batch.create(batchRequest);
         assertEquals(batch.getCurrency(), "GBP");
 
         Recipient recipient = testHelper.createRecipient();
-        body = "{\"sourceAmount\":\"10.00\", \"recipient\": {\"id\": " + "\"" + recipient.getId() + "\"" + "}}";
-        Payment payment = client.payment.create(body, batch.getId());
+
+        Payment paymentRequest = new Payment();
+        Recipient recipientRequest = new Recipient();
+        recipientRequest.setId(recipient.getId());
+        paymentRequest.setSourceAmount("10.00");
+        paymentRequest.setRecipient(recipientRequest);
+        Payment payment = client.payment.create(paymentRequest, batch.getId());
         assertNotNull(payment);
         assertNotNull(payment.getId());
-        body = "{\"sourceAmount\":\"20.00\"}";
-        boolean response = client.payment.update(payment.getId(), body, batch.getId());
+
+        Payment paymentUpdateRequest = new Payment();
+        paymentUpdateRequest.setSourceAmount("20.00");
+        boolean response = client.payment.update(payment.getId(), paymentUpdateRequest, batch.getId());
         assertNotNull(response);
 
         response = client.payment.delete(payment.getId(), batch.getId());
@@ -161,10 +174,19 @@ public class BatchTest {
 
         Recipient recipientAlpha = testHelper.createRecipient();
 
-        String body = "{\"payments\": [{\"recipient\": {\"id\": " + "\"" + recipientAlpha.getId() + "\""
-                + "},\"amount\": \"10.00\", \"currency\": \"EUR\"}]}";
+        Batch batchRequest = new Batch();
+        Payment paymentRequest = new Payment();
+        Recipient paymentRecipient = new Recipient();
+        paymentRecipient.setId(recipientAlpha.getId());
+        paymentRequest.setRecipient(paymentRecipient);
+        paymentRequest.setAmount("10.00");
+        paymentRequest.setCurrency("EUR");
 
-        Batch batch = client.batch.create(body);
+        ArrayList<Payment> payments = new ArrayList<Payment>();
+        payments.add(paymentRequest);
+        batchRequest.setPayments(payments);
+
+        Batch batch = client.batch.create(batchRequest);
         assertNotNull(batch);
         assertNotNull(batch.getId());
 
@@ -197,7 +219,7 @@ public class BatchTest {
         Gateway client = new Gateway(config);
 
         //Testing Payments pagination - with Iterator
-        String batchId = "<batch-id>";
+        String batchId = "B-XVDCobCkEj4XL6SM3Pz6W7";
         PaymentsIterator payments = client.payment.search(batchId, "");
 
         int itemCount = 0;
@@ -229,5 +251,27 @@ public class BatchTest {
         //Testing Batches pagination - with manual pagination
         Batches b = client.batch.search(1, 10, "");
         assertNotNull(b.getBatches().get(0).getId());
+    }
+
+    @Test
+    public void testMultipleDelete() throws Exception{
+        Gateway client = new Gateway(config);
+
+        Batch batchRequest1 = new Batch();
+        batchRequest1.setCurrency("GBP");
+        batchRequest1.setDescription("Integration Test Create First Batch");
+        Batch batch1 = client.batch.create(batchRequest1);
+
+        Batch batchRequest2 = new Batch();
+        batchRequest1.setCurrency("USD");
+        batchRequest1.setDescription("Integration Test Create Second Batch");
+        Batch batch2 = client.batch.create(batchRequest2);
+
+        ArrayList<Batch> multipleDelReq = new ArrayList<Batch>();
+        multipleDelReq.add(batch1);
+        multipleDelReq.add(batch2);
+        boolean delResult = client.batch.delete(multipleDelReq);
+
+        assertTrue(delResult);
     }
 }
