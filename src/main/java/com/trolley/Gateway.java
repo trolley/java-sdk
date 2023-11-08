@@ -9,6 +9,7 @@ public class Gateway
     public RecipientAccountGateway recipientAccount;
     public BalancesGateway balances;
     public PaymentGateway payment;
+    public OfflinePaymentGateway offlinePayment;
     public InvoiceGateway invoice;
     public InvoiceLineGateway invoiceLine;
     public InvoicePaymentGateway invoicePayment;
@@ -21,6 +22,7 @@ public class Gateway
         this.recipientAccount = new RecipientAccountGateway(config);
         this.balances = new BalancesGateway(config);
         this.payment = new PaymentGateway(config);
+        this.offlinePayment = new OfflinePaymentGateway(config);
         this.invoice = new InvoiceGateway(config);
         this.invoiceLine = new InvoiceLineGateway(config);
         this.invoicePayment = new InvoicePaymentGateway(config);

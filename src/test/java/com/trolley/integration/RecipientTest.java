@@ -12,6 +12,7 @@ import com.trolley.Configuration;
 import com.trolley.Gateway;
 import com.trolley.types.Recipient;
 import com.trolley.types.RecipientAccount;
+import com.trolley.types.supporting.OfflinePaymentsIterator;
 import com.trolley.types.supporting.Recipients;
 import com.trolley.types.supporting.RecipientsIterator;
 
@@ -144,6 +145,23 @@ public class RecipientTest {
         while(recipients.hasNext()) {
             itemCount++;
             assertNotNull(recipients.next().getId());
+        }
+
+        assertTrue(itemCount>0);
+    }
+
+    @Test
+    public void testRecipientOfflinePayment() throws Exception{
+        Gateway client = new Gateway(config);
+
+        String recipientId = "R-4QoXiSPjbnLuUmQR2bgb8C";
+
+        OfflinePaymentsIterator offlinePayments = client.recipient.getAllOfflinePayments(recipientId, "");
+
+        int itemCount = 0;
+        while(offlinePayments.hasNext()) {
+            itemCount++;
+            assertNotNull(offlinePayments.next().getId());
         }
 
         assertTrue(itemCount>0);
