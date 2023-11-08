@@ -1,36 +1,36 @@
-
 package com.trolley.types;
 
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.trolley.Configuration;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RecipientAccount
 {
-    String type;
-    Boolean primary;
-    String currency;
-    String id;
-    String recipientId;
-    String recipientAccountId;
-    String routeType;
-    String recipientFees;
-    String country;
-    String iban;
-    String accountNum;
-    String accountHolderName;
-    String swiftBic;
-    String branchId;
-    String bankId;
-    String bankName;
-    String bankAddress;
-    String bankCity;
-    String bankRegionCode;
-    String bankPostalCode;
-    String emailAddress;
-    String status;
-    String disabledAt;
+    private String type;
+    
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    private boolean primary;
+
+    private String currency;
+    private String id;
+    private String recipientId;
+    private String recipientAccountId;
+    private String routeType;
+    private String recipientFees;
+    private String country;
+    private String iban;
+    private String accountNum;
+    private String accountHolderName;
+    private String swiftBic;
+    private String branchId;
+    private String bankId;
+    private String bankName;
+    private String bankAddress;
+    private String bankCity;
+    private String bankRegionCode;
+    private String bankPostalCode;
+    private String emailAddress;
+    private String status;
+    private String disabledAt;
     
     public String getEmailAddress() {
         return this.emailAddress;
@@ -72,11 +72,11 @@ public class RecipientAccount
         this.type = type;
     }
     
-    public Boolean getPrimary() {
+    public boolean getPrimary() {
         return this.primary;
     }
     
-    public void setPrimary(final Boolean primary) {
+    public void setPrimary(final boolean primary) {
         this.primary = primary;
     }
     
@@ -216,23 +216,4 @@ public class RecipientAccount
         this.bankPostalCode = bankPostalCode;
     }
     
-    public static List<RecipientAccount> findAll(final String recipient_id) throws Exception {
-        return Configuration.gateway().recipientAccount.findAll(recipient_id);
-    }
-    
-    public static RecipientAccount find(final String recipient_id, final String recipient_account_id) throws Exception {
-        return Configuration.gateway().recipientAccount.find(recipient_id, recipient_account_id);
-    }
-    
-    public static RecipientAccount create(final String recipient_id, final String body) throws Exception {
-        return Configuration.gateway().recipientAccount.create(recipient_id, body);
-    }
-    
-    public static RecipientAccount update(final String recipient_id, final String recipient_account_id, final String body) throws Exception {
-        return Configuration.gateway().recipientAccount.update(recipient_id, recipient_account_id, body);
-    }
-    
-    public static boolean delete(final String recipient_id, final String recipient_account_id) throws Exception {
-        return Configuration.gateway().recipientAccount.delete(recipient_id, recipient_account_id);
-    }
 }
