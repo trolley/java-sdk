@@ -12,6 +12,8 @@ import com.trolley.Configuration;
 import com.trolley.Gateway;
 import com.trolley.types.Recipient;
 import com.trolley.types.RecipientAccount;
+import com.trolley.types.supporting.Logs;
+import com.trolley.types.supporting.LogsIterator;
 import com.trolley.types.supporting.OfflinePaymentsIterator;
 import com.trolley.types.supporting.Recipients;
 import com.trolley.types.supporting.RecipientsIterator;
@@ -128,7 +130,7 @@ public class RecipientTest {
         //Making sure routeMinimum is not null before asserting it's value
         for (Recipient recipient : recipients.getRecipients()) {
             if(null != recipient.getRouteMinimum()){
-                //Making sure routeMinium is set to a non-null value
+                //Making sure routeMinimum is set to a non-null value
                 assertTrue(Integer.parseInt(recipient.getRouteMinimum()) >= 0);
                 break;
             }
@@ -154,7 +156,7 @@ public class RecipientTest {
     public void testRecipientOfflinePayment() throws Exception{
         Gateway client = new Gateway(config);
 
-        String recipientId = "R-4QoXiSPjbnLuUmQR2bgb8C";
+        String recipientId = testHelper.getRecipientId();
 
         OfflinePaymentsIterator offlinePayments = client.recipient.getAllOfflinePayments(recipientId, "");
 
@@ -162,6 +164,25 @@ public class RecipientTest {
         while(offlinePayments.hasNext()) {
             itemCount++;
             assertNotNull(offlinePayments.next().getId());
+        }
+
+        assertTrue(itemCount>0);
+    }
+
+    @Test
+    public void testRecipientLogs() throws Exception{
+        Gateway client = new Gateway(config);
+
+        String recipientId = testHelper.getRecipientId();
+
+        Logs logs = client.recipient.getAllLogs(recipientId, 1, 10);
+        assertTrue(logs.getLogs().size() > 0);
+        LogsIterator l = client.recipient.getAllLogs(recipientId);
+
+        int itemCount = 0;
+        while(l.hasNext()) {
+            itemCount++;
+            assertNotNull(l.next().getVia());
         }
 
         assertTrue(itemCount>0);

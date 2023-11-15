@@ -10,8 +10,11 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import com.trolley.Exceptions.InvalidFieldException;
+import com.trolley.types.Log;
 import com.trolley.types.Payment;
 import com.trolley.types.Recipient;
+import com.trolley.types.supporting.Logs;
+import com.trolley.types.supporting.LogsIterator;
 import com.trolley.types.supporting.Meta;
 import com.trolley.types.supporting.OfflinePayments;
 import com.trolley.types.supporting.OfflinePaymentsIterator;
@@ -26,6 +29,12 @@ public class RecipientGateway
         this.client = new Client(config);
     }
     
+    /**
+     * Fetch a recipient by id.
+     * @param recipientId
+     * @return
+     * @throws Exception
+     */
     public Recipient find(final String recipientId) throws Exception {
         if (recipientId == null || recipientId.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
@@ -35,12 +44,46 @@ public class RecipientGateway
         return this.recipientFactory(response);
     }
     
-    public String findLogs(final String recipientId) throws Exception {
-        final String endPoint = "/v1/recipients/" + recipientId + "/logs";
+    /**
+     * Get all logs of the recipient, with manual pagination
+     * @param recipientId
+     * @param page
+     * @param pageSize
+     * @return {@code Logs} object, containing a {@code List<Log>} and a {@code Meta} object
+     * @throws Exception
+     */
+    public Logs getAllLogs(final String recipientId, final int page, final int pageSize) throws Exception {
+        if (recipientId == null) {
+            throw new InvalidFieldException("recipientId cannot be null.");
+        }
+
+        final String endPoint = "/v1/recipients/" + recipientId + "/logs?page="+page+"&pageSize="+pageSize;
         final String response = this.client.get(endPoint);
-        return response;
+        return logListFactory(response);
+    }
+
+    /**
+     * Get all logs of the recipient, with auto-pagination and 10 items per page.
+     * @param recipientId
+     * @return {@code LogsIterator} object, containing a {@code List<Log>} and a {@code Meta} object, to iterate over all the pages automatically.
+     * @throws Exception
+     */
+    public LogsIterator getAllLogs(final String recipientId) throws Exception {
+        if (recipientId == null) {
+            throw new InvalidFieldException("recipientId cannot be null.");
+        }
+
+        int pageSize = 10;
+        Logs p = getAllLogs(recipientId, 1, pageSize);
+        return new LogsIterator(this, p, recipientId);
     }
     
+    /**
+     * Get all payments of the recipient, whose id is provided.
+     * @param recipientId
+     * @return
+     * @throws Exception
+     */
     public List<Payment> findPayments(final String recipientId) throws Exception {
         if (recipientId == null || recipientId.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
@@ -216,6 +259,25 @@ public class RecipientGateway
         return recipient;
     }
     
+    private Logs logListFactory(final String data) throws IOException {
+        final ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        final JsonNode node = mapper.readTree(data);
+        
+        final List<Log> logsFromResponse = (List<Log>)mapper.readValue(node.get("recipientLogs").traverse(), (Class)Object.class);
+
+        final Meta meta = (Meta)mapper.readValue(node.get("meta").traverse(), (Class)Meta.class);
+
+        final Logs logs = new Logs(new ArrayList<Log>(), meta);
+        
+        for (int i = 0; i < logsFromResponse.size(); ++i) {
+            final Log pojo = (Log)mapper.convertValue((Object)logsFromResponse.get(i), (Class)Log.class);
+            logs.getLogs().add(pojo);
+        }
+
+        return logs;
+    }
+
     private Recipients recipientListFactory(final String data) throws IOException {
         final ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
