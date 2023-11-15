@@ -14,6 +14,13 @@ import io.github.cdimascio.dotenv.Dotenv;
 
 public class TestHelper {
 
+    private String recipientId = "";
+    Dotenv dotenv = Dotenv.load();
+
+    public TestHelper() {
+        recipientId = dotenv.get("RECIPIENT_ID");
+    }
+
     public static Configuration getConfig(){
         Dotenv dotenv = Dotenv.load();
 
@@ -21,6 +28,14 @@ public class TestHelper {
             dotenv.get("ACCESS_KEY"), 
             dotenv.get("SECRET_KEY"));
 
+    }
+
+    public String getRecipientId() {
+        return recipientId;
+    }
+
+    public void setRecipientId(String recipientId) {
+        this.recipientId = recipientId;
     }
 
     /**
