@@ -16,6 +16,7 @@ import com.trolley.types.InvoicePayment;
 import com.trolley.types.Invoices;
 import com.trolley.types.Recipient;
 import com.trolley.types.supporting.Amount;
+import com.trolley.types.supporting.InvoicePaymentFields;
 import com.trolley.types.supporting.InvoicePaymentPart;
 import com.trolley.types.supporting.InvoicePaymentsIterator;
 import com.trolley.types.supporting.InvoicesIterator;
@@ -255,7 +256,17 @@ public class InvoiceTests {
         paymentPart.setInvoiceLineId(invoice.getLines().get(0).getId());
         paymentPart.setAmount(new Amount("50", "USD"));
 
-        InvoicePayment invoicePayment = client.invoicePayment.create(null, paymentPart);
+        ArrayList<String> tags = new ArrayList<String>();
+        tags.add("tag1");
+        tags.add("tag2");
+
+        InvoicePaymentFields paymentFields = new InvoicePaymentFields(
+            false,
+            "Integration Test Payment",
+            "ext-id-"+System.currentTimeMillis(),
+            tags);       
+
+        InvoicePayment invoicePayment = client.invoicePayment.create(null, paymentPart, paymentFields);
 
         assertTrue(invoicePayment.getInvoicePayments().size()>0);
 

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trolley.Exceptions.InvalidFieldException;
 import com.trolley.types.InvoicePayment;
+import com.trolley.types.supporting.InvoicePaymentFields;
 import com.trolley.types.supporting.InvoicePaymentPart;
 import com.trolley.types.supporting.InvoicePayments;
 import com.trolley.types.supporting.InvoicePaymentsIterator;
@@ -42,6 +43,66 @@ public class InvoicePaymentGateway
         }else{
             body = "{";
         }
+        ArrayList<InvoicePaymentPart> invoicePaymentParts = new ArrayList<InvoicePaymentPart>() {
+            {
+                add(payment);
+            }
+        };
+
+        body+= "\"ids\":" +new ObjectMapper()
+                            .setSerializationInclusion(Include.NON_EMPTY)
+                            .writeValueAsString(invoicePaymentParts)
+                +"}";
+        final String response = this.client.post(endPoint, body);
+        return InvoicePayment.invoicePaymentFactory(response);
+    }
+
+    /**
+     * Create a payment against an invoice, with payment fields.
+     * <p>
+     * NOTE: If you provide a batch id, this method will try to add the payment to it. If you provide a 
+     * {@code null} or blank ({@code ""}) batch id, a new batch will be created.
+     *
+     * 
+     * @param batchId (Optional) Id of the batch you want to add these payments too.
+     * @param payment InvoicePaymentPart object representing the Invoice payment that needs to be created
+     * * @param paymentFields InvoicePaymentFields object representing the payment fields that needs to be added to the created payment.
+     * @return InvoicePayment object of representing the created payment for the Invoice
+     * @throws Exception
+     */
+    public InvoicePayment create(final String batchId, final InvoicePaymentPart payment, final InvoicePaymentFields paymentFields) throws Exception {
+        final String endPoint = "/v1/invoices/payment/create/";
+
+        String body = "";
+
+        if(null != batchId && !batchId.isEmpty()){
+            body = "{ \"batchId\": \"" + batchId + "\",";
+        }else{
+            body = "{";
+        }
+
+        if(null != paymentFields){
+            if(null != paymentFields.getExternalId() && !paymentFields.getExternalId().isEmpty()){
+                body+= "\"externalId\": \"" + paymentFields.getExternalId() + "\",";
+            }
+    
+            if(null != paymentFields.getMemo() && !paymentFields.getMemo().isEmpty()){
+                body+= "\"memo\": \"" + paymentFields.getMemo() + "\",";
+            }
+    
+            if(paymentFields.shouldCoverFees()){
+                body+= "\"coverFees\": " + paymentFields.shouldCoverFees() + ",";
+            }else{
+                body+= "\"coverFees\": false,";
+            }
+    
+            if(null != paymentFields.getTags() && paymentFields.getTags().size() > 0){
+                body+= "\"tags\":" + new ObjectMapper()
+                .setSerializationInclusion(Include.NON_EMPTY)
+                .writeValueAsString(paymentFields.getTags())+",";
+            }
+        }
+
         ArrayList<InvoicePaymentPart> invoicePaymentParts = new ArrayList<InvoicePaymentPart>() {
             {
                 add(payment);
