@@ -16,7 +16,7 @@ import com.trolley.types.InvoicePayment;
 import com.trolley.types.Invoices;
 import com.trolley.types.Recipient;
 import com.trolley.types.supporting.Amount;
-import com.trolley.types.supporting.InvoicePaymentFields;
+import com.trolley.types.supporting.InvoicePaymentRequest;
 import com.trolley.types.supporting.InvoicePaymentPart;
 import com.trolley.types.supporting.InvoicePaymentsIterator;
 import com.trolley.types.supporting.InvoicesIterator;
@@ -248,6 +248,7 @@ public class InvoiceTests {
             null, 
             null, 
             invoiceLines));
+
         assertEquals(invoice.getRecipientId(), recipient.getId());
         
         //Create a new Invoice Payment
@@ -256,17 +257,17 @@ public class InvoiceTests {
         paymentPart.setInvoiceLineId(invoice.getLines().get(0).getId());
         paymentPart.setAmount(new Amount("50", "USD"));
 
-        ArrayList<String> tags = new ArrayList<String>();
-        tags.add("tag1");
-        tags.add("tag2");
+        String[] tags = {"tag1", "tag2"};
 
-        InvoicePaymentFields paymentFields = new InvoicePaymentFields(
+        InvoicePaymentRequest invoicePaymentRequest = new InvoicePaymentRequest(
+            null,
             false,
             "Integration Test Payment",
             "ext-id-"+System.currentTimeMillis(),
-            tags);       
+            tags,
+            paymentPart);       
 
-        InvoicePayment invoicePayment = client.invoicePayment.create(null, paymentPart, paymentFields);
+        InvoicePayment invoicePayment = client.invoicePayment.create(invoicePaymentRequest);
 
         assertTrue(invoicePayment.getInvoicePayments().size()>0);
 
@@ -276,6 +277,8 @@ public class InvoiceTests {
         paymentPart.setInvoiceLineId(invoice.getLines().get(0).getId());
         paymentPart.setPaymentId(invoicePayment.getPaymentId());
         paymentPart.setAmount(new Amount("10","USD"));
+        paymentPart.setExternalId("ext-id-"+System.currentTimeMillis());
+        paymentPart.setCoverFees(true);
 
         boolean paymentUpdateResult = client.invoicePayment.update(paymentPart);
         assertTrue(paymentUpdateResult);

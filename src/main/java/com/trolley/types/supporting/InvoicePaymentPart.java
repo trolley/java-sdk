@@ -12,7 +12,7 @@ public class InvoicePaymentPart{
     private boolean coverFees;
     private String memo;
     private String externalId;
-    private ArrayList<String> tags;
+    private String[] tags;
     
     public InvoicePaymentPart() {
     }
@@ -22,6 +22,21 @@ public class InvoicePaymentPart{
         this.invoiceLineId = invoiceLineId;
         this.paymentId = paymentId;
         this.amount = amount;
+    }
+
+    /**
+     * IMPORTANT: Use as request only while updating an InvoicePayment. For "Create Invoice Payment" request, use {@link InvoicePaymentRequest#InvoicePaymentRequest(String, boolean, String, String, String[], InvoicePaymentPart) InvoicePaymentRequest}.
+     */
+    public InvoicePaymentPart(String invoiceId, String invoiceLineId, String paymentId, Amount amount,
+            boolean coverFees, String memo, String externalId, String[] tags) {
+        this.invoiceId = invoiceId;
+        this.invoiceLineId = invoiceLineId;
+        this.paymentId = paymentId;
+        this.amount = amount;
+        this.coverFees = coverFees;
+        this.memo = memo;
+        this.externalId = externalId;
+        this.tags = tags;
     }
 
     public String getInvoiceId() {
@@ -60,7 +75,11 @@ public class InvoicePaymentPart{
         return coverFees;
     }
 
-    private void coverFees(boolean coverFees) {
+    /**
+     * IMPORTANT: Use as request only while updating an InvoicePayment
+     * @param coverFees
+     */
+    public void setCoverFees(boolean coverFees) {
         this.coverFees = coverFees;
     }
 
@@ -68,7 +87,11 @@ public class InvoicePaymentPart{
         return memo;
     }
 
-    private void setMemo(String memo) {
+    /**
+     * IMPORTANT: Use as request only while updating an InvoicePayment
+     * @param memo
+     */
+    public void setMemo(String memo) {
         this.memo = memo;
     }
 
@@ -76,17 +99,23 @@ public class InvoicePaymentPart{
         return externalId;
     }
 
-    private void setExternalId(String externalId) {
+    /**
+     * IMPORTANT: Use as request only while updating an InvoicePayment
+     * @param externalId
+     */
+    public void setExternalId(String externalId) {
         this.externalId = externalId;
     }
 
-    public ArrayList<String> getTags() {
+    public String[] getTags() {
         return tags;
     }
 
-    private void setTags(ArrayList<String> tags) {
+    /**
+     * IMPORTANT: Use as request only while updating an InvoicePayment
+     * @param tags
+     */
+    public void setTags(String[] tags) {
         this.tags = tags;
     }
-
-    
 }
