@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trolley.Exceptions.InvalidFieldException;
 import com.trolley.types.InvoicePayment;
+import com.trolley.types.supporting.InvoicePaymentRequest;
 import com.trolley.types.supporting.InvoicePaymentPart;
 import com.trolley.types.supporting.InvoicePayments;
 import com.trolley.types.supporting.InvoicePaymentsIterator;
@@ -26,12 +27,14 @@ public class InvoicePaymentGateway
      * NOTE: If you provide a batch id, this method will try to add the payment to it. If you provide a 
      * {@code null} or blank ({@code ""}) batch id, a new batch will be created.
      *
+     * @deprecated As of v2.0.1, this method is deprecated to support improvements to Create InvoicePayment API. Use {@link InvoicePaymentGateway#create(InvoicePaymentRequest) create(InvoicePaymentRequest)} instead.
      * 
      * @param batchId (Optional) Id of the batch you want to add these payments too.
      * @param payment InvoicePaymentPart object representing the Invoice payment that needs to be created
      * @return InvoicePayment object of representing the created payment for the Invoice
      * @throws Exception
      */
+    @Deprecated
     public InvoicePayment create(final String batchId, final InvoicePaymentPart payment) throws Exception {
         final String endPoint = "/v1/invoices/payment/create/";
 
@@ -62,11 +65,14 @@ public class InvoicePaymentGateway
      * NOTE: If you provide a batch id, this method will try to add the payment to it. If you provide a 
      * {@code null} or blank ({@code ""}) batch id, a new batch will be created. 
      * 
+     * @deprecated As of v2.0.1, this method is deprecated to support improvements to Create InvoicePayment API. Use {@link InvoicePaymentGateway#create(InvoicePaymentRequest) create(InvoicePaymentRequest)} instead.
+     * 
      * @param batchId (Optional) Id of the batch you want to add these payments too.
      * @param invoicePaymentParts A List of InvoicePaymentPart objects representing the Invoice payments that need to be created.
      * @return InvoicePayment object of representing the created payment for the Invoice
      * @throws Exception
      */
+    @Deprecated
     public InvoicePayment create(final String batchId, final List<InvoicePaymentPart> invoicePaymentParts) throws Exception {
         final String endPoint = "/v1/invoices/payment/create/";
 
@@ -82,6 +88,27 @@ public class InvoicePaymentGateway
                             .setSerializationInclusion(Include.NON_EMPTY)
                             .writeValueAsString(invoicePaymentParts)
                 +"}";
+        final String response = this.client.post(endPoint, body);
+        return InvoicePayment.invoicePaymentFactory(response);
+    }
+    
+    /**
+     * Create a payment against an invoice, with payment fields.
+     * <p>
+     * NOTE: If you provide a batch id, this method will try to add the payment to it. If you provide a 
+     * {@code null} or blank ({@code ""}) batch id, a new batch will be created.
+     *
+     * @param invoicePaymentRequest {@code InvoicePaymentRequest} object representing the InvoicePayment request, with payment fields that needs to be added to the created payment.
+     * @return InvoicePayment object of representing the created payment for the Invoice
+     * @throws Exception
+     */
+    public InvoicePayment create(final InvoicePaymentRequest invoicePaymentRequest) throws Exception {
+        final String endPoint = "/v1/invoices/payment/create/";
+
+        String body= new ObjectMapper()
+                    .setSerializationInclusion(Include.NON_EMPTY)
+                    .writeValueAsString(invoicePaymentRequest);
+
         final String response = this.client.post(endPoint, body);
         return InvoicePayment.invoicePaymentFactory(response);
     }
