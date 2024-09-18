@@ -141,7 +141,7 @@ public class RecipientGateway
      * Delete multiple Recipients.
      * <p>You should pass a {@code List<Recipient>} object to this method, where each item of the list filled only with the ID of the recipient you want to delete.
      * <p>This method will serialize only the IDs.
-     * @param recipients a List<Recipient> representing the batches that need to be deleted.
+     * @param recipients a {@code List<Recipient>} representing the batches that need to be deleted.
      * @return True if delete operation was successful
      * @throws Exception Thrown if the delete operation wasn't successful or if any other exception occurs.
      */

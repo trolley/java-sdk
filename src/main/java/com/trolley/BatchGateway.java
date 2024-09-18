@@ -57,7 +57,7 @@ public class BatchGateway
      * Delete multiple batches.
      * <p>You should pass a {@code List<Batch>} object to this method, with each item of the list filled with the ID of the batch you want to delete.
      * <p>This method will serialize only the IDs.
-     * @param batches a List<Batch> representing the batches that need to be deleted.
+     * @param batches a {@code List<Batch>} representing the batches that need to be deleted.
      * @return True if delete operation was successful
      * @throws Exception Thrown if the delete operation wasn't successful or if any other exception occurs.
      */
