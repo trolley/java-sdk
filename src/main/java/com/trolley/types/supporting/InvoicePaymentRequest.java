@@ -1,7 +1,5 @@
 package com.trolley.types.supporting;
 
-import java.util.ArrayList;
-
 /**
  * Used while creating a new InvoicePayment request
  */
@@ -42,7 +40,7 @@ public class InvoicePaymentRequest{
      * @param memo A recipient viewable Memo that you'd want the created payment to have.
      * @param externalId A unique External ID that you'd want to assign to the created payment.
      * @param tags A {@code String[]} array where each element is a merchant-viewable tag that you want to assign to the created payment.
-     * @param ids An {@code InvoicePaymentPart[]} array representing InvoicePaymentPart objects containing IDs and Amounts of Invoices and InvoiceLines you want to create payments for.
+     * @param paymentPart An {@code InvoicePaymentPart[]} array representing InvoicePaymentPart objects containing IDs and Amounts of Invoices and InvoiceLines you want to create payments for.
      */
     public InvoicePaymentRequest(String batchId, boolean coverFees, String memo, String externalId,
             String[] tags, InvoicePaymentPart paymentPart) {
@@ -98,7 +96,7 @@ public class InvoicePaymentRequest{
         return ids;
     }
 
-    public void setIds(InvoicePaymentPart[] ids) {
-        this.ids = ids;
+    public void setIds(InvoicePaymentPart[] paymentParts) {
+        this.ids = paymentParts;
     }
 }

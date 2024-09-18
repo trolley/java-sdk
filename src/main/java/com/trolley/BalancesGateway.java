@@ -19,7 +19,7 @@ public class BalancesGateway
     
     /**
      * Get balances of all paypal accounts
-     * @return List<Balance>
+     * @return {@code List<Balance>}
      * @throws Exception
      */
     public List<Balances> getPaypalAccountBalances() throws Exception{
@@ -28,7 +28,7 @@ public class BalancesGateway
 
     /**
      * Get balances of all paymentrails/Trolley accounts
-     * @return List<Balance>
+     * @return {@code List<Balance>}
      * @throws Exception
      */
     public List<Balances> getTrolleyAccountBalances() throws Exception{
@@ -37,7 +37,7 @@ public class BalancesGateway
 
     /**
      * Get balances of all accounts you hold with Trolley
-     * @return List<Balance>
+     * @return {@code List<Balance>}
      * @throws Exception
      */
     public List<Balances> getAllBalances() throws Exception{
