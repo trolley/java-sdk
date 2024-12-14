@@ -5,7 +5,7 @@ package com.trolley.types.supporting;
  */
 public class InvoicePaymentRequest{
     private String batchId;
-    private boolean coverFees;
+    private Boolean coverFees;
     private String memo;
     private String externalId;
     private String[] tags;
@@ -23,7 +23,7 @@ public class InvoicePaymentRequest{
      * @param tags A {@code String[]} array where each element is a merchant-viewable tag that you want to assign to the created payment.
      * @param ids An {@code InvoicePaymentPart[]} array representing InvoicePaymentPart objects containing IDs and Amounts of Invoices and InvoiceLines you want to create payments for.
      */
-    public InvoicePaymentRequest(String batchId, boolean coverFees, String memo, String externalId,
+    public InvoicePaymentRequest(String batchId, Boolean coverFees, String memo, String externalId,
             String[] tags, InvoicePaymentPart[] ids) {
         this.batchId = batchId;
         this.coverFees = coverFees;
@@ -42,7 +42,7 @@ public class InvoicePaymentRequest{
      * @param tags A {@code String[]} array where each element is a merchant-viewable tag that you want to assign to the created payment.
      * @param paymentPart An {@code InvoicePaymentPart[]} array representing InvoicePaymentPart objects containing IDs and Amounts of Invoices and InvoiceLines you want to create payments for.
      */
-    public InvoicePaymentRequest(String batchId, boolean coverFees, String memo, String externalId,
+    public InvoicePaymentRequest(String batchId, Boolean coverFees, String memo, String externalId,
             String[] tags, InvoicePaymentPart paymentPart) {
         this.batchId = batchId;
         this.coverFees = coverFees;
@@ -60,11 +60,11 @@ public class InvoicePaymentRequest{
         this.batchId = batchId;
     }
 
-    public boolean shouldCoverFees() {
+    public Boolean shouldCoverFees() {
         return coverFees;
     }
 
-    public void setCoverFees(boolean coverFees) {
+    public void setCoverFees(Boolean coverFees) {
         this.coverFees = coverFees;
     }
 
