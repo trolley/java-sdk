@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.trolley</groupId>
     <artifactId>java-sdk</artifactId>
-    <version>2.0.1</version>
+    <version>2.1.1</version>
     <description>Java SDK for Trolley API</description>
     <packaging>jar</packaging>
     <name>Trolley Java SDK</name>
