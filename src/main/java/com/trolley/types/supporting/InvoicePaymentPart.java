@@ -1,7 +1,5 @@
 package com.trolley.types.supporting;
 
-import java.util.ArrayList;
-
 public class InvoicePaymentPart{
     private String invoiceId;
     private String invoiceLineId;
@@ -9,7 +7,7 @@ public class InvoicePaymentPart{
     private Amount amount;
 
     //These fields are to hold values from parsed JSON, not for request body
-    private boolean coverFees;
+    private Boolean coverFees;
     private String memo;
     private String externalId;
     private String[] tags;
@@ -28,7 +26,7 @@ public class InvoicePaymentPart{
      * IMPORTANT: Use as request only while updating an InvoicePayment. For "Create Invoice Payment" request, use {@link InvoicePaymentRequest#InvoicePaymentRequest(String, boolean, String, String, String[], InvoicePaymentPart) InvoicePaymentRequest}.
      */
     public InvoicePaymentPart(String invoiceId, String invoiceLineId, String paymentId, Amount amount,
-            boolean coverFees, String memo, String externalId, String[] tags) {
+            Boolean coverFees, String memo, String externalId, String[] tags) {
         this.invoiceId = invoiceId;
         this.invoiceLineId = invoiceLineId;
         this.paymentId = paymentId;
@@ -71,7 +69,7 @@ public class InvoicePaymentPart{
         this.amount = amount;
     }
 
-    public boolean shouldCoverFees() {
+    public Boolean shouldCoverFees() {
         return coverFees;
     }
 

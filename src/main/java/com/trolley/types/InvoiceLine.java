@@ -27,14 +27,12 @@ public class InvoiceLine
     private Amount paidAmount;
     private String externalId;
 
-    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-    private boolean taxReportable;
+    private Boolean taxReportable;
 
     private List<String> tags;
     private InvoiceCategories category;
 
-    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-    private boolean forceUsTaxActivity;
+    private Boolean forceUsTaxActivity;
 
     public static enum InvoiceCategories{
         SERVICES("services"),
@@ -89,8 +87,8 @@ public class InvoiceLine
         InvoiceCategories category,
         String description, 
         String externalId,
-        boolean taxReportable, 
-        boolean forceUsTaxActivity,
+        Boolean taxReportable, 
+        Boolean forceUsTaxActivity,
         List<String> tags,
         String quantity,
         Amount discountAmount, 
@@ -223,11 +221,11 @@ public class InvoiceLine
         this.externalId = externalId;
     }
 
-    public boolean isTaxReportable() {
+    public Boolean isTaxReportable() {
         return taxReportable;
     }
 
-    public void setTaxReportable(boolean taxReportable) {
+    public void setTaxReportable(Boolean taxReportable) {
         this.taxReportable = taxReportable;
     }
 
@@ -247,11 +245,11 @@ public class InvoiceLine
         this.category = category;
     }
 
-    public boolean isForceUsTaxActivity() {
+    public Boolean isForceUsTaxActivity() {
         return forceUsTaxActivity;
     }
 
-    public void setForceUsTaxActivity(boolean forceUsTaxActivity) {
+    public void setForceUsTaxActivity(Boolean forceUsTaxActivity) {
         this.forceUsTaxActivity = forceUsTaxActivity;
     }
 
