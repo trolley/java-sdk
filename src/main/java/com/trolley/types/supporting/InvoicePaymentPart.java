@@ -23,7 +23,7 @@ public class InvoicePaymentPart{
     }
 
     /**
-     * IMPORTANT: Use as request only while updating an InvoicePayment. For "Create Invoice Payment" request, use {@link InvoicePaymentRequest#InvoicePaymentRequest(String, boolean, String, String, String[], InvoicePaymentPart) InvoicePaymentRequest}.
+     * IMPORTANT: Use as request only while updating an InvoicePayment. For "Create Invoice Payment" request, use {@link InvoicePaymentRequest#InvoicePaymentRequest(String, Boolean, String, String, String[], InvoicePaymentPart) InvoicePaymentRequest}.
      */
     public InvoicePaymentPart(String invoiceId, String invoiceLineId, String paymentId, Amount amount,
             Boolean coverFees, String memo, String externalId, String[] tags) {
