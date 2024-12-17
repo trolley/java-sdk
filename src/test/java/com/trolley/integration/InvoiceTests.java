@@ -44,6 +44,8 @@ public class InvoiceTests {
 
         InvoiceLine invoiceLine = new InvoiceLine();
         invoiceLine.setUnitAmount(new Amount("100", "USD"));
+        invoiceLine.setForceUsTaxActivity(false);
+        invoiceLine.setTaxReportable(false);
 
         ArrayList<InvoiceLine> invoiceLines = new ArrayList<InvoiceLine>(){
             {
@@ -261,7 +263,7 @@ public class InvoiceTests {
 
         InvoicePaymentRequest invoicePaymentRequest = new InvoicePaymentRequest(
             null,
-            false,
+            null,
             "Integration Test Payment",
             "ext-id-"+System.currentTimeMillis(),
             tags,
@@ -278,7 +280,7 @@ public class InvoiceTests {
         paymentPart.setPaymentId(invoicePayment.getPaymentId());
         paymentPart.setAmount(new Amount("10","USD"));
         paymentPart.setExternalId("ext-id-"+System.currentTimeMillis());
-        paymentPart.setCoverFees(true);
+        paymentPart.setCoverFees(false);
 
         boolean paymentUpdateResult = client.invoicePayment.update(paymentPart);
         assertTrue(paymentUpdateResult);

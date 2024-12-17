@@ -12,7 +12,7 @@ Add this dependency to your project's POM:
 <dependency>
     <groupId>com.trolley</groupId>
     <artifactId>java-sdk</artifactId>
-    <version>2.0.1</version>
+    <version>2.1.1</version>
 </dependency>
 ```
 
