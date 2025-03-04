@@ -92,7 +92,7 @@ public class Recipient
     }
     
     public void setTaxFormStatus(final String taxFormStatus) {
-        this.taxFormStatus = this.taxForm;
+        this.taxFormStatus = this.taxFormStatus;
     }
     
     public List<String> getTags() {
