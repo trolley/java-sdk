@@ -5,6 +5,6 @@ package com.trolley;
  */
 public class Version {
     public static int MAJOR = 2;
-    public static int MINOR = 0;
+    public static int MINOR = 2;
     public static int PATCH = 0;
 }
