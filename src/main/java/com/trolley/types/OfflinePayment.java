@@ -8,6 +8,7 @@ import com.trolley.types.supporting.Amount;
 public class OfflinePayment
 {
     private String id;
+    private String recipientId;
     private Recipient recipient;
     private String amount;
     private String currency;
@@ -24,6 +25,8 @@ public class OfflinePayment
     private String updatedAt;
     private String createdAt;
     private String deletedAt;
+    private String activityCount;
+    private Boolean taxReportable;
 
     public void setEquivalentWithholdingCurrency(final String equivalentWithholdingCurrency) {
         this.equivalentWithholdingCurrency = equivalentWithholdingCurrency;

@@ -23,7 +23,9 @@ public class BalancesGateway
      * @throws Exception
      */
     public List<Balances> getPaypalAccountBalances() throws Exception{
-        return fetchBalances("paypal");
+        final String endPoint = "/v1/balances/paypal";
+        final String response = this.client.get(endPoint);
+        return balancesListFactory(response);
     }
 
     /**
@@ -32,7 +34,9 @@ public class BalancesGateway
      * @throws Exception
      */
     public List<Balances> getTrolleyAccountBalances() throws Exception{
-        return fetchBalances("paymentrails");
+        final String endPoint = "/v1/balances/paymentrails";
+        final String response = this.client.get(endPoint);
+        return balancesListFactory(response);
     }
 
     /**

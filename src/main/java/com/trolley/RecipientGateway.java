@@ -39,7 +39,7 @@ public class RecipientGateway
         if (recipientId == null || recipientId.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
-        final String endPoint = "/v1/recipients/" + recipientId;
+        final String endPoint = "/v1/recipients/{recipientId}".replace("{recipientId}", recipientId);
         final String response = this.client.get(endPoint);
         return this.recipientFactory(response);
     }
@@ -57,7 +57,7 @@ public class RecipientGateway
             throw new InvalidFieldException("recipientId cannot be null.");
         }
 
-        final String endPoint = "/v1/recipients/" + recipientId + "/logs?page="+page+"&pageSize="+pageSize;
+        final String endPoint = "/v1/recipients/{recipientId}/logs".replace("{recipientId}", recipientId) + "?page=" + page + "&pageSize=" + pageSize;
         final String response = this.client.get(endPoint);
         return logListFactory(response);
     }
@@ -88,7 +88,7 @@ public class RecipientGateway
         if (recipientId == null || recipientId.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
-        final String endPoint = "/v1/recipients/" + recipientId + "/payments";
+        final String endPoint = "/v1/recipients/{recipientId}/payments".replace("{recipientId}", recipientId);
         final String response = this.client.get(endPoint);
         final ObjectMapper mapper = new ObjectMapper();
         final JsonNode node = mapper.readTree(response);
@@ -123,7 +123,7 @@ public class RecipientGateway
             throw new InvalidFieldException("Recipient object cannot be null or empty");
         }
         final String jsonRecipient = new ObjectMapper().writeValueAsString((Object)recipient);
-        final String endPoint = "/v1/recipients/" + recipientId;
+        final String endPoint = "/v1/recipients/{recipientId}".replace("{recipientId}", recipientId);
         this.client.patch(endPoint, jsonRecipient);
         return true;
     }
@@ -132,7 +132,7 @@ public class RecipientGateway
         if (recipientId == null || recipientId.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
-        final String endPoint = "/v1/recipients/" + recipientId;
+        final String endPoint = "/v1/recipients/{recipientId}".replace("{recipientId}", recipientId);
         this.client.delete(endPoint);
         return true;
     }
@@ -196,7 +196,7 @@ public class RecipientGateway
             throw new InvalidFieldException("searchTerm cannot be null. If you don't wish to provide a searchTerm, pass a blank String.");
         }
 
-        final String endPoint = "/v1/recipients/" + recipientId + "/offlinePayments?search=" + searchTerm + "&page=" + page + "&pageSize=" + pageSize;
+        final String endPoint = "/v1/recipients/{recipientId}/offlinePayments".replace("{recipientId}", recipientId) + "?search=" + searchTerm + "&page=" + page + "&pageSize=" + pageSize;
         
         final String response = this.client.get(endPoint);
         

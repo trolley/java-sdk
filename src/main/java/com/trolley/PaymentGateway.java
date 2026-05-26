@@ -28,7 +28,16 @@ public class PaymentGateway
         if (paymentId == null || paymentId.isEmpty()) {
             throw new InvalidFieldException("Payment id cannot be null or empty.");
         }
-        final String endPoint = "/v1/batches/" + batchId + "/payments/" + paymentId;
+        final String endPoint = "/v1/batches/{batchId}/payments/{paymentId}".replace("{batchId}", batchId).replace("{paymentId}", paymentId);
+        final String response = this.client.get(endPoint);
+        return this.paymentFactory(response);
+    }
+
+    public Payment find(final String paymentId) throws Exception {
+        if (paymentId == null || paymentId.isEmpty()) {
+            throw new InvalidFieldException("Payment id cannot be null or empty.");
+        }
+        final String endPoint = "/v1/payments/{paymentId}".replace("{paymentId}", paymentId);
         final String response = this.client.get(endPoint);
         return this.paymentFactory(response);
     }
@@ -45,7 +54,7 @@ public class PaymentGateway
                         .setDefaultPropertyInclusion(JsonInclude.Include.NON_DEFAULT)
                         .writeValueAsString((Object)payment);
 
-        final String endPoint = "/v1/batches/" + batchId + "/payments";
+        final String endPoint = "/v1/batches/{batchId}/payments".replace("{batchId}", batchId);
         final String response = this.client.post(endPoint, jsonPayment);
         return this.paymentFactory(response);
     }
@@ -64,7 +73,7 @@ public class PaymentGateway
         final String jsonPayment = new ObjectMapper()
                         .setDefaultPropertyInclusion(JsonInclude.Include.NON_DEFAULT)
                         .writeValueAsString((Object)payment);
-        final String endPoint = "/v1/batches/" + batchId + "/payments/" + paymentId;
+        final String endPoint = "/v1/batches/{batchId}/payments/{paymentId}".replace("{batchId}", batchId).replace("{paymentId}", paymentId);
         this.client.patch(endPoint, jsonPayment);
         return true;
     }
@@ -76,7 +85,7 @@ public class PaymentGateway
         if (paymentId == null || paymentId.isEmpty()) {
             throw new InvalidFieldException("Payment id cannot be null or empty.");
         }
-        final String endPoint = "/v1/batches/" + batchId + "/payments/" + paymentId;
+        final String endPoint = "/v1/batches/{batchId}/payments/{paymentId}".replace("{batchId}", batchId).replace("{paymentId}", paymentId);
         this.client.delete(endPoint);
         return true;
     }
@@ -121,7 +130,7 @@ public class PaymentGateway
         if (searchTerm == null) {
             throw new InvalidFieldException("searchTerm cannot be null. If you don't wish to provide a searchTerm, pass a blank String.");
         }
-        final String endPoint = "/v1/batches/" + batchId + "/payments?search=" + searchTerm + "&page=" + page + "&pageSize=" + pageSize;
+        final String endPoint = "/v1/batches/{batchId}/payments".replace("{batchId}", batchId) + "?search=" + searchTerm + "&page=" + page + "&pageSize=" + pageSize;
         final String response = this.client.get(endPoint);
         
         return this.paymentListFactory(response);

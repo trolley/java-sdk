@@ -22,8 +22,10 @@ public class Payment
     private List<String> tags;
     private String sourceAmount;
     private String sourceCurrency;
+    private String sourceCurrencyName;
     private String targetAmount;
     private String targetCurrency;
+    private String targetCurrencyName;
     private String exchangeRate;
     private String fees;
     private String recipientFees;
@@ -63,6 +65,8 @@ public class Payment
     private String settledAt;
     private String taxBasisAmount;
     private String taxBasisCurrency;
+    private String failureMessage;
+    private Boolean visibleToRecipient;
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private boolean taxReportable;
