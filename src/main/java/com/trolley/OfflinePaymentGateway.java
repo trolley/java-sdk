@@ -38,7 +38,7 @@ public class OfflinePaymentGateway
         String jsonRequest = new ObjectMapper()
                         .setDefaultPropertyInclusion(JsonInclude.Include.NON_DEFAULT)
                         .writeValueAsString((Object)offlinePayment);
-        final String endPoint = "/v1/recipients/" + recipientId + "/offlinePayments/";
+        final String endPoint = "/v1/recipients/{recipientId}/offlinePayments".replace("{recipientId}", recipientId);
         final String response = this.client.post(endPoint, jsonRequest);
         return this.offlinePaymentFactory(response);
     }
@@ -66,7 +66,7 @@ public class OfflinePaymentGateway
                         .setDefaultPropertyInclusion(JsonInclude.Include.NON_DEFAULT)
                         .writeValueAsString((Object)offlinePayment);
 
-        final String endPoint = "/v1/recipients/" + recipientId + "/offlinePayments/" + offlinePaymentId;
+        final String endPoint = "/v1/recipients/{recipientId}/offlinePayments/{offlinePaymentId}".replace("{recipientId}", recipientId).replace("{offlinePaymentId}", offlinePaymentId);
         this.client.patch(endPoint, jsonRequest);
         return true;
     }
@@ -86,7 +86,7 @@ public class OfflinePaymentGateway
             throw new InvalidFieldException("offlinePaymentId cannot be null or empty.");
         }
 
-        final String endPoint = "/v1/recipients/" + recipientId + "/offlinePayments/" + offlinePaymentId;
+        final String endPoint = "/v1/recipients/{recipientId}/offlinePayments/{offlinePaymentId}".replace("{recipientId}", recipientId).replace("{offlinePaymentId}", offlinePaymentId);
         this.client.delete(endPoint);
         return true;
     }

@@ -31,6 +31,9 @@ public class RecipientAccount
     private String emailAddress;
     private String status;
     private String disabledAt;
+    private Object cardDetails;
+    private Object mailing;
+    private String phoneNumber;
     
     public String getEmailAddress() {
         return this.emailAddress;

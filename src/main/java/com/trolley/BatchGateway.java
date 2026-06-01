@@ -26,7 +26,7 @@ public class BatchGateway
         if (batchId == null || batchId.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
         }
-        final String endPoint = "/v1/batches/" + batchId;
+        final String endPoint = "/v1/batches/{batchId}".replace("{batchId}", batchId);
         final String response = this.client.get(endPoint);
         return this.batchFactory(response);
     }
@@ -39,7 +39,7 @@ public class BatchGateway
             throw new InvalidFieldException("Batch object cannot be null or empty.");
         }
         final String jsonBatch = new ObjectMapper().writeValueAsString((Object)batch);
-        final String endPoint = "/v1/batches/" + batchId;
+        final String endPoint = "/v1/batches/{batchId}".replace("{batchId}", batchId);
         this.client.patch(endPoint, jsonBatch);
         return true;
     }
@@ -48,7 +48,7 @@ public class BatchGateway
         if (batchId == null || batchId.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
         }
-        final String endPoint = "/v1/batches/" + batchId;
+        final String endPoint = "/v1/batches/{batchId}".replace("{batchId}", batchId);
         this.client.delete(endPoint);
         return true;
     }
@@ -96,7 +96,7 @@ public class BatchGateway
         if (batchId == null || batchId.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
         }
-        final String endPoint = "/v1/batches/" + batchId + "/generate-quote";
+        final String endPoint = "/v1/batches/{batchId}/generate-quote".replace("{batchId}", batchId);
         final String response = this.client.post(endPoint);
         return response;
     }
@@ -105,7 +105,7 @@ public class BatchGateway
         if (batchId == null || batchId.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null or empty.");
         }
-        final String endPoint = "/v1/batches/" + batchId + "/start-processing";
+        final String endPoint = "/v1/batches/{batchId}/start-processing".replace("{batchId}", batchId);
         final String response = this.client.post(endPoint);
         return response;
     }
@@ -154,7 +154,7 @@ public class BatchGateway
         if (batchId == null || batchId.isEmpty()) {
             throw new InvalidFieldException("Batch id cannot be null os empty");
         }
-        final String endPoint = "/v1/batches/" + batchId + "/summary";
+        final String endPoint = "/v1/batches/{batchId}/summary".replace("{batchId}", batchId);
         final String response = this.client.get(endPoint);
         final ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

@@ -24,7 +24,7 @@ public class RecipientAccountGateway
         if (recipientId == null || recipientId.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
-        final String endPoint = "/v1/recipients/" + recipientId + "/accounts";
+        final String endPoint = "/v1/recipients/{recipientId}/accounts".replace("{recipientId}", recipientId);
         final String response = this.client.get(endPoint);
         return this.recipientAccountListFactory(response);
     }
@@ -33,7 +33,7 @@ public class RecipientAccountGateway
         if (recipientId == null || recipientId.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
-        final String endPoint = "/v1/recipients/" + recipientId + "/accounts/" + recipientAccountId;
+        final String endPoint = "/v1/recipients/{recipientId}/accounts/{recipientAccountId}".replace("{recipientId}", recipientId).replace("{recipientAccountId}", recipientAccountId);
         final String response = this.client.get(endPoint);
         return this.recipientAccountFactory(response);
     }
@@ -48,7 +48,7 @@ public class RecipientAccountGateway
         final String jsonAccount = new ObjectMapper()
                     .setDefaultPropertyInclusion(JsonInclude.Include.NON_DEFAULT)
                     .writeValueAsString((Object)account);
-        final String endPoint = "/v1/recipients/" + recipientId + "/accounts";
+        final String endPoint = "/v1/recipients/{recipientId}/accounts".replace("{recipientId}", recipientId);
         final String response = this.client.post(endPoint, jsonAccount);
         return this.recipientAccountFactory(response);
     }
@@ -63,7 +63,7 @@ public class RecipientAccountGateway
         final String jsonAccount = new ObjectMapper()
                     .setDefaultPropertyInclusion(JsonInclude.Include.NON_DEFAULT)
                     .writeValueAsString((Object)account);
-        final String endPoint = "/v1/recipients/" + recipientId + "/accounts/" + recipientAccountId;
+        final String endPoint = "/v1/recipients/{recipientId}/accounts/{recipientAccountId}".replace("{recipientId}", recipientId).replace("{recipientAccountId}", recipientAccountId);
         final String response = this.client.patch(endPoint, jsonAccount);
         return this.recipientAccountFactory(response);
     }
@@ -72,7 +72,7 @@ public class RecipientAccountGateway
         if (recipientId == null || recipientId.isEmpty()) {
             throw new InvalidFieldException("Recipient id cannot be null or empty.");
         }
-        final String endPoint = "/v1/recipients/" + recipientId + "/accounts/" + recipientAccountId;
+        final String endPoint = "/v1/recipients/{recipientId}/accounts/{recipientAccountId}".replace("{recipientId}", recipientId).replace("{recipientAccountId}", recipientAccountId);
         this.client.delete(endPoint);
         return true;
     }
