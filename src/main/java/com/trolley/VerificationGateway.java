@@ -36,8 +36,7 @@ public class VerificationGateway {
     }
 
     public String triggerWatchlist(final Object body) throws Exception {
-        final String endpoint = "/v1/verifications/watchlist/trigger";
-        return this.client.post(endpoint, new ObjectMapper().writeValueAsString(body));
+        return trigger("watchlist", body);
     }
 
     private String queryString(final Map<String, Object> filters) throws Exception {
