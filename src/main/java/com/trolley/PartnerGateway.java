@@ -17,6 +17,13 @@ public class PartnerGateway {
         return this.client.get("/v1/fees");
     }
 
+    public String getFees(final String currency) throws Exception {
+        if (currency == null || currency.isEmpty()) {
+            return getFees();
+        }
+        return this.client.get("/v1/fees?currency=" + pathSegment(currency));
+    }
+
     public String updateFees(final Object body) throws Exception {
         return this.client.patch("/v1/fees", json(body));
     }
