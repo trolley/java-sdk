@@ -15,6 +15,7 @@ public class Gateway
     public InvoicePaymentGateway invoicePayment;
     public VerificationGateway verification;
     public VerificationGateway trust;
+    public PartnerGateway partner;
     
     public Gateway(final Configuration config) {
         this.config = config;
@@ -30,5 +31,6 @@ public class Gateway
         this.invoicePayment = new InvoicePaymentGateway(config);
         this.verification = new VerificationGateway(config);
         this.trust = this.verification;
+        this.partner = new PartnerGateway(config);
     }
 }
